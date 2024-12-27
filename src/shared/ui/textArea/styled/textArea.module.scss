@@ -12,21 +12,27 @@
     }
 }
 
+.coverInput {
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(10);
+}
+
 .textArea {
     resize: none;
     @extend .paddingInputs;
     @extend .inputsStyle;
+    min-width: 100%;
     @media (min-width: mixins.em(global.$mobile)) {
         width: 100%;
     }
     @media (max-width: mixins.em(global.$mobile)) {
-        min-width: 100%;
+
     }
 
     &::placeholder {
         @extend .styleForAdditionalText;
     }
-
     transition: border ease 0.3s 0s;
     @media (any-hover: hover) {
         &:hover {

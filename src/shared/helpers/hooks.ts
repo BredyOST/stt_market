@@ -66,9 +66,11 @@ export const useGetLocalStateForForms = () => {
         if (storage) {
             data = JSON.parse(storage);
         }
-        Object.keys(data).forEach((key) => {
-            dispatch(updateField({ name: key as keyof FormsAddProfileSchema, value: data[key] }));
-        });
+        if(data) {
+            Object?.keys(data)?.forEach((key) => {
+                dispatch(updateField({ name: key as keyof FormsAddProfileSchema, value: data[key] }));
+            });
+        }
     };
     return { checkLocalStorage };
 };

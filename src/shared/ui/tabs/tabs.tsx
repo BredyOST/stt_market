@@ -16,7 +16,6 @@ const Tabs = ({ options }: ITabsProps) => {
     const { addTab } = formsAddProfileActions;
 
     const changeActiveTab: ForFunc<number, void> = (label: number): void => {
-        console.log(label);
         dispatch(addTab(label));
     };
 

@@ -7,7 +7,6 @@ function Home() {
     return (
         <div className={cls.page}>
             <div className='page__container'>
-                <div className={cls.cover}></div>
                 <OpenModalAddProfile />
             </div>
             <ToastContainer position='top-right' />

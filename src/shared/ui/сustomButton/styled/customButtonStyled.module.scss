@@ -60,7 +60,7 @@
 }
 .customButtonSecond {
     border-radius: mixins.rem(10);
-    width: mixins.rem(70);
+    width: mixins.rem(90);
     height: mixins.rem(110);
 }
 
@@ -153,7 +153,7 @@
     font-weight: 500;
     font-size: mixins.rem(18);
     transition: background-color ease 0.3s 0s;
-    box-shadow: mixins.rem(3) mixins.rem(10) mixins.rem(16) mixins.rem(2) rgba(0, 0, 0, 0.42);
+    box-shadow: mixins.rem(3) mixins.rem(0) mixins.rem(37) mixins.rem(-3) rgba(0, 0, 0, 0.42);
 
     @media (any-hover: hover) {
         &:hover {

@@ -6,6 +6,7 @@
 .wrapper {
     display: flex;
     flex-direction: column;
+    position: relative;
     padding-top: 0;
     row-gap: mixins.rem(10);
     width: mixins.rem(900);
@@ -15,6 +16,8 @@
     @include mixins.adaptiveValue('padding-right', 40, 15, 3, 940, global.$mobile);
     @include mixins.adaptiveValue('width', 740, 390, 3, global.$mobile, 400);
     @include mixins.adaptiveValue('width', 390, 320, 3, 400, 320);
+    max-height: 98vh;
+    overflow-y: auto;
 
     @media (min-width: mixins.em(global.$mobile)) {
     }
@@ -45,20 +48,23 @@
 .bodyBlock {
     display: flex;
     column-gap: mixins.rem(80);
+    row-gap: mixins.rem(10);
     @include mixins.adaptiveValue('column-gap', 80, 40, 3, 940, global.$mobile);
 
     @media (max-width: mixins.em(global.$mobile)) {
         flex-direction: column;
-        overflow: auto;
     }
 }
 
 .leftBlock {
     display: flex;
     flex-direction: column;
-    row-gap: mixins.rem(10);
+
     flex: 0 1 50%;
     align-items: center;
+    @media (max-width: mixins.em(global.$mobile)) {
+        row-gap: mixins.rem(10);
+    }
 }
 
 .coverBtns {
@@ -68,6 +74,7 @@
     width: 100%;
     justify-content: center;
     font-family: globalIndex.$font_family_main;
+    flex: 1 1 auto;
 }
 
 .coverBtns {
@@ -84,7 +91,15 @@
     flex-direction: column;
     row-gap: mixins.rem(10);
     flex: 0 1 50%;
-    align-items: center;
+    align-items: flex-start;
+
+    @media(min-width: mixins.em(global.$mobile)) {
+        padding-top: mixins.rem(30);
+    }
+
+    @media(max-width: mixins.em(global.$mobile)) {
+        //padding-top: mixins.rem(10);
+    }
 }
 
 .svgLogo {
@@ -127,6 +142,7 @@
     row-gap: mixins.rem(10);
     flex: 1 1 auto;
     min-width: 100%;
+    justify-content: center;
 }
 
 .coverValue {
@@ -134,15 +150,19 @@
     column-gap: mixins.rem(10);
     justify-content: space-between;
     min-width: 95%;
-    padding-top: mixins.rem(20);
+    padding-top: mixins.rem(10);
     padding-bottom: mixins.rem(10);
     @extend .titleFontSize;
     font-size: mixins.rem(22);
+    flex: 1 1 auto;
+    align-items: center;
 }
 
 .coverTabs {
     display: flex;
     column-gap: mixins.rem(10);
+    min-width: 100%;
+    justify-content: center;
 
     @media (min-width: mixins.em(420)) {
         max-width: 80%;
@@ -169,6 +189,11 @@
 .coverIncognito {
     padding-top: mixins.rem(20);
     padding-bottom: mixins.rem(20);
-    flex: 1 1 auto;
+    justify-content: flex-start;
+}
+
+.coverAddBtn {
+    display: flex;
     min-width: 100%;
+    justify-content: center;
 }

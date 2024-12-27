@@ -7,7 +7,6 @@
     display: flex;
     flex-direction: column;
     gap: mixins.rem(10);
-    min-width: 100%;
 }
 
 .checkbox {
@@ -26,6 +25,7 @@
         border-radius: 50%;
         background: #fff;
         position: relative;
+        cursor: pointer;
         transition:
             background-color ease 0.3s 0s,
             border-color ease 0.3s 0s,

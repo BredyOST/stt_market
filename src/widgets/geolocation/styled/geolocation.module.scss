@@ -20,7 +20,7 @@
 }
 
 .dropdown {
-    padding-bottom: mixins.rem(10);
+    padding-bottom: mixins.rem(20);
     padding-left: mixins.rem(10);
     padding-right: mixins.rem(10);
     padding-top: mixins.rem(3);
@@ -32,9 +32,10 @@
     display: flex;
     flex-direction: column;
     row-gap: mixins.rem(20);
+    overflow: auto;
 
     @media (min-width: mixins.em(global.$mobile)) {
-        max-height: mixins.rem(320);
+        max-height: mixins.rem(420);
         transform: translateY(101%);
         position: absolute;
         bottom: 0;
@@ -43,11 +44,11 @@
 
     @media (max-width: mixins.em(global.$mobile)) {
         position: fixed;
-        top: 0;
+        top: 50%;
         left: 50%;
         width: 98%;
-        transform: translate(-50%, 5%);
-        max-height: mixins.rem(500);
+        transform: translate(-50%, -50%);
+        max-height: 70vh;
     }
 }
 

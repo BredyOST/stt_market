@@ -1,5 +1,43 @@
+@use '../../../shared/styles/variable/globalIndex';
+@use '../../../shared/styles/variable/global';
+@use '../../../shared/styles/mixins';
+@use '../../../shared/styles/variable/common';
+
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  row-gap: mixins.rem(30);
+}
+
+.title {
+  @extend .titleFontSize;
+  color: #000000;
+  font-weight: 400;
+  font-size: mixins.rem(24);
+  font-family: globalIndex.$font_family_main;
+  line-height: globalIndex.$line_height_title;
+  @include mixins.adaptiveValue('font-size', globalIndex.$font_size_main, 18, 3, global.$tablet, global.$mobileSmall);
 }
 
 .buttonModal {
+  background: globalIndex.$background_colour_additional_light;
+  padding-top: mixins.rem(20);
+  padding-bottom: mixins.rem(20);
+  padding-left: mixins.rem(50);
+  padding-right: mixins.rem(50);
+  border-radius: mixins.rem(40);
+  color: globalIndex.$color_title;
+  transition: background ease 0.3s 0s, transform ease 0.3s 0s;
+  font-weight: 600;
+  box-shadow: mixins.rem(5) mixins.rem(5) mixins.rem(29) mixins.rem(-3) rgba(0, 0, 0, 0.59);
+
+  @media(any-hover: hover) {
+    &:hover {
+      background: globalIndex.$background_colour_additional;
+      transform: translateY(2px);
+      transition: background ease 0.3s 0s, transform ease 0.3s 0s;
+    }
+  }
 }

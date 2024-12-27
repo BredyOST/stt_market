@@ -195,7 +195,7 @@ const AddProfile = () => {
                         <Tabs options={TABS_OPTIONS} />
                     </div>
                     <div className={cls.coverIncognito}>
-                        <Checkbox itemList={CHECKBOX_INCOGNITO} checked={is_incognito} onChange={changeIncognito} />
+                            <Checkbox itemList={CHECKBOX_INCOGNITO} checked={is_incognito} onChange={changeIncognito} />
                     </div>
                     <div className={cls.coverAddBtn}>
                         <CustomButton onClick={sendForm} type='button' indicator={IndicatorsForUi.simpleButton}>

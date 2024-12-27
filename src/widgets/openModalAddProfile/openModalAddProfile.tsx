@@ -19,13 +19,16 @@ const OpenModalAddProfile = () => {
     return (
         <div>
             <div className={cls.wrapper}>
-                <button className={cls.buttonModal} onClick={changeStateModalWindow}>
-                    Add
-                </button>
+                <h3 className={cls.title}>Want to add your profile?</h3>
+                <div>
+                    <button className={cls.buttonModal} onClick={changeStateModalWindow}>
+                        Add
+                    </button>
+                </div>
             </div>
             {modalAddProfileState && (
                 <Portal whereToAdd={document.body}>
-                    <Modal>
+                <Modal>
                         <AddProfile />
                     </Modal>
                 </Portal>

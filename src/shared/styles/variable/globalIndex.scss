@@ -30,8 +30,8 @@ $font_family_main: 'Ubuntu, sans-serif'; // основной шрифт
 $font_family_title: 'Ubuntu, sans-serif'; // основной шрифт
 $font_family_input: 'Ubuntu, sans-serif'; // шрифт инпутов
 
-$line_height_main: math.div($font_size_main, $font_size_main + 5);
-$line_height_title: math.div($font_size_title, $font_size_title + 5);
+$line_height_main: math.div($font_size_main + 5, $font_size_main);
+$line_height_title: math.div($font_size_title + 5, $font_size_title);
 
 //Основые отступы внутри страниц
 $padding_top_pages: 50; // отступ внутри страницы
