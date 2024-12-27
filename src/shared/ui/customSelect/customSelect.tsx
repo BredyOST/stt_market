@@ -17,15 +17,23 @@ interface ICustomSelectProps {
 }
 
 const CustomSelect = ({ options, onSelect, placeholder, arrowIndicator }: ICustomSelectProps) => {
+
     const dispatch = useAppDispatch();
+
+    /** STATES*/
     const { language } = useAppSelector((state) => state.formsAddProfile);
+    /** для показа выпадающего меню*/
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
+
+    /** ACTIONS*/
     const { addLanguage } = formsAddProfileActions;
 
+    /** изменение состояния для показа выпадающего меню и его скрытия*/
     const openMenu = () => {
         setIsOpen((prev) => !prev);
     };
 
+    /** выбор языка из выпадающего меню*/
     const handleChooseOption: ForFunc<number | string, void> = (option: string) => {
         dispatch(addLanguage(option));
         setIsOpen(false);
@@ -47,8 +55,8 @@ const CustomSelect = ({ options, onSelect, placeholder, arrowIndicator }: ICusto
                     </div>
                     <ul className={cls.bodySelect}>
                         {isOpen &&
-                            options.length > 0 &&
-                            options.map((option) => (
+                            options?.length > 0 &&
+                            options?.map((option) => (
                                 <li
                                     className={option.value === language ? cls.active : undefined}
                                     key={option.value}

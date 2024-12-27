@@ -78,7 +78,7 @@
     font-size: mixins.rem(14);
     line-height: globalIndex.$line_height_main;
     letter-spacing: mixins.em(1.05);
-    color: globalIndex.$color_title;
+    color: globalIndex.$color_hover_first;
     font-weight: 500;
     will-change: transform;
 }

@@ -24,6 +24,8 @@ const CustomInputFile = ({
     loadedLogo,
     loadedBanner,
 }: ICustomInputProps) => {
+
+    /** для добавления логотипа*/
     if (indicator === IndicatorsForUi.addBannerToProfile) {
         return (
             <div className={`${cls.coverBtnFiles} ${loadedLogo && cls.loaded}`}>
@@ -42,6 +44,8 @@ const CustomInputFile = ({
             </div>
         );
     }
+
+    /** для добавления видео*/
     if (indicator === IndicatorsForUi.addLogoToBanner) {
         return (
             <div className={`${cls.coverBtnFiles} ${loadedBanner && cls.loaded}`}>

@@ -5,11 +5,16 @@ import { modalAddProfileActions } from '../../shared/redux/slices/modalWindowSta
 import { useAppDispatch } from '../../shared/redux/hooks/hooks';
 import cls from './styled/closePopup.module.scss';
 
-const ClosePopup = () => {
+const ClosePopup = React.memo(() => {
+
     const dispatch = useAppDispatch();
+
+    /** ACTIONS*/
     const { changeModalAddProfileState, changeModalAddProfileStateIsClosing } = modalAddProfileActions;
 
-    const closeModal = () => {
+    /** FUNCTIONS*/
+    /** для закрытия модального окна*/
+    const closeModal:() => void = () => {
         dispatch(changeModalAddProfileStateIsClosing(true));
         setTimeout(() => dispatch(changeModalAddProfileState(false)), 500);
     };
@@ -19,6 +24,6 @@ const ClosePopup = () => {
             <SvgClose className={cls.closeIcon} onClick={closeModal} />
         </button>
     );
-};
+});
 
 export default ClosePopup;

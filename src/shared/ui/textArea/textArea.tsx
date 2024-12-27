@@ -11,6 +11,8 @@ interface ITextAreaProps extends React.HTMLProps<HTMLTextAreaElement> {
 }
 
 const TextArea = ({ indicators, placeholder, value, onChange, type }: ITextAreaProps) => {
+
+   /** текстовое поле для ввода хобби */
     if (indicators === InputsIndicators.addProfileHobbies) {
         return (
             <div className={cls.coverInput}>
@@ -19,6 +21,8 @@ const TextArea = ({ indicators, placeholder, value, onChange, type }: ITextAreaP
             </div>
         );
     }
+
+    /** текстовое поле для ввода хешей */
     if (indicators === InputsIndicators.addProfileHash) {
         return (
             <div className={cls.coverInput}>
@@ -26,6 +30,7 @@ const TextArea = ({ indicators, placeholder, value, onChange, type }: ITextAreaP
             </div>
         );
     }
+
     return null;
 };
 

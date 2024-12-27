@@ -7,9 +7,14 @@ import { ForFunc } from '../../../entities/IndicatorsForUi';
 
 const Slider = () => {
     const dispatch = useAppDispatch();
+
+    /** STATES*/
     const { mlm } = useAppSelector((state) => state.formsAddProfile);
+
+    /** ACTIONS*/
     const { addMlm } = formsAddProfileActions;
 
+    /** изменить значение mlm*/
     const changeMlm: ForFunc<React.ChangeEvent<HTMLInputElement>, void> = (e) => {
         dispatch(addMlm(e.target.value));
     };

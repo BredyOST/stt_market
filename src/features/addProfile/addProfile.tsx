@@ -8,7 +8,7 @@ import {
     ForFunc,
     IButtonsForFormAddProfile,
     IInputsForFormAddProfile,
-    IndicatorsForUi,
+    IndicatorsForUi, ObjForLocaleStorage,
 } from '../../entities/IndicatorsForUi';
 import CustomInput from '../../shared/ui/customInput/customInput';
 import {
@@ -35,29 +35,43 @@ import { showAttention } from '../../shared/helpers/attention';
 import { FETCH_REQUEST_LOGO } from '../../shared/redux/sagas/sagaAddProfile/sagaAddLogo';
 import { FETCH_REQUEST_BANNER } from '../../shared/redux/sagas/sagaAddProfile/sagaAddBanner';
 import { FETCH_REQUEST_SEND_FORM } from '../../shared/redux/sagas/sagaCheckProfile/sagaCheckProfile';
+import Loader from "../../widgets/loader/loader";
 
 const AddProfile = () => {
+
     const dispatch = useAppDispatch();
+
+    /** STATES*/
     const { name, mlm, is_incognito, logo, banner, tab, language, hashtags, url, activity_hobbies, geolocation } = useAppSelector(
         (state) => state.formsAddProfile
     );
-    const { updateField, addIncognito, addLogo, addBanner } = formsAddProfileActions;
     const { isPendingAddBanner, isPendingAddLogo } = useAppSelector((state) => state.requestAddProfile);
+    const {isPendingSendForm} = useAppSelector(state => state.requestAddProfile);
+
+    /** ACTIONS*/
+    const { updateField, addIncognito} = formsAddProfileActions;
+
+    /** CUSTOM HOOKS*/
+    /** проверка формы перед отправкой*/
     const { validateForm } = useCheckAllForm();
+    /** проверка хранилища для обновления данных формы если они не заполнены*/
+    const { checkLocalStorage } = useGetLocalStateForForms();
 
-    const changeIncognito: ForFunc<number, void> = (id: number) => {
+   /** FUNCTIONS
+    /** для смены состояния чекбокса */
+    const changeIncognito: ForFunc<number, void> = React.useCallback((id: number) => {
         dispatch(addIncognito(!is_incognito));
-    };
+    },[addIncognito, is_incognito])
 
-    const changeState = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, item: keyof FormsAddProfileSchema) => {
+    /** универсальная формула для смены состояний полей формы */
+    const changeState = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, item: keyof FormsAddProfileSchema):void => {
         dispatch(updateField({ name: item, value: e.target.value }));
-    };
+    },[updateField])
 
-    const addFile = async (e: React.ChangeEvent<HTMLInputElement>, item: keyof FormsAddProfileSchema) => {
+    /** для добавления файлов logo и  video */
+    const addFile = React.useCallback(async (e: React.ChangeEvent<HTMLInputElement>, item: keyof FormsAddProfileSchema):Promise<void> => {
         const files = e.target.files;
         const file = files[0];
-        if (!files || files.length === 0) {
-        }
 
         if (files.length > 1) {
             showAttention(ERROR_ATTENTION_FOR_FORM.muchFiles, 'error');
@@ -80,17 +94,19 @@ const AddProfile = () => {
                 dispatch({ type: FETCH_REQUEST_BANNER, payload: file });
             }
         }
-    };
+    },[]);
 
+    /** отправка заполненной формы*/
     const sendForm: ForFunc<void, void> = () => {
+
         const result:boolean = validateForm();
 
         if (result) {
-            const obj = {
+            const obj:ObjForLocaleStorage = {
                 name: name,
                 url: url,
                 activity_hobbies: activity_hobbies,
-                hashtags: hashtags,
+                hashtags: hashtags.replace(/\b(?!#)(\w+)/g, '#$&').trim(),
                 is_incognito: is_incognito,
                 logo: logo,
                 banner: banner,
@@ -100,6 +116,10 @@ const AddProfile = () => {
                 language: language,
             };
 
+            let currentLocal:string = localStorage.getItem('formData')
+            if(currentLocal) {
+                localStorage.removeItem('formData');
+            }
             localStorage.setItem('formData', JSON.stringify(obj));
 
             dispatch({
@@ -115,8 +135,6 @@ const AddProfile = () => {
         }
     };
 
-    const { checkLocalStorage } = useGetLocalStateForForms();
-
     React.useEffect(() => {
         checkLocalStorage();
     }, []);
@@ -130,8 +148,8 @@ const AddProfile = () => {
             <div className={cls.bodyBlock}>
                 <div className={cls.leftBlock}>
                     <div className={cls.coverBtns}>
-                        {BUTTONS_FOR_ADD_PROFILE.length >= 1 &&
-                            BUTTONS_FOR_ADD_PROFILE.map((item: IButtonsForFormAddProfile) => (
+                        {BUTTONS_FOR_ADD_PROFILE?.length >= 1 &&
+                            BUTTONS_FOR_ADD_PROFILE?.map((item: IButtonsForFormAddProfile) => (
                                 <CustomInputFile
                                     key={item.id}
                                     type='file'
@@ -149,8 +167,8 @@ const AddProfile = () => {
                             ))}
                     </div>
                     <div className={cls.aboutYou}>
-                        {INPUTS_FOR_ADD_PROFILE.length >= 1 &&
-                            INPUTS_FOR_ADD_PROFILE.map((item: IInputsForFormAddProfile) => (
+                        {INPUTS_FOR_ADD_PROFILE?.length >= 1 &&
+                            INPUTS_FOR_ADD_PROFILE?.map((item: IInputsForFormAddProfile) => (
                                 <CustomInput
                                     type='text'
                                     indicators={item.indicator}
@@ -166,8 +184,8 @@ const AddProfile = () => {
                             ))}
                     </div>
                     <div className={cls.aboutYou}>
-                        {TEXT_AREA_FOR_ADD_PROFILE.length >= 1 &&
-                            TEXT_AREA_FOR_ADD_PROFILE.map((item: IInputsForFormAddProfile) => (
+                        {TEXT_AREA_FOR_ADD_PROFILE?.length >= 1 &&
+                            TEXT_AREA_FOR_ADD_PROFILE?.map((item: IInputsForFormAddProfile) => (
                                 <TextArea
                                     type='text'
                                     indicators={item.indicator}
@@ -207,6 +225,7 @@ const AddProfile = () => {
                     </div>
                 </div>
             </div>
+            {isPendingSendForm && <Loader/>}
         </div>
     );
 };

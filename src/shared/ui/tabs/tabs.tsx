@@ -10,7 +10,7 @@ export interface ITabsProps {
     options: TabsOptions[];
 }
 
-const Tabs = ({ options }: ITabsProps) => {
+const Tabs = React.memo(({ options }: ITabsProps) => {
     const dispatch = useAppDispatch();
     const { tab } = useAppSelector((state) => state.formsAddProfile);
     const { addTab } = formsAddProfileActions;
@@ -35,6 +35,8 @@ const Tabs = ({ options }: ITabsProps) => {
                 ))}
         </div>
     );
-};
+}, (prevProps, nextProps) => {
+    return prevProps.options === nextProps.options;
+});
 
 export default Tabs;

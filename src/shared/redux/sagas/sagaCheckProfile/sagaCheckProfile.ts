@@ -14,25 +14,16 @@ export const fetchDataSuccessAddProfile = (data: any) => ({ type: FETCH_SUCCESS_
 export const fetchDataFailureAddProfile = (error: any) => ({ type: FETCH_FAILURE_SEND_FORM, payload: error });
 
 export function* fetchSendForm(action: any) {
-    console.log('start');
     try {
         yield put(requestAddProfileActions.fetchRequestSendForm());
-        console.log('start two');
         const response = yield call(() => sendForm(action.payload));
-        console.log('response');
-        console.log(response);
-        console.log(response?.data?.form_validation?.message);
         if (response?.data?.form_validation?.message === 'Данные формы успешно обработаны') {
-            console.log(11111);
             showAttention('Данные формы успешно обработаны', 'success');
             yield put(requestAddProfileActions.fetchSuccessLogo());
         }
-        // console.log(response?.status === 200)
-        // console.log(response?.data?.form_validated?.message === 'Данные формы успешно обработаны')
-        console.log('response end');
     } catch (err) {
     } finally {
-        yield put(requestAddProfileActions.fetchRequestSendForm());
+        yield put(requestAddProfileActions.fetchSuccessSendForm());
     }
 }
 

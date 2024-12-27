@@ -10,6 +10,9 @@ export const useCheckAllForm = () => {
     const { logo, banner, name, url, activity_hobbies, hashtags, geolocation, language, mlm, tab, is_incognito } = useAppSelector(
         (state) => state.formsAddProfile
     );
+    // проверка наличия протоколов http, https, или ftp
+    const urlPattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+
     const validateForm = () => {
         if (!name.trim()) {
             toast.error(ERROR_ATTENTION_FOR_FORM.name);
@@ -18,6 +21,11 @@ export const useCheckAllForm = () => {
 
         if (!url.trim()) {
             toast.error(ERROR_ATTENTION_FOR_FORM.siteUrl);
+            return false;
+        }
+
+        if (!urlPattern.test(url)) {
+            toast.error(ERROR_ATTENTION_FOR_FORM.noHTTP);
             return false;
         }
 
@@ -66,6 +74,7 @@ export const useGetLocalStateForForms = () => {
         if (storage) {
             data = JSON.parse(storage);
         }
+
         if(data) {
             Object?.keys(data)?.forEach((key) => {
                 dispatch(updateField({ name: key as keyof FormsAddProfileSchema, value: data[key] }));

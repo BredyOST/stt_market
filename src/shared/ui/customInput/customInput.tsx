@@ -12,6 +12,8 @@ interface ICustomInputProps extends HTMLAttributes<HTMLInputElement> {
 }
 
 const CustomInput = ({ type = 'text', indicators, placeholder, value, onChange }: ICustomInputProps) => {
+
+    /** инпут для ввода имени*/
     if (indicators === InputsIndicators.addProfileName) {
         return (
             <div className={cls.coverInput}>
@@ -19,6 +21,8 @@ const CustomInput = ({ type = 'text', indicators, placeholder, value, onChange }
             </div>
         );
     }
+
+    /** инпут для ввода url*/
     if (indicators === InputsIndicators.addProfileSiteUrl) {
         return (
             <div className={cls.coverInput}>
@@ -26,6 +30,8 @@ const CustomInput = ({ type = 'text', indicators, placeholder, value, onChange }
             </div>
         );
     }
+
+    /** инпут для ввода geolocation*/
     if (indicators === InputsIndicators.addGeoLocation) {
         return (
             <div className={cls.coverInputGeo}>

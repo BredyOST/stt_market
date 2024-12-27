@@ -5,7 +5,7 @@ import { Box } from '@mui/system';
 
 const Loader = () => {
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
             <CircularProgress />
         </Box>
     );

@@ -13,21 +13,30 @@ import SvgTrash from '../../../public/svg/trash.svg';
 import SvgClose from '../../../public/svg/close.svg';
 import { showAttention } from '../../shared/helpers/attention';
 
-const Geolocation = () => {
+const Geolocation = React.memo(() => {
+
     const dispatch = useAppDispatch();
+
+    /** STATES*/
     const { geolocation, inputGeo } = useAppSelector((state) => state.formsAddProfile);
     const { modalAddProfileState } = useAppSelector((state) => state.modalWindow);
-    const { addGeo, addInputGeo } = formsAddProfileActions;
+    /** для открытия выпадающего списка*/
     const [isOpenSelectMenu, setIsOpenSelectMenu] = React.useState<boolean>(false);
 
+    /**ACTIONS*/
+    const { addGeo, addInputGeo } = formsAddProfileActions;
+
+    /** FUNCTIONS*/
+    /** для изменения состояния показа селекта*/
     const changeIsOpenSelectMenu: ForFunc<void, void> = () => {
         setIsOpenSelectMenu((prevState) => !prevState);
     };
-
+    /** для отслеживания изменений в инпуте ввода геолокации*/
     const changeValueInputGeo: ForFunc<React.ChangeEvent<HTMLInputElement>, void> = (e) => {
         dispatch(addInputGeo(e.target.value));
     };
 
+    /** добавить геолокацию*/
     const handleAddOption: ForFunc<void, void> = () => {
         if (inputGeo.length === 0) {
             showAttention(ERROR_ATTENTION_FOR_FORM.geolocation, 'error');
@@ -38,8 +47,8 @@ const Geolocation = () => {
             showAttention('geolocation has added', 'success');
         }
     };
-
-    const handleRemoveOption: ForFunc<string, void> = (option: string) => {
+    /** удалить геолокацию*/
+    const handleRemoveOption: ForFunc<string, void> = (option) => {
         dispatch(addGeo(geolocation.filter((item) => item !== option)));
     };
 
@@ -66,8 +75,8 @@ const Geolocation = () => {
                         </CustomButton>
                     </div>
                     <div className={cls.coverOptions}>
-                        {geolocation.length >= 1 &&
-                            geolocation.map((option: string, index: number) => (
+                        {geolocation?.length >= 1 &&
+                            geolocation?.map((option: string, index: number) => (
                                 <div key={`${option}-${index}`} className={cls.option}>
                                     <div className={cls.startBlockinfo}>
                                         <span>{index + 1}</span>
@@ -111,5 +120,5 @@ const Geolocation = () => {
             )}
         </div>
     );
-};
+})
 export default Geolocation;

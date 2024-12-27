@@ -90,6 +90,23 @@ export enum ERROR_ATTENTION_FOR_FORM {
     'maxSizeLogo' = 'Image must be less then 3 MB!',
     'maxSizeBanner' = 'Video must be less then 15 MB!',
     'muchFiles' = 'Can add only 1 file!',
+    'noHTTP'= 'Please enter a site URL with http:// or https://.'
 }
+
+
+export interface  ObjForLocaleStorage{
+    'name': string,
+    'url': string,
+    'activity_hobbies': string,
+    'hashtags': string
+    'is_incognito': boolean
+    'logo': string,
+    'banner': string,
+    'geolocation': string[]
+    'marketingPercent': number,
+    'mlm': string,
+    'language': string,
+}
+
 
 export type ForFunc<T, U> = (arg: T) => U;
