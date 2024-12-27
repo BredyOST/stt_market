@@ -1,0 +1,10 @@
+@use '../../../../shared/styles/variable/globalIndex';
+@use '../../../../shared/styles/variable/global';
+@use '../../../../shared/styles/mixins';
+@use '../../../../shared/styles/variable/common';
+
+.wrapper {
+    display: flex;
+    justify-content: space-around;
+    column-gap: mixins.rem(10);
+}

@@ -1,0 +1,34 @@
+@use '../../../../shared/styles/variable/globalIndex';
+@use '../../../../shared/styles/variable/global';
+@use '../../../../shared/styles/mixins';
+@use '../../../../shared/styles/variable/common';
+
+.input {
+    width: 100%;
+    @extend .paddingInputs;
+    transition: border ease 0.3s 0s;
+    @extend .inputsStyle;
+    &::placeholder {
+        @extend .styleForAdditionalText;
+    }
+
+    @media (any-hover: hover) {
+        &:hover {
+            transition: border ease 0.3s 0s;
+            border: mixins.rem(1) solid globalIndex.$background_colour_additional_accent;
+        }
+    }
+}
+
+.inputGeo {
+    min-width: 100%;
+    background-color: globalIndex.$background_colour_additional_light;
+
+    &::placeholder {
+        @extend .styleForAdditionalText;
+    }
+}
+
+.coverInputGeo {
+    flex: 1 1 auto;
+}

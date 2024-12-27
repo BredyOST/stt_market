@@ -1,0 +1,206 @@
+@use '../../../shared/styles/variable/globalIndex';
+@use '../../../shared/styles/variable/global';
+@use '../../../shared/styles/mixins';
+@use '../../../shared/styles/variable/common';
+
+.wrapper {
+    width: 100%;
+    border-radius: mixins.rem(8);
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    transition: border ease 0.3s 0s;
+    border: mixins.rem(1) solid transparent;
+    @media (any-hover: hover) {
+        &:hover {
+            transition: border ease 0.3s 0s;
+            border: mixins.rem(1) solid globalIndex.$background_colour_additional_accent;
+        }
+    }
+}
+
+.dropdown {
+    padding-bottom: mixins.rem(10);
+    padding-left: mixins.rem(10);
+    padding-right: mixins.rem(10);
+    padding-top: mixins.rem(3);
+    background-color: white;
+    width: 100%;
+    z-index: 15;
+    box-shadow: mixins.rem(0) mixins.rem(0) mixins.rem(10) mixins.rem(8) rgba(0, 0, 0, 0.11);
+    border-radius: mixins.rem(30);
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(20);
+
+    @media (min-width: mixins.em(global.$mobile)) {
+        max-height: mixins.rem(320);
+        transform: translateY(101%);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+    @media (max-width: mixins.em(global.$mobile)) {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        width: 98%;
+        transform: translate(-50%, 5%);
+        max-height: mixins.rem(500);
+    }
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(0%, 50%);
+    fill: globalIndex.$color_main_second;
+    transition: fill ease 0.3s 0s;
+    width: mixins.rem(20);
+    height: mixins.rem(20);
+
+    @media (any-hover: hover) {
+        &:hover {
+            fill: #000000;
+            transition: fill ease 0.3s 0s;
+        }
+    }
+}
+
+.coverBtnFileText {
+    display: flex;
+    column-gap: mixins.rem(20);
+
+    span {
+        color: globalIndex.$color_title;
+    }
+}
+
+.svgArrow {
+    @extend .svgIconArrow;
+    transform: translate(-50%, 37%);
+    transform-origin: 50% 50%;
+    transition: transform ease 0.3s 0s;
+    fill: globalIndex.$color_title;
+    &.active {
+        transform: translate(-50%, 37%) rotate(-90deg);
+        transition: transform ease 0.3s 0s;
+    }
+}
+
+.coverTitle {
+    display: flex;
+    min-width: 100%;
+    justify-content: center;
+    position: relative;
+}
+
+.title {
+    @extend .titleFontSize;
+    font-size: mixins.rem(globalIndex.$font_size_title);
+    font-weight: globalIndex.$font_weight_title;
+    background: #2ba296;
+    padding-top: mixins.rem(15);
+    padding-bottom: mixins.rem(15);
+    padding-left: mixins.rem(35);
+    padding-right: mixins.rem(35);
+    border-radius: mixins.rem(0) mixins.rem(0) mixins.rem(25) mixins.rem(25);
+    background: globalIndex.$background_colour_additional;
+}
+
+.coverOptions {
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(4);
+    overflow: auto;
+}
+
+.startBlockinfo {
+    display: flex;
+    flex: 1 1 auto;
+    column-gap: mixins.rem(5);
+    @extend .styleForAdditionalText;
+    font-weight: globalIndex.$font_weight_main;
+    background-color: rgba(0, 0, 0, 0.07);
+    padding-top: mixins.rem(3);
+    padding-bottom: mixins.rem(3);
+    padding-left: mixins.rem(15);
+    padding-right: mixins.rem(15);
+    border: mixins.rem(1) solid transparent;
+    outline: mixins.rem(1) transparent;
+    border-radius: mixins.rem(10);
+
+    span {
+        color: globalIndex.$background_colour_additional_accent;
+    }
+}
+
+.svgLogo {
+    width: mixins.rem(20);
+    height: mixins.rem(20);
+    flex: 0 0 mixins.rem(20);
+}
+
+.option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1 1 auto;
+    column-gap: mixins.rem(15);
+}
+
+.deleteButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.inputGroup {
+    display: flex;
+    gap: mixins.rem(10);
+}
+
+.addButton {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.addButton:hover {
+    background-color: #45a049;
+}
+
+.svgOkay {
+    @extend .svgOkayArrow;
+    flex: 1 0 mixins.rem(25);
+}
+
+.coverBtnOk {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 100%;
+    justify-content: center;
+}
+
+.coverBlockDown {
+    display: flex;
+    column-gap: mixins.rem(15);
+    align-items: center;
+}
+
+.svgTrash {
+    width: mixins.rem(20);
+    height: mixins.rem(20);
+    transition: fill ease 0.3s 0s;
+
+    @media (any-hover: hover) {
+        &:hover {
+            fill: globalIndex.$background_colour_additional_accent;
+            transition: fill ease 0.3s 0s;
+        }
+    }
+}
