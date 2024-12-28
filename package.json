@@ -16,6 +16,7 @@
         "@reduxjs/toolkit": "^2.5.0",
         "@svgr/webpack": "^8.1.0",
         "axios": "^1.7.9",
+        "bad-words": "^4.0.0",
         "dotenv": "^16.4.7",
         "next": "15.1.2",
         "react": "^19.0.0",

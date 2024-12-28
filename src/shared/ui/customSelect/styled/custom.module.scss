@@ -31,6 +31,7 @@
     z-index: 10;
     border-radius: mixins.rem(30);
     box-shadow: mixins.rem(0) mixins.rem(0) mixins.rem(10) mixins.rem(8) rgba(0, 0, 0, 0.11);
+
     @media (min-width: mixins.em(global.$mobile)) {
         position: absolute;
         bottom: 0;
@@ -45,15 +46,16 @@
         top: 50%;
         left: 50%;
         width: 98%;
-        min-height: 70vh; //
+        //min-height: 70vh; //
         transform: translate(-50%, -50%);
-        max-height: 70vh;
+        //max-height: 70vh;
     }
 }
 
 .bodySelect {
     overflow: auto;
-    max-height: mixins.rem(230);
+    max-height: 70vh;
+
     li {
         cursor: pointer;
         padding-left: mixins.rem(10);
@@ -75,15 +77,14 @@
                 color ease 0.3s 0s;
         }
 
-        @media (min-width: mixins.em(global.$mobile)) {
-            max-height: mixins.rem(230);
-        }
-
         @media (max-width: mixins.em(global.$mobile)) {
             font-size: mixins.rem(20);
             padding-top: mixins.rem(5);
-            padding-bottom: mixins.rem(5);
-        }
+            padding-bottom: mixins.rem(5);}
+    }
+
+    @media (min-width: mixins.em(global.$mobile)) {
+        max-height: mixins.rem(230);
     }
 }
 

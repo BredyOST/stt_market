@@ -75,13 +75,13 @@
     border-radius: mixins.rem(15);
     left: 50%;
     transform: translate(-50%, -50%);
-    overflow: auto;
+
     z-index: 150;
     max-height: mixins.rem(550);
     display: flex;
 
     @media (max-width: mixins.em(global.$mobile)) {
-        min-height: 100vh;
+        min-height: 98vh;
     }
 
     .active & {

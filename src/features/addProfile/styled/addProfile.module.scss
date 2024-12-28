@@ -15,8 +15,8 @@
     @include mixins.adaptiveValue('padding-left', 40, 15, 3, 940, global.$mobile);
     @include mixins.adaptiveValue('padding-right', 40, 15, 3, 940, global.$mobile);
     @include mixins.adaptiveValue('width', 740, 390, 3, global.$mobile, 400);
-    @include mixins.adaptiveValue('width', 390, 320, 3, 400, 320);
-    max-height: 98vh;
+    @include mixins.adaptiveValue('width', 390, 310, 3, 400, 320);
+    max-height: 95vh;
     overflow-y: auto;
 
     @media (min-width: mixins.em(global.$mobile)) {

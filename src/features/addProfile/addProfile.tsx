@@ -100,13 +100,19 @@ const AddProfile = () => {
     const sendForm: ForFunc<void, void> = () => {
 
         const result:boolean = validateForm();
+        /** добававить # к словам*/
+        const formattedHashtags = hashtags
+            .split(',')
+            .map((tag) => tag.trim()) // Убираем пробелы вокруг слов
+            .map((tag) => (tag.startsWith('#') ? tag : `#${tag}`)) // Добавляем # только если его нет
+            .join(', ');
 
         if (result) {
             const obj:ObjForLocaleStorage = {
                 name: name,
                 url: url,
                 activity_hobbies: activity_hobbies,
-                hashtags: hashtags.replace(/\b(?!#)(\w+)/g, '#$&').trim(),
+                hashtags: formattedHashtags,
                 is_incognito: is_incognito,
                 logo: logo,
                 banner: banner,

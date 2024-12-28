@@ -22,6 +22,7 @@ export function* fetchSendForm(action: any) {
             yield put(requestAddProfileActions.fetchSuccessLogo());
         }
     } catch (err) {
+        console.log(err);
     } finally {
         yield put(requestAddProfileActions.fetchSuccessSendForm());
     }
