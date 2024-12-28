@@ -12,7 +12,6 @@ interface ICustomInputProps extends HTMLAttributes<HTMLInputElement> {
 }
 
 const CustomInput = ({ type = 'text', indicators, placeholder, value, onChange }: ICustomInputProps) => {
-
     /** инпут для ввода имени*/
     if (indicators === InputsIndicators.addProfileName) {
         return (

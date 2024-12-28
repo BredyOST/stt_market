@@ -93,11 +93,11 @@
     flex: 0 1 50%;
     align-items: flex-start;
 
-    @media(min-width: mixins.em(global.$mobile)) {
+    @media (min-width: mixins.em(global.$mobile)) {
         padding-top: mixins.rem(30);
     }
 
-    @media(max-width: mixins.em(global.$mobile)) {
+    @media (max-width: mixins.em(global.$mobile)) {
         //padding-top: mixins.rem(10);
     }
 }

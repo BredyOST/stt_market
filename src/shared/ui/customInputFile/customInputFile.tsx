@@ -24,7 +24,6 @@ const CustomInputFile = ({
     loadedLogo,
     loadedBanner,
 }: ICustomInputProps) => {
-
     /** для добавления логотипа*/
     if (indicator === IndicatorsForUi.addBannerToProfile) {
         return (

@@ -6,7 +6,6 @@ import { useAppDispatch } from '../../shared/redux/hooks/hooks';
 import cls from './styled/closePopup.module.scss';
 
 const ClosePopup = React.memo(() => {
-
     const dispatch = useAppDispatch();
 
     /** ACTIONS*/
@@ -14,7 +13,7 @@ const ClosePopup = React.memo(() => {
 
     /** FUNCTIONS*/
     /** для закрытия модального окна*/
-    const closeModal:() => void = () => {
+    const closeModal: () => void = () => {
         dispatch(changeModalAddProfileStateIsClosing(true));
         setTimeout(() => dispatch(changeModalAddProfileState(false)), 500);
     };

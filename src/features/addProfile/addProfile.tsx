@@ -8,7 +8,8 @@ import {
     ForFunc,
     IButtonsForFormAddProfile,
     IInputsForFormAddProfile,
-    IndicatorsForUi, ObjForLocaleStorage,
+    IndicatorsForUi,
+    ObjForLocaleStorage,
 } from '../../entities/IndicatorsForUi';
 import CustomInput from '../../shared/ui/customInput/customInput';
 import {
@@ -35,10 +36,9 @@ import { showAttention } from '../../shared/helpers/attention';
 import { FETCH_REQUEST_LOGO } from '../../shared/redux/sagas/sagaAddProfile/sagaAddLogo';
 import { FETCH_REQUEST_BANNER } from '../../shared/redux/sagas/sagaAddProfile/sagaAddBanner';
 import { FETCH_REQUEST_SEND_FORM } from '../../shared/redux/sagas/sagaCheckProfile/sagaCheckProfile';
-import Loader from "../../widgets/loader/loader";
+import Loader from '../../widgets/loader/loader';
 
 const AddProfile = () => {
-
     const dispatch = useAppDispatch();
 
     /** STATES*/
@@ -46,10 +46,10 @@ const AddProfile = () => {
         (state) => state.formsAddProfile
     );
     const { isPendingAddBanner, isPendingAddLogo } = useAppSelector((state) => state.requestAddProfile);
-    const {isPendingSendForm} = useAppSelector(state => state.requestAddProfile);
+    const { isPendingSendForm } = useAppSelector((state) => state.requestAddProfile);
 
     /** ACTIONS*/
-    const { updateField, addIncognito} = formsAddProfileActions;
+    const { updateField, addIncognito } = formsAddProfileActions;
 
     /** CUSTOM HOOKS*/
     /** проверка формы перед отправкой*/
@@ -57,19 +57,25 @@ const AddProfile = () => {
     /** проверка хранилища для обновления данных формы если они не заполнены*/
     const { checkLocalStorage } = useGetLocalStateForForms();
 
-   /** FUNCTIONS
+    /** FUNCTIONS
     /** для смены состояния чекбокса */
-    const changeIncognito: ForFunc<number, void> = React.useCallback((id: number) => {
-        dispatch(addIncognito(!is_incognito));
-    },[addIncognito, is_incognito])
+    const changeIncognito: ForFunc<number, void> = React.useCallback(
+        (id: number) => {
+            dispatch(addIncognito(!is_incognito));
+        },
+        [addIncognito, is_incognito]
+    );
 
     /** универсальная формула для смены состояний полей формы */
-    const changeState = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, item: keyof FormsAddProfileSchema):void => {
-        dispatch(updateField({ name: item, value: e.target.value }));
-    },[updateField])
+    const changeState = React.useCallback(
+        (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, item: keyof FormsAddProfileSchema): void => {
+            dispatch(updateField({ name: item, value: e.target.value }));
+        },
+        [updateField]
+    );
 
     /** для добавления файлов logo и  video */
-    const addFile = React.useCallback(async (e: React.ChangeEvent<HTMLInputElement>, item: keyof FormsAddProfileSchema):Promise<void> => {
+    const addFile = React.useCallback(async (e: React.ChangeEvent<HTMLInputElement>, item: keyof FormsAddProfileSchema): Promise<void> => {
         const files = e.target.files;
         const file = files[0];
 
@@ -94,12 +100,11 @@ const AddProfile = () => {
                 dispatch({ type: FETCH_REQUEST_BANNER, payload: file });
             }
         }
-    },[]);
+    }, []);
 
     /** отправка заполненной формы*/
     const sendForm: ForFunc<void, void> = () => {
-
-        const result:boolean = validateForm();
+        const result: boolean = validateForm();
         /** добававить # к словам*/
         const formattedHashtags = hashtags
             .split(',')
@@ -108,7 +113,7 @@ const AddProfile = () => {
             .join(', ');
 
         if (result) {
-            const obj:ObjForLocaleStorage = {
+            const obj: ObjForLocaleStorage = {
                 name: name,
                 url: url,
                 activity_hobbies: activity_hobbies,
@@ -122,8 +127,8 @@ const AddProfile = () => {
                 language: language,
             };
 
-            let currentLocal:string = localStorage.getItem('formData')
-            if(currentLocal) {
+            let currentLocal: string = localStorage.getItem('formData');
+            if (currentLocal) {
                 localStorage.removeItem('formData');
             }
             localStorage.setItem('formData', JSON.stringify(obj));
@@ -219,7 +224,7 @@ const AddProfile = () => {
                         <Tabs options={TABS_OPTIONS} />
                     </div>
                     <div className={cls.coverIncognito}>
-                            <Checkbox itemList={CHECKBOX_INCOGNITO} checked={is_incognito} onChange={changeIncognito} />
+                        <Checkbox itemList={CHECKBOX_INCOGNITO} checked={is_incognito} onChange={changeIncognito} />
                     </div>
                     <div className={cls.coverAddBtn}>
                         <CustomButton onClick={sendForm} type='button' indicator={IndicatorsForUi.simpleButton}>
@@ -231,7 +236,7 @@ const AddProfile = () => {
                     </div>
                 </div>
             </div>
-            {isPendingSendForm && <Loader/>}
+            {isPendingSendForm && <Loader />}
         </div>
     );
 };

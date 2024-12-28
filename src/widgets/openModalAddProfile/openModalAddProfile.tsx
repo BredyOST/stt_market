@@ -28,7 +28,7 @@ const OpenModalAddProfile = () => {
             </div>
             {modalAddProfileState && (
                 <Portal whereToAdd={document.body}>
-                <Modal>
+                    <Modal>
                         <AddProfile />
                     </Modal>
                 </Portal>

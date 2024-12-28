@@ -9,7 +9,6 @@ interface ICheckboxProps {
 }
 
 const Checkbox = React.memo(({ itemList, checked, onChange }: ICheckboxProps) => {
-
     return (
         <div className={cls.checkboxGroup}>
             {itemList.map((item) => (

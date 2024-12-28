@@ -10,33 +10,36 @@ export interface ITabsProps {
     options: TabsOptions[];
 }
 
-const Tabs = React.memo(({ options }: ITabsProps) => {
-    const dispatch = useAppDispatch();
-    const { tab } = useAppSelector((state) => state.formsAddProfile);
-    const { addTab } = formsAddProfileActions;
+const Tabs = React.memo(
+    ({ options }: ITabsProps) => {
+        const dispatch = useAppDispatch();
+        const { tab } = useAppSelector((state) => state.formsAddProfile);
+        const { addTab } = formsAddProfileActions;
 
-    const changeActiveTab: ForFunc<number, void> = (label: number): void => {
-        dispatch(addTab(label));
-    };
+        const changeActiveTab: ForFunc<number, void> = (label: number): void => {
+            dispatch(addTab(label));
+        };
 
-    return (
-        <div className={cls.wrapper}>
-            {options.length > 0 &&
-                options.map((item: TabsOptions) => (
-                    <CustomButton
-                        active={item.label == tab}
-                        onClick={() => changeActiveTab(item.label)}
-                        type='button'
-                        indicator={IndicatorsForUi.tabsProfile}
-                        key={item.id}
-                    >
-                        {item.label}
-                    </CustomButton>
-                ))}
-        </div>
-    );
-}, (prevProps, nextProps) => {
-    return prevProps.options === nextProps.options;
-});
+        return (
+            <div className={cls.wrapper}>
+                {options.length > 0 &&
+                    options.map((item: TabsOptions) => (
+                        <CustomButton
+                            active={item.label == tab}
+                            onClick={() => changeActiveTab(item.label)}
+                            type='button'
+                            indicator={IndicatorsForUi.tabsProfile}
+                            key={item.id}
+                        >
+                            {item.label}
+                        </CustomButton>
+                    ))}
+            </div>
+        );
+    },
+    (prevProps, nextProps) => {
+        return prevProps.options === nextProps.options;
+    }
+);
 
 export default Tabs;

@@ -17,7 +17,6 @@ interface ICustomSelectProps {
 }
 
 const CustomSelect = ({ options, onSelect, placeholder, arrowIndicator }: ICustomSelectProps) => {
-
     const dispatch = useAppDispatch();
 
     /** STATES*/

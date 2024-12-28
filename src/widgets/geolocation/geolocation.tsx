@@ -14,7 +14,6 @@ import SvgClose from '../../../public/svg/close.svg';
 import { showAttention } from '../../shared/helpers/attention';
 
 const Geolocation = React.memo(() => {
-
     const dispatch = useAppDispatch();
 
     /** STATES*/
@@ -120,5 +119,5 @@ const Geolocation = React.memo(() => {
             )}
         </div>
     );
-})
+});
 export default Geolocation;

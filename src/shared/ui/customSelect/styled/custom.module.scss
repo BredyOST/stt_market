@@ -80,7 +80,8 @@
         @media (max-width: mixins.em(global.$mobile)) {
             font-size: mixins.rem(20);
             padding-top: mixins.rem(5);
-            padding-bottom: mixins.rem(5);}
+            padding-bottom: mixins.rem(5);
+        }
     }
 
     @media (min-width: mixins.em(global.$mobile)) {

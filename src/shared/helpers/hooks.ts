@@ -75,7 +75,7 @@ export const useGetLocalStateForForms = () => {
             data = JSON.parse(storage);
         }
 
-        if(data) {
+        if (data) {
             Object?.keys(data)?.forEach((key) => {
                 console.log(data[key]);
                 dispatch(updateField({ name: key as keyof FormsAddProfileSchema, value: data[key] }));
