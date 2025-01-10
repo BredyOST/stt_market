@@ -13,6 +13,15 @@
   }
 }
 
+.wallet_header_telegram {
+  height: 39px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 10px;
+}
+
 .labelLogo {
   color: #47c999;
   font-weight: 500;

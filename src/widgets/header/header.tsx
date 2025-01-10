@@ -29,9 +29,10 @@ function Header(props) {
     // console.log(`accReduxL ${account}`)
     // console.log(props.account)
     async function prepareTelegram() {
-        const data = {'account': props.account}
-        axios.post('https://stt.market/api/notifications/create/', data)
-            .then((response) => {
+        const data = {'account': account}
+        try {
+            const response = await axios.post('https://stt.market/api/notifications/create/', data)
+            if(response.status === 200) {
                 let dd = response.data
                 if (dd.status === 400) {
                     setToastText(dd.message)
@@ -42,11 +43,28 @@ function Header(props) {
                     setTelegramCode(dd.code)
                     setShowTelegramModal(true)
                 }
+            }
+        } catch(err) {
+            console.log(err);
+        }
 
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        // axios.post('https://stt.market/api/notifications/create/', data)
+        //     .then((response) => {
+        //         let dd = response.data
+        //         if (dd.status === 400) {
+        //             setToastText(dd.message)
+        //             setToastErrorShow(true)
+        //
+        //         } else if (dd.status === 200) {
+        //             setTelegramValid(dd.valid)
+        //             setTelegramCode(dd.code)
+        //             setShowTelegramModal(true)
+        //         }
+        //
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
 
     }
 
@@ -116,8 +134,6 @@ function Header(props) {
         }
     }, [])
 
-
-
     const {t} = useTranslation();
 
     return (
@@ -127,7 +143,7 @@ function Header(props) {
                     <SvgLogo className={cls.svgLogo} />
                     <p className={cls.labelLogo}>{t("Smart Trading Token")}</p>
                 </div>
-                <div className={"wallet__header-telegram"}>
+                <div className={cls.wallet_header_telegram}>
                     <CustomSelect  options={LANGUAGES} indicator={SelectsIndicators.language}/>
                     {!props.withoutWallet
                         ? <>
