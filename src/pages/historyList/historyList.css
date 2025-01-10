@@ -1,0 +1,46 @@
+.history_button {
+  color: #008279 !important;
+  font-size: 12px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 150px;
+  margin: 30px auto 0;
+  padding: 15px 25px;
+  border-radius: 50px;
+  background-color: #96fac5;
+}
+
+.history_button img {
+  width: 50px;
+}
+
+.history_button p {
+  margin-bottom: 0;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.history_load {
+  height: 235px;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.history_load .load-more {
+  width: 50px;
+  height: 50px;
+  background-color: #96fac5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.history_load .load-more i {
+  color: #ffffff;
+  font-size: 36px;
+}

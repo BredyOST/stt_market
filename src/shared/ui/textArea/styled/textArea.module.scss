@@ -1,0 +1,55 @@
+@use '../../../../shared/styles/variable/globalIndex';
+@use '../../../../shared/styles/variable/global';
+@use '../../../../shared/styles/mixins';
+@use '../../../../shared/styles/variable/common';
+
+.textAreaCover {
+    @media (min-width: mixins.em(global.$mobile)) {
+        max-width: mixins.rem(370);
+    }
+    @media (max-width: mixins.em(global.$mobile)) {
+        min-width: 100%;
+    }
+}
+
+.coverInput {
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(10);
+}
+
+.textArea {
+    resize: none;
+    @extend .paddingInputs;
+    @extend .inputsStyle;
+    min-width: 100%;
+    @media (min-width: mixins.em(global.$mobile)) {
+        width: 100%;
+    }
+    @media (max-width: mixins.em(global.$mobile)) {
+    }
+
+    &::placeholder {
+        @extend .styleForAdditionalText;
+    }
+    transition: border ease 0.3s 0s;
+    @media (any-hover: hover) {
+        &:hover {
+            transition: border ease 0.3s 0s;
+            border: mixins.rem(1) solid globalIndex.$background_colour_additional_accent;
+        }
+    }
+}
+
+.textAreaHash {
+    min-height: mixins.rem(100);
+}
+
+.textAreaText {
+    min-height: mixins.rem(70);
+}
+
+.textAreaText,
+.textAreaHash {
+    max-width: mixins.rem(485);
+}

@@ -1,0 +1,189 @@
+@use '../../../../shared/styles/variable/globalIndex';
+@use '../../../../shared/styles/variable/global';
+@use '../../../../shared/styles/mixins';
+@use '../../../../shared/styles/variable/common';
+
+.hiddenBtn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: mixins.rem(1);
+    height: mixins.rem(1);
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.customButton,
+.customButtonSecond {
+    display: flex;
+    flex-direction: column;
+    background: rgba(242, 242, 242, 0.59);
+    border: mixins.rem(3) transparent;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    row-gap: mixins.rem(5);
+    cursor: pointer;
+    @extend .styleForAdditionalText;
+    transition:
+        background ease 0.3s 0s,
+        box-shadow ease 0.3s 0s;
+    .loaded & {
+        //border: mixins.rem(3) solid globalIndex.$color_title;
+        background: #8ff3e6;
+    }
+    .errorLoaded & {
+        background-color: #ddc9c7;
+
+    }
+
+    @media (any-hover: hover) {
+        &:hover {
+            background: rgba(195, 192, 192, 0.59);
+            transition:
+                background ease 0.3s 0s,
+                box-shadow ease 0.3s 0s;
+            box-shadow: mixins.rem(0) mixins.rem(0) mixins.rem(10) mixins.rem(3) rgba(0, 0, 0, 0.15);
+        }
+    }
+}
+
+.coverText {
+    display: flex;
+    flex-direction: column;
+}
+
+.minSize {
+    font-size: mixins.rem(13);
+}
+
+.customButton {
+    border-radius: 50%;
+    width: mixins.rem(110);
+    height: mixins.rem(110);
+}
+.customButtonSecond {
+    border-radius: mixins.rem(10);
+    width: mixins.rem(90);
+    height: mixins.rem(110);
+}
+
+.icon {
+    width: mixins.rem(50);
+    text-align: center;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.coverBtnGeo {
+    display: flex;
+    background: globalIndex.$background_colour_additional_accent_second;
+    border-radius: mixins.rem(10);
+    padding-top: mixins.rem(7);
+    padding-bottom: mixins.rem(7);
+    padding-left: mixins.rem(15);
+    padding-right: mixins.rem(15);
+    border: mixins.rem(1) solid transparent;
+    outline: mixins.rem(1) transparent;
+    width: 100%;
+    cursor: pointer;
+
+    &.span {
+        background: transparent;
+    }
+}
+
+.geo {
+    background: transparent;
+    font-size: mixins.rem(16);
+    border: mixins.rem(1) solid transparent;
+    outline: mixins.rem(1) transparent;
+    @extend .styleForAdditionalText;
+}
+
+.okey {
+    background: globalIndex.$color_title;
+    width: mixins.rem(32);
+    height: mixins.rem(32);
+    border-radius: mixins.rem(5);
+    fill: #2ba296;
+    transition: background-color ease 0.3s 0s;
+
+    @media (any-hover: hover) {
+        &:hover {
+            transition: background-color ease 0.3s 0s;
+            background: globalIndex.$color_hover_first;
+        }
+    }
+}
+
+.tabs {
+    width: mixins.rem(40);
+    height: mixins.rem(40);
+    border-radius: mixins.rem(10);
+    background: globalIndex.$background_colour_additional_accent_second;
+    transition: background ease 0.3s 0s;
+    color: globalIndex.$color_title;
+    font-weight: 600;
+    &.active {
+        background: globalIndex.$background_colour_additional_accent;
+        transition: background ease 0.3s 0s;
+    }
+
+    @media (any-hover: hover) {
+        &:hover {
+            background: globalIndex.$background_colour_additional_accent;
+        }
+    }
+}
+
+.coverBtnTrash {
+    width: mixins.rem(32);
+    height: mixins.rem(32);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.simple {
+    padding-top: mixins.rem(15);
+    padding-bottom: mixins.rem(15);
+    padding-left: mixins.rem(40);
+    padding-right: mixins.rem(40);
+    background-color: globalIndex.$color_title;
+    border-radius: mixins.rem(30);
+    color: #ffffff;
+    font-weight: 500;
+    font-size: mixins.rem(18);
+    transition: background-color ease 0.3s 0s;
+    box-shadow: mixins.rem(3) mixins.rem(0) mixins.rem(37) mixins.rem(-3) rgba(0, 0, 0, 0.42);
+
+    @media (any-hover: hover) {
+        &:hover {
+            background-color: globalIndex.$color_hover_first;
+            transition: background-color ease 0.3s 0s;
+        }
+    }
+}
+
+.coverBtnFiles {
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(10);
+}
+
+.maxSize {
+    text-align: center;
+    font-size: mixins.rem(10);
+    @extend .styleForAdditionalText;
+}
+
+.greenBtn {
+    @extend .btnGreen;
+    padding-left: mixins.rem(30);
+    padding-right: mixins.rem(30);
+    margin: 0;
+}

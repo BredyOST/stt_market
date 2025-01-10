@@ -1,0 +1,239 @@
+.history_card {
+  width: 170px;
+  height: 235px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 15px;
+  background-color: #ffffff;
+  margin: 0 10px;
+  cursor: pointer;
+  padding-top: 35px;
+  transition: opacity 400ms ease 0s, transform 400ms ease 0s;
+  transform: none;
+}
+
+.history_card.pending {
+  background-color: #fff3cd;
+}
+
+.history_card-time {
+  font-size: 8px!important;
+  color: #818181;
+  margin-bottom: 0;
+  text-align: center!important;
+}
+
+.history_card-type {
+  color: #444444;
+  margin-bottom: 0;
+  min-height: 36px;
+  height: 36px;
+  font-weight: 500;
+  font-size: 1.1rem;
+  max-width: 130px;
+  word-break: break-word;
+}
+
+.history_card img {
+  height: 60px;
+  margin-bottom: 20px;
+}
+
+.history_card-img {
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.history_card i {
+  font-size: 60px;
+  color: #888888;
+  margin-bottom: 15px;
+}
+
+.history_card-title {
+  margin-bottom: 0;
+  min-height: 36px;
+  height: 36px;
+  font-weight: 600;
+  font-size: 12px;
+  max-width: 120px;
+  word-break: break-word;
+  text-align: center!important;
+  color: #333333;
+  line-height: 1.15;
+  overflow: hidden;
+}
+
+.history_card-amount {
+  margin-top: 30px;
+  font-size: 1.3rem!important;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.history_card-amount span {
+  font-weight: 600;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.history_card-amount.out {
+  color: #d84855;
+}
+
+.history_card-amount.in {
+  color: #198754;
+}
+
+.history-modal-instance .modal-body {
+  padding: 0 ;
+}
+
+.history-modal-instance .modal-content {
+  max-width: 350px;
+  margin: auto;
+  padding-top: 0;
+}
+
+.history-modal-instance.pending .modal-content {
+  background-color: #fff3cd;
+}
+
+.history-modal {
+  text-align: center;
+  padding: 0;
+  padding-bottom: 25px;
+}
+
+.history-modal p {
+  text-align: center;
+}
+
+span.history-modal-time {
+  font-size: .75rem;
+  color: #818181;
+  margin-bottom: 20px;
+}
+
+p.history-modal-type {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: .9rem;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #bbbbbb;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
+
+.history-modal-instance.pending p.history-modal-type {
+  background-color: #31d59b;
+}
+
+.history-modal-img {
+  width: 80px;
+  height: 80px;
+  margin: 20px auto 20px;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 50%;
+}
+
+.history-modal i {
+  color: #888888;
+  margin: 20px auto 20px;
+  font-size: 80px;
+}
+
+p.history-modal-title {
+  color: #333333;
+  font-weight: 600;
+  font-size: .9rem;
+  margin-bottom: 20px;
+}
+
+a.history-modal-link {
+  color: #ffffff!important;
+  text-decoration: none!important;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.4rem 2rem;
+  margin: 0 auto 15px;
+  display: block;
+  width: 220px;
+}
+
+span.history-modal-helper {
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: .85rem;
+}
+
+span.history-modal-text {
+  font-size: .85rem;
+  font-weight: 500;
+  word-break: break-all;
+  margin: auto;
+  margin-bottom: 15px;
+  cursor: pointer;
+  max-width: 266px;
+  color: #888888;
+}
+
+button.history-modal-copy {
+  margin: 0 auto 20px;
+  background-color: #31d59b;
+  font-weight: 700;
+  border-radius: 30px;
+  border-color: transparent;
+  font-size: .65rem;
+  padding: 0.2rem 1.8rem;
+  color: #ffffff;
+  width: auto;
+}
+
+span.history-modal-helper-big {
+  margin-bottom: 0;
+}
+
+.history-modal span {
+  display: block;
+}
+
+span.history-modal-amount {
+  color: #333333;
+  font-weight: 500;
+  font-size: 1.7rem;
+  margin-bottom: 25px;
+  font-family: 'Ubuntu', sans-serif;
+  line-height: 1;
+}
+
+.history-exchange-completed p {
+  color: #2ab684!important;
+}
+
+.history-exchange-completed p.history-modal-helper {
+  color: #333333!important;
+}
+
+.green-text {
+  color: #47c999!important;
+}
+
+.ok-btn {
+  margin-bottom: 15px;
+  width: 120px;
+  height: 50px;
+  border-radius: 35px;
+  font-weight: 600;
+  font-size: 1.3rem;
+  background-color: #96fac5!important;
+  color: #ffffff!important;
+  border-color: transparent!important;
+}

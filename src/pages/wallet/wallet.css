@@ -1,0 +1,124 @@
+.wallet_card {
+  width: 100%;
+  background-color: #96fac5;
+  height: 280px;
+  border-radius: 25px;
+  position: relative;
+  padding-top: 25px;
+}
+.wallet_card-stripe {
+  width: 100%;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #47c999;
+  padding: 0 15px;
+}
+.wallet_card-stripe span {
+  font-weight: 600;
+  color: #ffffff;
+}
+.wallet_card-balance {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 30px auto 0;
+  width: fit-content;
+  text-decoration: none;
+}
+.wallet_card-balance .stt-empty {
+  width: 50px;
+  display: block;
+}
+.wallet_card-balance .stt-balance {
+  font-size: 28px;
+  font-weight: 500;
+  color: #444444 !important;
+  font-family: Ubuntu, sans-serif;
+}
+.wallet_card-balance .stt-arrow {
+  width: 50px;
+  height: 42px;
+  font-size: 28px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  color: #47c999;
+}
+.wallet_card .help-usdt-balance {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #008279;
+  font-family: Ubuntu, sans-serif;
+  margin-bottom: 36px;
+}
+.wallet_card .additional-balances {
+  margin-top: 15px;
+  padding-left: 25px;
+}
+.wallet_card .additional-balances div {
+  font-family: Ubuntu, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+  width: 40%;
+  background-color: rgba(255, 255, 255, 0.4);
+  color: #47c999;
+  padding: 5px 15px;
+  border-radius: 15px;
+}
+.wallet_card .additional-balances div span {
+  font-family: Montserrat, sans-serif;
+  width: 45px;
+  display: inline-block;
+}
+
+.wallet_link {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #96fac5;
+  border-radius: 25px;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #008279 !important;
+  font-weight: 500;
+}
+.wallet_link span {
+  font-size: 20px;
+}
+.btn-send-tokens {
+  color: #ffffff !important;
+  font-size: 14px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 25px;
+  border-radius: 50px;
+  background-color: #47c999;
+  text-align: center;
+  font-weight: 500;
+  border: 2px transparent;
+}
+.balance_title {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 25px;
+  align-items: center;
+}
+
+.additional-balances {
+  margin-top: 15px;
+  padding-left: 25px;
+  flex: 1 0 50%;
+}

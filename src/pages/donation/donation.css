@@ -1,0 +1,134 @@
+.react-select-container {
+  width: 120px;
+}
+
+.react-select__control {
+  background-color: #eeeeee !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  padding: 3px 0;
+  border-radius: 35px !important;
+}
+
+.react-select__indicator-separator {
+  border: none;
+  background-color: transparent !important;
+}
+
+.react-select__single-value {
+  font-weight: 500;
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between !important;
+  cursor: pointer;
+}
+
+.react-select__option {
+  font-weight: 500;
+  color: #333333 !important;
+  background-color: #ffffff !important;
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start !important;
+  cursor: pointer;
+  font-size: 0.9rem !important;
+}
+
+.react-select__indicator, .react-select__indicators {
+  padding: 0 4px;
+}
+
+.react-select__indicators i {
+  display: none;
+  font-size: 32px;
+  color: #ffffff;
+  margin-right: 15px;
+}
+
+.stt-input {
+  text-align: left;
+  border: none;
+  outline: none;
+  padding: 5px;
+  width: fit-content;
+  min-width: 50px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 500;
+  font-size: 2.3rem;
+  line-height: 1;
+  display: inline;
+  -moz-appearance: textfield;
+  /* Chrome, Safari, Edge, Opera */
+  background: transparent;
+}
+
+.stt-input::-webkit-outer-spin-button,
+.stt-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.stt-input:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #eeeeee;
+}
+
+.donation__block {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 60px;
+  height: 80px;
+}
+
+.donation__confirm {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 25px;
+}
+.donation__confirm-button {
+  background-color: #49dea7;
+  color: #ffffff;
+  width: 100px;
+  height: 50px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  cursor: pointer;
+}
+.donation__confirm-button._disabled {
+  background-color: #aaaaaa;
+}
+
+.token-chip {
+  display: block;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+  padding: 2px;
+  background-color: white;
+  border-radius: 50%;
+}
+.token-chip img {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+}
+
+.donation-select {
+  margin-top: 5px;
+}

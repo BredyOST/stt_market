@@ -1,0 +1,42 @@
+@use 'sass:math';
+
+//backgrounds
+$background_colour_main: #f8f8f8; // основной фон
+$background_colour_additional_light: #b3fad5;
+$background_colour_additional: #96fac5; // дополнительный фон для окон
+$background_colour_additional_accent: #47c999; // акцентный фон для окон
+$background_colour_additional_accent_second: rgba(255, 255, 255, 0.5);
+
+$color_main: #0000;
+$color_title: #0e837b;
+$color_main_second: #a1a1a1;
+
+$color_hover_first: #206e69;
+
+$font_size_main: 16; // основной шрифт
+$font_size_title: 18; // шрифт для заголовков
+$font_size_additional: 15; // дополнительный шрифт
+
+$font_weight_main: 400; // начертание основного шрифта
+$font_weight_title: 600; // начертание для заголовков
+$font_weight_additional: 600; // начертание для заголовков
+
+$letter_spacing_main: 1.15; // основной шрифт
+$letter_spacing_title: 1.15; // для заголовков
+
+$theme_main_text_color: #000000; // основной цвет шрифта
+
+$font_family_main: 'Ubuntu, sans-serif'; // основной шрифт
+$font_family_title: 'Ubuntu, sans-serif'; // основной шрифт
+$font_family_input: 'Ubuntu, sans-serif'; // шрифт инпутов
+
+$line_height_main: math.div($font_size_main + 5, $font_size_main);
+$line_height_title: math.div($font_size_title + 5, $font_size_title);
+
+//Основые отступы внутри страниц
+$padding_top_pages: 50; // отступ внутри страницы
+$padding_bottom_pages: 60; // отступ внутри страницы
+
+// адапивные границы
+$PageHome_adaptive_start: 991.98;
+$PageHome_adaptive_end: 320;

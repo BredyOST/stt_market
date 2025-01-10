@@ -1,0 +1,4 @@
+.leaflet-container {
+  z-index: 0; /* Установите z-index, чтобы карта не перекрывала другие элементы */
+  position: relative;
+}
