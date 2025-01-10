@@ -24,13 +24,11 @@ function Header(props) {
     const [toastCompleteShow, setToastCompleteShow] = useState(false)
     const [safetyModalShow, setSafetyModalShow] = useState(false)
 
-    const {loggedIn, account } = useAppSelector(state => state.authSlice)
+    const {loggedIn, account, provider, wallet} = useAppSelector(state => state.authSlice)
 
-    // console.log(`accReduxL ${account}`)
-    // console.log(props.account)
     async function prepareTelegram() {
-        const data = {'account': account}
         try {
+            const data = {'account': account}
             const response = await axios.post('https://stt.market/api/notifications/create/', data)
             if(response.status === 200) {
                 let dd = response.data
@@ -47,31 +45,13 @@ function Header(props) {
         } catch(err) {
             console.log(err);
         }
-
-        // axios.post('https://stt.market/api/notifications/create/', data)
-        //     .then((response) => {
-        //         let dd = response.data
-        //         if (dd.status === 400) {
-        //             setToastText(dd.message)
-        //             setToastErrorShow(true)
-        //
-        //         } else if (dd.status === 200) {
-        //             setTelegramValid(dd.valid)
-        //             setTelegramCode(dd.code)
-        //             setShowTelegramModal(true)
-        //         }
-        //
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
-
     }
 
-    function changeTelegram() {
-        const data = {'account': props.account}
-        axios.post('https://stt.market/api/notifications/change/', data)
-            .then((response) => {
+    async function changeTelegram() {
+        try {
+            const data = {'account': account}
+            const response = await axios.post('https://stt.market/api/notifications/change/', data)
+            if(response.status === 200) {
                 let dd = response.data
                 if (dd.status === 400) {
                     setToastText(dd.message)
@@ -81,17 +61,17 @@ function Header(props) {
                     setShowTelegramChangeModal(false)
                     prepareTelegram()
                 }
-
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
 
-    function checkTelegram(requested=false) {
-        const data = {'account': props.account}
-        axios.post('https://stt.market/api/notifications/check/', data)
-            .then((response) => {
+    async function checkTelegram(requested=false) {
+        try {
+            const data = {'account': props.account}
+            const response = await axios.post('https://stt.market/api/notifications/check/', data)
+            if (response.status === 200) {
                 let dd = response.data
                 setTelegramUsername(dd.username)
                 if (requested) {
@@ -103,35 +83,41 @@ function Header(props) {
                         setToastErrorShow(true)
                     }
                 }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            }
+        } catch(err) {
+            console.log(err);
+        }
     }
 
-    function safetyCheck() {
-        const data = {'username': telegramUsername}
-        axios.post('https://stt.market/api/notifications/safety/', data)
-            .then((response) => {
+    async function safetyCheck() {
+        try {
+            const data = {'username': telegramUsername}
+            const response = await axios.post('https://stt.market/api/notifications/safety/', data)
+            if(response.status === 200) {
                 setSafetyModalShow(true)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    async function check () {
+        if (account) {
+            try {
+                const data = {'account': account}
+                const response:any = axios.post('https://stt.market/api/notifications/check/', data)
+                if(response.status === 200) {
+                    let dd = response.data
+                    setTelegramUsername(dd.username)
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
     }
 
     useEffect(() => {
-        if (props.account) {
-            const data = {'account': props.account}
-            axios.post('https://stt.market/api/notifications/check/', data)
-                .then((response) => {
-                    let dd = response.data
-                    setTelegramUsername(dd.username)
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        }
+        check()
     }, [])
 
     const {t} = useTranslation();
@@ -195,7 +181,6 @@ function Header(props) {
                                                 <div className={"close_btn"} onClick={() => setSafetyModalShow(false)}>
                                                     <i className="fa-solid fa-xmark"></i>
                                                 </div>
-
                                             </div>
                                             <div className={"help-wrapper telegram-wrapper"} style={{paddingLeft: 0, paddingRight: 0}}>
                                                 <i className="fa-solid fa-shield-check" style={{fontSize: '3.5rem', color: '#efefef'}}></i>
