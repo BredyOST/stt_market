@@ -12,6 +12,7 @@ import CustomInput from "../../shared/ui/customInput/customInput";
 import cls from "../../widgets/sttBonusModule/styled/sttBonusModule.module.scss";
 import {ReactComponent as SvgQr} from '../../assets/svg/qr.svg'
 import {InputsIndicators} from "../../entities/uiInterfaces/uiInterfaces";
+import {useAppSelector} from "../../shared/redux/hooks/hooks";
 
 function Wallet(props) {
     const [sttBalance, setSttBalance] = useState(0)
@@ -22,13 +23,16 @@ function Wallet(props) {
     const [showModalSendTokens, setShowModalSendTokens] = useState(false)
     const [recipientAddress, setRecipientAddress] = useState('')
 
+    /** states */
+    const {account} = useAppSelector(state => state.authSlice)
+
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
 
     useEffect(() => {
-        if (props.account) {
-            const acc = props.account
+        if (account) {
+            const acc = account
             const provider_balance = new ethers.BrowserProvider(window.ethereum)
             const contract = new ethers.Contract(tokenContractAddress, tokenContractAbi, provider_balance);
             const usdtContract = new ethers.Contract(usdtContractAddress, usdtContractAbi, provider_balance);
@@ -60,7 +64,7 @@ function Wallet(props) {
                 setEthBalance(+balanceInEth)
             })
         }
-    }, [props.account]);
+    }, [account]);
 
     //
     // async function sendTokens(recipientAddress, amount) {
@@ -93,8 +97,9 @@ function Wallet(props) {
 
     async function sendTokens(receiver, amount) {
 
-        const providerMain = props.provider
         const provider = new ethers.BrowserProvider(window.ethereum);
+        const providerMain = provider
+
 
         const signer = await providerMain.getSigner(); // Подписант (пользователь, который выполняет транзакции)
         const contractCommon = new ethers.Contract(tokenContractAddress, tokenContractAbi, signer);
@@ -214,10 +219,10 @@ function Wallet(props) {
         <React.Fragment>
             <div className={"wallet_card eth-card"}>
                 <div className={"wallet_card-stripe"}>
-                    <span>{props.account ? '****' + props.account.substr(props.account.length - 4) : ''}</span>
+                    <span>{account ? '****' + account.substr(account.length - 4) : ''}</span>
                 </div>
-                {props.account
-                    ? <a className={"wallet_card-balance"} href={"https://arbiscan.io/address/" + props.account}
+                {account
+                    ? <a className={"wallet_card-balance"} href={"https://arbiscan.io/address/" + account}
                          target={"_blank"} rel={"noreferrer"}><span className={"stt-empty"}></span><span
                         className={"stt-balance"}>{numberWithCommas(sttBalance)}</span><span
                         className={"stt-arrow"}><img src={"/img/arrow-dark.png"} alt={''}

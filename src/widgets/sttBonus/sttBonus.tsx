@@ -19,6 +19,8 @@ const SttBonus = ({withoutWallet, account, provider}:ISttBonusProps) => {
      * @referrerAddress - рефер адресс
      * @signer - кого регистрируем
      * */
+
+
     // async function registerReferral(referrerAddress) {
     //     const providerMain = provider.provider; // Провайдер, например, MetaMask
     //     const signer = await providerMain.getSigner(); // Получаем подписанта

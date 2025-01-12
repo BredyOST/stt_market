@@ -1,11 +1,11 @@
 .main-block {
-  width: 100%;
-  background-color: #ffffff;
-  min-height: 280px;
-  border-radius: 25px;
-  padding: 15px 25px;
-  position: relative;
-  height: auto;
+  //width: 100%;
+  //background-color: #ffffff;
+  //min-height: 280px;
+  //border-radius: 25px;
+  //padding: 15px 25px;
+  //position: relative;
+  //height: auto;
 
   &__header {
     font-family: Ubuntu, sans-serif;
@@ -51,22 +51,22 @@
 }
 
 .period-button {
-  margin-top: 15px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  background-color: #ffffff;
-  border-radius: 25px;
-  padding: 10px 0;
-  text-align: center;
-  text-decoration: none;
-  color: #a1a1a1;
-  font-weight: 500;
-  cursor: pointer;
-
-  &._active {
-    background-color: #96fac5;
-  }
+  //margin-top: 15px;
+  //display: flex;
+  //flex-direction: row;
+  //align-items: center;
+  //justify-content: center;
+  //width: 100%;
+  //background-color: #ffffff;
+  //border-radius: 25px;
+  //padding: 10px 0;
+  //text-align: center;
+  //text-decoration: none;
+  //color: #a1a1a1;
+  //font-weight: 500;
+  //cursor: pointer;
+  //
+  //&._active {
+  //  background-color: #96fac5;
+  //}
 }
