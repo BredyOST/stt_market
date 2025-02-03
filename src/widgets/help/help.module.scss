@@ -1,0 +1,51 @@
+@use '../../shared/styles/variable/globalIndex';
+@use '../../shared/styles/variable/global';
+@use '../../shared/styles/mixins';
+@use '../../shared/styles/variable/common';
+
+
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding-top: mixins.rem(40);
+  padding-bottom: mixins.rem(20);
+  row-gap: mixins.rem(20);
+}
+
+.coverSubTitle {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  @extend .titleBlock;
+  max-width: mixins.rem(537);
+}
+
+.linkCover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link {
+  align-self: center;
+  display: flex;
+  align-items: center;
+  @extend .btn_main;
+  padding-left: mixins.rem(28);
+  padding-right: mixins.rem(28);
+  padding-top: mixins.rem(14);
+  padding-bottom: mixins.rem(14);
+  font-size: mixins.rem(16);
+  font-weight: 700;
+  font-family: globalIndex.$font_family_btn_first;
+  border-radius: mixins.rem(30);
+  min-width: mixins.rem(137);
+  min-height: mixins.rem(54);
+}
+

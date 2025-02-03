@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import cls from './styled/tabs.module.scss';
-import { ForFunc  } from '../../../entities/IndicatorsForUi';
+import { ForFunc  } from '../../../entities/others';
 import CustomButton from '../сustomButton/CustomButton';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { formsAddProfileActions } from '../../redux/slices/formsAddProfileSlice/formsAddProfileSlice';

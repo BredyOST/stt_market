@@ -11,6 +11,8 @@ import {ReactElement} from "react";
 
 
 export enum IndicatorsForUi {
+    'loginIn'='loginIn',
+    'wallet'='wallet',
     'addBannerToProfile' = 'addBannerToProfile',
     'addLogoToProfile' = 'addLogoToProfile',
     'addGeoToProfile' = 'addGeoToProfile',
@@ -45,6 +47,8 @@ export enum InputsIndicators {
 export enum SelectsIndicators {
     'address' = 'address',
     'language' = 'language',
+    'swapFrom' = 'swapFrom',
+    'swapTo'='swapTo'
 }
 
 /**

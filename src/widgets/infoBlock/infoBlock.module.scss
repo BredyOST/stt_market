@@ -1,0 +1,13 @@
+@use '../../shared/styles/variable/globalIndex';
+@use '../../shared/styles/variable/global';
+@use '../../shared/styles/mixins';
+@use '../../shared/styles/variable/common';
+
+.grid_wrapper {
+  padding-top: mixins.rem(30);
+  padding-bottom: mixins.rem(20);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(371px, 371px));
+  justify-content: space-between;
+  gap: mixins.rem(10);
+}

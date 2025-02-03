@@ -1,6 +1,24 @@
-import { FormsAddProfileSchema } from '../formsAddProfileSlice/formsAddProfileSchema';
 
 export interface IModalWindowStatesSchema {
-    modalAddProfileState: boolean;
-    isClosingModalAddProfileState: boolean;
+    modalAddProfileState: boolean,
+    isClosingModalAddProfileState: boolean,
+
+    modalSendTokens: boolean,
+    isClosingModalSendTokens: boolean,
+
+    modalSwap: boolean,
+    isClosingModalSwap: boolean,
+
+    modalDonation: boolean,
+    isClosingModalDonation: boolean
+
+    modalNotifications: boolean,
+    isClosingModalNotifications: boolean,
+
+    modalSafetyConnection:boolean,
+    isClosingModalSafetyConnection: boolean,
+
+    modalTelegram: boolean,
+    isClosingModalTelegram: boolean
+
 }

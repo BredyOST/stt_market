@@ -1,0 +1,164 @@
+@use '../../../shared/styles/variable/globalIndex';
+@use '../../../shared/styles/variable/global';
+@use '../../../shared/styles/mixins';
+@use '../../../shared/styles/variable/common';
+
+.wrapper {
+  padding-left: mixins.rem(30);
+  padding-right: mixins.rem(30);
+  padding-bottom: mixins.rem(30);
+  display: flex;
+  flex-direction: column;
+  width: mixins.rem(371);
+  row-gap: mixins.rem(30);
+}
+
+.notification_header {
+  @extend .titlePopup;
+}
+
+.wrapper_btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, 30%);
+}
+
+.hurt {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.close_svg {
+  @extend .close_svg;
+}
+
+.stt_modal_header {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  row-gap: mixins.rem(34);
+  align-items: center;
+}
+
+.svgQr {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: mixins.rem(30);
+  transform: translate(-50%, -50%);
+}
+
+
+.btn_send_tokens {
+  @extend .btn_main;
+  padding-left: mixins.rem(28);
+  padding-right: mixins.rem(28);
+  padding-top: mixins.rem(14);
+  padding-bottom: mixins.rem(14);
+  font-size: mixins.rem(16);
+  font-weight: 700;
+  font-family: globalIndex.$font_family_btn_first;
+  border-radius: mixins.rem(30);
+  min-width: mixins.rem(137);
+  min-height: mixins.rem(54);
+}
+
+.cover_text_block {
+  position: relative;
+}
+
+.wrap_input {
+  height: mixins.rem(58);
+  width: mixins.rem(310);
+  font-family: globalIndex.$font_family_main;
+  font-size: mixins.rem(16);
+  font-weight: 600;
+  line-height: globalIndex.$line_height;
+  position: relative;
+}
+
+.input_cover {
+  font-family: globalIndex.$font_family_main;
+  color: #7C7C7C;
+  font-weight: 600;
+  font-size: mixins.rem(16);
+  height: 100%;
+  width: 100%;
+  background-color: #D3FDDE;
+  border-radius: mixins.rem(15);
+  padding-left: mixins.rem(30);
+  padding-right: mixins.rem(64);
+  padding-top: mixins.rem(5);
+  padding-bottom: mixins.rem(5);
+  &::placeholder {
+    font-family: globalIndex.$font_family_main;
+  }
+}
+
+.tokensForSend {
+  font-family: globalIndex.$font_family_third;
+  color: #A2A1A1;
+  font-weight: 600;
+  line-height: globalIndex.$line_height;
+  row-gap: mixins.rem(20);
+}
+
+.coverBlockMoney {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  row-gap: mixins.rem(20);
+}
+
+.value {
+  font-size: mixins.rem(32);
+  column-gap: mixins.rem(5);
+  display: flex;
+  font-family: globalIndex.$font_family_third;
+  color: #A2A1A1;
+  font-weight: 600;
+  line-height: globalIndex.$line_height;
+}
+.range {
+  font-size: mixins.rem(14);
+}
+
+.wallet {
+  font-family: globalIndex.$font_family_third;
+  color: #409798;
+  font-weight: 600;
+  font-size: mixins.rem(32);
+  line-height: globalIndex.$line_height;
+}
+
+.textInfo {
+  font-family: globalIndex.$font_family_main;
+  color: #A2A1A1;
+  font-weight: 600;
+  font-size: mixins.rem(14);
+  line-height: globalIndex.$line_height;
+}
+
+
+.wrap_input_tokens {
+  color: #A2A1A1;
+}
+
+.input_cover_tokens {
+  display: inline-block;
+  color: #A2A1A1;
+  font-family: globalIndex.$font_family_third;
+  font-weight: 600;
+  max-width: mixins.rem(150);
+  text-align: right;
+  &::placeholder{
+    color: #A2A1A1;
+  }
+}
+.coverTokensInput {
+
+}

@@ -120,6 +120,7 @@ function Donation(props) {
     const [toastErrorShow, setToastErrorShow] = useState(false)
     const [toastCompleteShow, setToastCompleteShow] = useState(false)
     const [showWwModal, setWwModal] = useState(false)
+
     const from_options = [
         {value: 'stt', label: 'STT', icon: '/img/stt-logo.svg'},
         {value: 'usdt', label: 'USDT', icon: '/img/tether.svg'}

@@ -1,0 +1,54 @@
+@use '../../shared/styles/variable/globalIndex';
+@use '../../shared/styles/variable/global';
+@use '../../shared/styles/mixins';
+@use '../../shared/styles/variable/common';
+
+
+.classNameWrap {
+  position: relative;
+}
+
+
+.btn_cover {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  min-width: mixins.rem(50);
+  transform: translateY(mixins.rem(-30));
+}
+
+
+.svg {
+  fill: #ffffff;
+  width: mixins.rem(39);
+  height: mixins.rem(39);
+
+  //&.sizePayment {
+  //
+  //}
+  //&.sizeSound {
+  //  width: mixins.rem(31);
+  //  height: mixins.rem(21);
+  //}
+  //&.sizeLink {
+  //  width: mixins.rem(31);
+  //  height: mixins.rem(21);
+  //}
+  //&.sizeFavourite {
+  //  width: mixins.rem(31);
+  //  height: mixins.rem(21);
+  //}
+}
+
+.wrapperSvg {
+
+}
+
+.profileInfo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}

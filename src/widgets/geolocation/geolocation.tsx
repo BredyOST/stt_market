@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from './styled/geolocation.module.scss';
-import { ForFunc } from '../../entities/IndicatorsForUi';
+import { ForFunc } from '../../entities/others';
 import CustomButton from '../../shared/ui/сustomButton/CustomButton';
 import { TITLES } from '../../entities/pageTitiles';
 import CustomInput from '../../shared/ui/customInput/customInput';

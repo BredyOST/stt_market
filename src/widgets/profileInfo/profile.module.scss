@@ -1,0 +1,88 @@
+@use '../../shared/styles/variable/globalIndex';
+@use '../../shared/styles/variable/global';
+@use '../../shared/styles/mixins';
+@use '../../shared/styles/variable/common';
+
+
+.wrapper {
+  display: flex;
+  column-gap: mixins.rem(64);
+}
+
+.logo {
+  height: mixins.rem(150);
+  width: mixins.rem(150);
+  background-color: #e6e8ea;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info_user {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: mixins.rem(20);
+}
+
+.name_user {
+  font-size: mixins.rem(32);
+  font-family: globalIndex.$font_family_main;
+  line-height: globalIndex.$line_height;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.name {
+  font-weight: 700;
+  font-size: mixins.rem(32);
+}
+.status {
+  font-weight: 300;
+  font-size: mixins.rem(20);
+}
+
+.interaction_block {
+    display: flex;
+    column-gap: mixins.rem(35);
+    font-family: globalIndex.$font_family_third;
+    font-size: mixins.rem(20);
+  font-weight: 700;
+
+}
+
+.info_block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: mixins.rem(5);
+}
+
+.svgInfo {
+  width: mixins.rem(40);
+  height: mixins.rem(40);
+  fill: #000000;
+}
+
+.cash {
+  width: mixins.rem(27);
+  height: mixins.rem(27);
+}
+
+.subsribers {
+  width: mixins.rem(27);
+  height: mixins.rem(27);
+}
+
+.star {
+  width: mixins.rem(27);
+  height: mixins.rem(27);
+}
+
+.svgLogo {
+  border-radius: 50%;
+  height: mixins.rem(161);
+  width: mixins.rem(161);
+}

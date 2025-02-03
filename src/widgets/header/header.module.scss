@@ -3,36 +3,83 @@
 @use '../../shared/styles/mixins';
 @use '../../shared/styles/variable/common';
 
-.wallet_header_logo {
+.wrapper {
   display: flex;
-  align-items: center;
-  column-gap: mixins.rem(10);
-
-  @media (max-width: 767px) {
-      padding-left: 15px;
-  }
+  justify-content: space-between;
+  padding-top: mixins.rem(106);
 }
 
-.wallet_header_telegram {
-  height: 39px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  column-gap: 10px;
+.additional {
+    align-items: flex-start;
 }
 
-.labelLogo {
-  color: #47c999;
-  font-weight: 500;
-
-  @media (max-width: 767px) {
-      display: none;
-  }
-}
 
 .svgLogo {
   width: mixins.rem(39);
   height: mixins.rem(39);
   flex: 0 0 mixins.rem(39);
+}
+
+.svg_safety {
+  width: mixins.rem(22);
+  height: mixins.rem(27);
+}
+
+.svgLogoProfile {
+  width: mixins.rem(26);
+  height: mixins.rem(26);
+  flex: 0 0 mixins.rem(26);
+}
+
+// перепроверил
+
+.leftBlock {
+  display: flex;
+  column-gap: mixins.rem(40);
+  align-items: center;
+}
+
+.rightBlock {
+  display: flex;
+  column-gap: mixins.rem(36);
+  align-items: center;
+}
+
+.langAndSaffety {
+  display: flex;
+  column-gap: mixins.rem(10);
+}
+
+.btnConnect {
+  @extend .btn_main;
+  padding-left: mixins.rem(28);
+  padding-right: mixins.rem(28);
+  padding-top: mixins.rem(14);
+  padding-bottom: mixins.rem(14);
+  font-size: mixins.rem(16);
+  font-weight: 700;
+  font-family: globalIndex.$font_family_btn_first;
+  border-radius: mixins.rem(30);
+  min-width: mixins.rem(137);
+  min-height: mixins.rem(54);
+}
+
+.btnConnectAddProfile {
+  @extend .btn_main;
+  padding-left: mixins.rem(28);
+  padding-right: mixins.rem(28);
+  padding-top: mixins.rem(14);
+  padding-bottom: mixins.rem(14);
+  font-size: mixins.rem(16);
+  font-weight: 700;
+  font-family: globalIndex.$font_family_btn_first;
+  border-radius: mixins.rem(30);
+  min-width: mixins.rem(182);
+  min-height: mixins.rem(54);
+}
+
+.btnConnectAddProfileText {
+  display: flex;
+  align-items: center;
+  column-gap: mixins.rem(9);
 }

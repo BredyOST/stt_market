@@ -4,7 +4,6 @@
 @use '../../../../shared/styles/variable/common';
 
 .wrapper {
-    background: globalIndex.$background_colour_additional_accent_second;
     border-radius: mixins.rem(10);
     padding-top: mixins.rem(7);
     padding-bottom: mixins.rem(7);
@@ -17,11 +16,11 @@
     font-family: globalIndex.$font_family_main;
     transition: border ease 0.3s 0s;
     cursor: pointer;
-
+    font-size: mixins.rem(14);
+    font-weight: 600;
     @media (any-hover: hover) {
         &:hover {
             transition: border ease 0.3s 0s;
-            border: mixins.rem(1) solid globalIndex.$background_colour_additional_accent;
         }
     }
 }
@@ -82,13 +81,16 @@
     top: 105%;
     left: 50%;
     transform: translateX(-50%);
-    width: mixins.rem(60);
+    width: mixins.rem(90);
     background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 mixins.rem(4) mixins.rem(6) rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     display: none;
     padding-right: 0;
     padding-left: 0;
+    text-align: center;
+    padding-top: mixins.rem(8);
+    padding-bottom: mixins.rem(8);
 
     &.show {
         display: block;
@@ -97,12 +99,17 @@
     li {
         text-align: center;
         cursor: pointer;
-        padding-top: mixins.rem(5);
-        padding-bottom: mixins.rem(5);
+        padding-top: mixins.rem(15);
+        padding-bottom: mixins.rem(14);
+        font-weight: 600;
         @media(any-hover: hover) {
             &:hover {
-                background-color: #2ab684;
+              color: #1a1e21;
             }
+        }
+
+        &.active {
+            color: #2ab684;
         }
     }
 
@@ -222,4 +229,41 @@
             transition: fill ease 0.3s 0s;
         }
     }
+}
+
+
+
+.wrapperSTT {
+    //border-radius: mixins.rem(10);
+    //padding-top: mixins.rem(7);
+    //padding-bottom: mixins.rem(7);
+    //padding-left: mixins.rem(15);
+    //padding-right: mixins.rem(15);
+    //border: mixins.rem(1) solid transparent;
+    //outline: mixins.rem(1) transparent;
+    //width: 100%;
+    position: relative;
+    //font-family: globalIndex.$font_family_main;
+    //transition: border ease 0.3s 0s;
+    //cursor: pointer;
+    //font-size: mixins.rem(14);
+    //font-weight: 600;
+    //@media (any-hover: hover) {
+    //    &:hover {
+    //        transition: border ease 0.3s 0s;
+    //    }
+    //}
+}
+
+.icon {
+    width: mixins.rem(20);
+    height: mixins.rem(20);
+}
+.CustomSelectStt {
+    display: flex;
+    column-gap: mixins.rem(5);
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    justify-content: center;
 }

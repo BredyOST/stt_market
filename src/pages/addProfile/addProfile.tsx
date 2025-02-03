@@ -4,7 +4,7 @@ import { TITLES } from '../../entities/pageTitiles';
 import CustomButton from '../../shared/ui/сustomButton/CustomButton';
 import {
     ForFunc,
-} from '../../entities/IndicatorsForUi';
+} from '../../entities/others';
 import CustomInput from '../../shared/ui/customInput/customInput';
 import {
     BUTTONS_FOR_ADD_PROFILE,
@@ -160,15 +160,14 @@ const AddProfile = (props) => {
         checkLocalStorage();
     }, []);
 
-    // console.log(useAppSelector(state => state.formsAddProfile));
-    // console.log(useAppSelector(state => state.requestAddProfile));
-    console.log(typeof is_incognito)
     return (
         <div className={cls.wrapper}>
             <div className={cls.coverTitle}>
-                <h3 className={cls.title}>{TITLES.addProfile}</h3>
+                <div className={cls.coverBlock}>
+                    <h3 className={cls.title}>{TITLES.addProfile}</h3>
+                </div>
             </div>
-            <ClosePopup />
+            <ClosePopup/>
             <div className={cls.bodyBlock}>
                 <div className={cls.leftBlock}>
                     <div className={cls.coverBtns}>

@@ -1,0 +1,59 @@
+@use '../../shared/styles/variable/globalIndex';
+@use '../../shared/styles/variable/global';
+@use '../../shared/styles/mixins';
+@use './../../shared/styles/variable/common';
+@use 'sass:math';
+
+.wrapper {
+  position: relative;
+  min-height: mixins.rem(1050);
+}
+
+.title {
+  font-family: globalIndex.$font_family_title;
+  font-weight: 700;
+  font-size: mixins.rem(48);
+  max-width: mixins.rem(377);
+  line-height: 1.2;
+  margin-top: mixins.rem(40);
+}
+
+.content_cover {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: mixins.rem(20);
+  margin-right: mixins.rem(280);
+  margin-top: mixins.rem(230);
+}
+
+.mlm_text {
+  font-family: globalIndex.$font_family_main;
+  font-size: mixins.rem(16);
+  font-weight: 700;
+  max-width: mixins.rem(223);
+  text-align: center;
+}
+
+.illustration_left,
+.illustration_right{
+  position: absolute;
+  bottom: 0;
+  z-index: -1;
+}
+
+.illustration_left {
+  left: 0;
+  transform: translate(mixins.rem(0), mixins.rem(-70));
+}
+
+.illustration_right {
+  right: 0;
+  transform: translate(mixins.rem(0), mixins.rem(40));
+}
+

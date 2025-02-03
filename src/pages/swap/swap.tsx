@@ -527,8 +527,7 @@ function Swap(props) {
                                             : <React.Fragment>
                                                 {targetToken === 'stt'
                                                     ? <span>1 STT = {correctRate.toFixed(8)} USDT</span>
-                                                    :
-                                                    <span>1 STT = {extraBalances[targetToken].rate ? extraBalances[targetToken].rate : 0.000} {extraBalances[targetToken].name}</span>
+                                                    : <span>1 STT = {extraBalances[targetToken].rate ? extraBalances[targetToken].rate : 0.000} {extraBalances[targetToken].name}</span>
                                                 }
                                             </React.Fragment>
                                         }
@@ -547,7 +546,6 @@ function Swap(props) {
                                         <i className="fa-solid fa-shuffle"></i>
                                     </div>
                                 }
-
                             </div>
                         </div>
                         : <div className={"swap_block-action"}>

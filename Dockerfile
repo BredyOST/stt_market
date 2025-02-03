@@ -1,5 +1,5 @@
 # Базовый образ для сборки
-FROM ubuntu:22.04 AS build
+FROM ubuntu:24.04 AS build
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
@@ -24,34 +24,21 @@ RUN yarn install --frozen-lockfile
 COPY . .
 RUN yarn build
 
-# Создаем минимальный образ для запуска
-FROM ubuntu:22.04 AS production
+# Финальный минимальный образ
+FROM nginx:alpine AS production
 
-# Устанавливаем рабочую директорию
-WORKDIR /app
+# Устанавливаем рабочую директорию Nginx
+WORKDIR /usr/share/nginx/html
 
-# Устанавливаем Node.js и Yarn для запуска приложения
-RUN apt-get update && apt-get install -y \
-    curl \
-    gnupg \
-    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g yarn \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Копируем собранное приложение из стадии сборки
+COPY --from=build /app/build ./
 
-# Копируем собранные файлы из предыдущего этапа
-COPY --from=build /app/build ./build
-COPY --from=build /app/package.json /app/yarn.lock ./
+# Настраиваем конфигурацию Nginx (опционально)
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Устанавливаем только production-зависимости
-RUN yarn install --production --frozen-lockfile
-
-COPY craco.config.js /app/craco.config.js
-
-# Устанавливаем переменные окружения
+# Экспонируем порт 80
+EXPOSE 80
 ENV HOST=0.0.0.0
-EXPOSE 3000
 
-# Команда для запуска приложения
-CMD ["yarn", "start"]
+# Команда по умолчанию для запуска Nginx
+CMD ["nginx", "-g", "daemon off;"]

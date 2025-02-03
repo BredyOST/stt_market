@@ -1,0 +1,219 @@
+@use '../../../shared/styles/variable/globalIndex';
+@use '../../../shared/styles/variable/global';
+@use '../../../shared/styles/mixins';
+@use '../../../shared/styles/variable/common';
+
+.wrapper {
+  padding-left: mixins.rem(30);
+  padding-right: mixins.rem(30);
+  padding-bottom: mixins.rem(30);
+  display: flex;
+  flex-direction: column;
+  width: mixins.rem(371);
+  row-gap: mixins.rem(30);
+}
+
+.notification_header {
+  @extend .titlePopup;
+}
+.wrapper_btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, 30%);
+}
+
+.close_svg {
+  @extend .close_svg;
+}
+
+.stt_modal_header {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  row-gap: mixins.rem(34);
+  align-items: center;
+}
+
+
+.btn_send_tokens {
+  @extend .btn_swap;
+  padding-left: mixins.rem(28);
+  padding-right: mixins.rem(28);
+  padding-top: mixins.rem(14);
+  padding-bottom: mixins.rem(14);
+  font-size: mixins.rem(16);
+  font-weight: 700;
+  font-family: globalIndex.$font_family_btn_first;
+  border-radius: mixins.rem(30);
+  min-width: mixins.rem(137);
+  min-height: mixins.rem(54);
+}
+
+.coverBlockMoney {
+  display: flex;
+  justify-content: center;
+}
+.cover_text_block {
+  display: flex;
+  flex-direction: column;
+  row-gap: mixins.rem(15);
+  position: relative;
+}
+
+.valueBlock,
+.changeBlock{
+  height: mixins.rem(119);
+  row-gap: mixins.rem(18);
+  padding-left: mixins.rem(28);
+  padding-right: mixins.rem(28);
+  padding-top: mixins.rem(28);
+  padding-bottom: mixins.rem(28);
+  border-radius: mixins.rem(20);
+}
+
+.valueBlock, {
+  background-color: #EAFDBB;
+}
+.blockInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infoSwap {
+  font-size: mixins.rem(10);
+  color: #A2A1A1;
+  font-family: globalIndex.$font_family_main;
+  row-gap: mixins.rem(5);
+  display: flex;
+  flex-direction: column;
+}
+
+.changeBlock {
+  background-color: #EAFEE7;
+
+}
+
+.cover {
+
+}
+
+.valueBlock {
+  display: flex;
+  justify-content: space-between;
+}
+
+.max,
+.range{
+  display: flex;
+  font-family: globalIndex.$font_family_third;
+  line-height: globalIndex.$line_height;
+  color: #A2A1A1;
+  font-weight: 700;
+  align-items: center;
+  column-gap: mixins.rem(15);
+}
+
+.blockInfo {
+
+}
+
+.sttSign {
+  background-color: #FFFFFF;
+  font-family: globalIndex.$font_family_main;
+  font-size: mixins.rem(16);
+  font-weight: 600;
+  line-height: globalIndex.$line_height;
+  display: flex;
+  column-gap: mixins.rem(15);
+  width: mixins.rem(100);
+  max-height: mixins.rem(36);
+  align-items: center;
+  border-radius: mixins.rem(20);
+  padding: mixins.rem(10);
+}
+.textStt {
+color: #A2A1A1;
+  flex: 1 1 auto;
+  cursor:pointer;
+}
+
+.count {
+  font-size: mixins.rem(24);
+}
+.countText {
+  font-family: globalIndex.$font_family_main;
+  background-color: #FFFFFF;
+  color: #EAFDBB;
+  font-size: mixins.rem(16);
+  font-weight: 700;
+  border-radius: mixins.rem(10);
+  padding-bottom: mixins.rem(3);
+  padding-top: mixins.rem(3);
+  padding-right: mixins.rem(5);
+  padding-left: mixins.rem(5);
+}
+
+.range {
+  font-size: mixins.rem(14);
+}
+
+.convertValue {
+  font-family: globalIndex.$font_family_third;
+  font-weight: 700;
+  color: globalIndex.$btn_color;
+  line-height: globalIndex.$line_height;
+  font-size: mixins.rem(24);
+}
+
+.arrow {
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  height: mixins.rem(63);
+  width: mixins.rem(63);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: center;
+}
+.arrowCover {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.svgArrow {
+  fill: #CFCFCF;
+  width: mixins.rem(28);
+  height: mixins.rem(15);
+  justify-content: center;
+  align-items: center;
+}
+
+
+.wrap_input_tokens {
+  color: #A2A1A1;
+}
+
+.input_cover_tokens {
+  display: inline-block;
+  color: #A2A1A1;
+  font-family: globalIndex.$font_family_third;
+  font-weight: 600;
+  max-width: mixins.rem(80);
+  background-color: transparent;
+  text-align: right;
+  &::placeholder{
+    color: #A2A1A1;
+  }
+}
+
+.infoSwap {
+
+}

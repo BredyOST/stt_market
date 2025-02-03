@@ -40,6 +40,11 @@ body {
     height: 100%;
 }
 
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
 body {
     color: globalIndex.$theme_main_text_color;
     line-height: 1;
@@ -49,13 +54,24 @@ body {
     text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: globalIndex.$background_colour_main;
+    background: rgb(220,217,249);
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    background: linear-gradient(
+                    180deg,
+                    #F7E4E3 0%,
+                    #FCF9E2 38%,
+                    #FFECEC 75%,
+                    #F6E0FF 100%
+    );
 }
 
 input,
 button,
 textarea {
-    font-family: globalIndex.$font_family_input;
+    font-family: globalIndex.$font_family_main;
     font-size: inherit;
 }
 

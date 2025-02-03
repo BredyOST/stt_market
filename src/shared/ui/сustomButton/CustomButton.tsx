@@ -4,14 +4,48 @@ import {IndicatorsForUi} from "../../../entities/uiInterfaces/uiInterfaces";
 
 interface ICustomButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     type: 'button' | 'submit' | 'reset';
-    indicator: IndicatorsForUi;
+    indicator?: IndicatorsForUi;
     uploadIcon?: ReactElement;
     onClick?: (args: any) => void;
     children?: ReactElement | string | number;
     active?: boolean;
+    classnameWrapper?:string,
+    classNameBtn?: string,
 }
 
-const CustomButton = ({ type, indicator, onClick, children, active }: ICustomButtonProps) => {
+const CustomButton = ({
+                          type,
+                          indicator,
+                          onClick,
+                          children,
+                          active,
+                          classnameWrapper,
+                          classNameBtn,
+}: ICustomButtonProps) => {
+
+
+    if(indicator === IndicatorsForUi.wallet || !indicator) {
+        return (
+            <div className={classnameWrapper}>
+                <button className={classNameBtn} type={type} onClick={onClick}>
+                    {children}
+                </button>
+            </div>
+        );
+    }
+
+
+    if (indicator === IndicatorsForUi.loginIn) {
+        return (
+            <div className={cls.wrapper}>
+                <button className={cls.btn} type={type} onClick={onClick}>
+                    {children}
+                </button>
+            </div>
+        );
+    }
+
+
     if (indicator === IndicatorsForUi.addGeoToProfile) {
         return (
             <label className={cls.coverBtnGeo}>

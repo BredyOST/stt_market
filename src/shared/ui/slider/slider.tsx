@@ -3,7 +3,7 @@ import React from 'react';
 import cls from './styled/slider.module.scss';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { formsAddProfileActions } from '../../redux/slices/formsAddProfileSlice/formsAddProfileSlice';
-import { ForFunc } from '../../../entities/IndicatorsForUi';
+import { ForFunc } from '../../../entities/others';
 
 const Slider = () => {
     const dispatch = useAppDispatch();

@@ -22,7 +22,6 @@ function* fetchSendForm(action: UploadAction) {
     try {
 
         const {image_data, video_data, ...others}  = action.payload;
-
         yield put(requestAddProfileActions.fetchRequest({type: 'form'}));
         const response: any = yield call(sendForm, others);
 

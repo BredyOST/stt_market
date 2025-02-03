@@ -5,18 +5,35 @@ import {InputsIndicators} from "../../../entities/uiInterfaces/uiInterfaces";
 
 interface ICustomInputProps extends HTMLAttributes<HTMLInputElement> {
     type: 'text' | 'password';
-    indicators: InputsIndicators;
     placeholder: string;
-    value?: string;
+    value?: string | number;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    classNameWrapper?: string
+    classNameInput?:string
+    indicators?: InputsIndicators;
     inAppSelector?: boolean;
     disable?: boolean;
     svg?:React.ReactElement;
     codeHasWritten?: boolean;
     onBlur?: (e:React.ChangeEvent<HTMLInputElement>) => void;
+    style?: any
 }
 
-const CustomInput = ({ type = 'text', indicators, placeholder, value, onChange, inAppSelector, disable, svg, codeHasWritten, onBlur}: ICustomInputProps) => {
+const CustomInput = ({
+                         type = 'text',
+                         indicators,
+                         placeholder,
+                         value,
+                         onChange,
+                         inAppSelector,
+                         disable,
+                         svg,
+                         codeHasWritten,
+                         onBlur,
+                         classNameWrapper,
+                         classNameInput,
+                         style
+}: ICustomInputProps) => {
 
     const { name, mlm, is_incognito, logoLink, bannerLink, tab, language, hashtags, url, activity_hobbies, coordinates } = useAppSelector(
         (state) => state.formsAddProfile
@@ -26,6 +43,27 @@ const CustomInput = ({ type = 'text', indicators, placeholder, value, onChange, 
     if(inAppSelector) {
         state = inAppSelector[value]
     }
+
+    if (!indicators) {
+        return (
+            <div className={classNameWrapper}>
+                <input
+                    type={type}
+                    className={classNameInput}
+                    placeholder={placeholder}
+                    value={inAppSelector ? state : value}
+                    onChange={onChange}
+                    disabled={disable}
+                    onBlur={onBlur}
+                    style={style}
+                />
+                {svg && !codeHasWritten && svg}
+            </div>
+        );
+    }
+
+
+
 
     /** инпут для ввода url*/
     /** инпут для ввода имени*/

@@ -1,1 +1,10 @@
-// Файл подключения шрифтов
+
+@font-face {
+  font-family: 'Mittleschrift-Caps';
+  src:url('./../../../assets/fonts/numbers/Mittleschrift-Caps.ttf.woff') format('woff'),
+  url('./../../../assets/fonts/numbers/Mittleschrift-Caps.ttf.svg#Mittleschrift-Caps') format('svg'),
+  url('./../../../assets/fonts/numbers/Mittleschrift-Caps.ttf.eot'),
+  url('./../../../assets/fonts/numbers/Mittleschrift-Caps.ttf.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}

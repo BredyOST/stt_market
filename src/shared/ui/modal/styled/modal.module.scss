@@ -70,7 +70,8 @@
 
 .content {
     position: absolute;
-    background: globalIndex.$background_colour_additional;
+    //background: globalIndex.$background_colour_additional;
+    background-color: #ffff;
     top: 50%;
     border-radius: mixins.rem(15);
     left: 50%;

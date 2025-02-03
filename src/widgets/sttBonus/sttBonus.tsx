@@ -1,7 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import cls from './styled/sttBonus.module.scss'
-import SttBonusModule from "../../widgets/sttBonusModule/sttBonusModule";
 import {useTranslation} from "react-i18next";
+import {useAppDispatch, useAppSelector} from "../../shared/redux/hooks/hooks";
+import CustomButton from "../../shared/ui/сustomButton/CustomButton";
+import {IndicatorsForUi} from "../../entities/uiInterfaces/uiInterfaces";
+import {ReactComponent as SvgGift} from './../../assets/svg/gift.svg';
+import {ReactComponent as SvgSend} from './../../assets/svg/sendStt.svg';
+import {ReactComponent as SvgNotification} from './../../assets/svg/notificationsStt.svg';
+import Portal from "../../shared/ui/portal/portal";
+import Modal from "../../shared/ui/modal/modal";
+import SendTokens from "../../feautures/modalWindows/sendTokens/sendTokens";
+import {modalAddProfileActions} from "../../shared/redux/slices/modalWindowStatesSlice/modalWindowStateSlice";
+import NotificationTg from "../../feautures/modalWindows/notificationTg/notificationTg";
+import axios from "axios";
+import {authActions} from "../../shared/redux/slices/authSlice/authSlice";
 
 interface ISttBonusProps {
     withoutWallet: any
@@ -10,17 +22,59 @@ interface ISttBonusProps {
 }
 
 
-const SttBonus = ({withoutWallet, account, provider}:ISttBonusProps) => {
+const SttBonus = () => {
 
     const { t, i18n } = useTranslation();
+
+    const dispatch = useAppDispatch();
+
+    /** STATES*/
+    const [toastText, setToastText] = useState('')
+    const [toastErrorShow, setToastErrorShow] = useState(false)
+    const {loggedIn, account } = useAppSelector(state => state.authSlice);
+    const {modalNotifications, isClosingModalNotifications} = useAppSelector(state => state.modalWindow)
+
+    /** ACTIONS*/
+    const {closeModal, openModal} = modalAddProfileActions
+    const {addTelegramCode, addTelegramValid} = authActions;
+
+    /** Functions*/
+    /** Функция отображения попапа уведомлений*/
+    const showModalNotifications = () => {
+        console.log(11111)
+        const modalName:any = 'modalNotifications'
+        dispatch(openModal({modalName: modalName}))
+    }
+
+    /** Функция проверки телеграмма*/
+    async function prepareTelegram() {
+
+        try {
+            const data = {'account': account}
+            const response = await axios.post('https://stt.market/api/notifications/create/', data)
+
+            if(response.status === 200) {
+                let dd = response.data
+                if (dd.status === 400) {
+                    setToastText(dd.message)
+                    setToastErrorShow(true)
+                    showModalNotifications()
+                } else if (dd.status === 200) {
+                    dispatch(addTelegramValid(dd.valid))
+                    dispatch(addTelegramCode(dd.code))
+                    showModalNotifications()
+                }
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
 
 
     /**
      * @referrerAddress - рефер адресс
      * @signer - кого регистрируем
      * */
-
-
     // async function registerReferral(referrerAddress) {
     //     const providerMain = provider.provider; // Провайдер, например, MetaMask
     //     const signer = await providerMain.getSigner(); // Получаем подписанта
@@ -73,42 +127,34 @@ const SttBonus = ({withoutWallet, account, provider}:ISttBonusProps) => {
     //     // console.log("Transaction confirmed:", receipt);
     // }
 
-    // registerReferral('0x2')
-
-
-    async function deploy() {
-        // Получаем провайдер и signer (например, MetaMask)
-        // const providerMain = provider;
-        // const signer = await providerMain.getSigner();
-        //
-        // const bytecode = fs.readFileSync("path/to/ReferralSystemBytecode.bin", "utf8");
-        //
-        // console.log(signer);
-        // // Создаем контрактный фабрику для деплоя
-        // const factory = new ethers.ContractFactory(abi, bytecode, signer);
-
-        // Разворачиваем контракт
-        // const contract = await factory.deploy();
-
-        // Ожидаем завершения деплоя
-        // await contract.deployed();
-
-        // console.log("Contract deployed to:", contract.address);
-    }
-
-    deploy()
-
-
-
     return (
         <div className={cls.wrapper}>
-            <div className={cls.cover}>
-                <h3 className={cls.title}>{t('Welcome to React')}</h3>
-                <div className={cls.text}>{t('sttBonus')}</div>
+            <div className={cls.cover_block}>
+                <CustomButton classnameWrapper={cls.cover_btn} classNameBtn={cls.btnStt} indicator={IndicatorsForUi.wallet} type='button'>
+                    <div className={cls.textStt}>
+                        {/*<SvgGift className={cls.svgGift}/>*/}
+                        <img src="/img/giftStt.png" alt="pictures"/>
+                        <div>STT bonus</div>
+                    </div>
+                </CustomButton>
             </div>
-            <div className={cls.coverRight}>
-                <SttBonusModule/>
+            <div className={cls.cover_block}>
+                <CustomButton onClick={prepareTelegram}  classnameWrapper={`${cls.cover_btn} ${cls.height}`} classNameBtn={cls.btnStt} indicator={IndicatorsForUi.wallet} type='button'>
+                    <img src="/img/notificztionsStt.png" alt="pictures"/>
+                    {/*<SvgSend className={cls.svgSend}/>*/}
+                </CustomButton>
+                <CustomButton classnameWrapper={`${cls.cover_btn} ${cls.height}`} classNameBtn={cls.btnStt}
+                              indicator={IndicatorsForUi.wallet} type='button'>
+                    {/*<SvgNotification className={cls.svgNotification}/>*/}
+                    <img src="/img/sentStt.png" alt="pictures"/>
+                </CustomButton>
             </div>
+            <Portal whereToAdd={document.body}>
+                <Modal show={modalNotifications} closing={isClosingModalNotifications}>
+                    <NotificationTg/>
+                </Modal>
+            </Portal>
+
         </div>
     );
 };

@@ -9,13 +9,12 @@
     position: relative;
     padding-top: 0;
     row-gap: mixins.rem(10);
-    width: mixins.rem(900);
-    @extend .paddingsForContentModal;
-    @include mixins.adaptiveValue('width', 900, 740, 3, 940, global.$mobile);
-    @include mixins.adaptiveValue('padding-left', 40, 15, 3, 940, global.$mobile);
-    @include mixins.adaptiveValue('padding-right', 40, 15, 3, 940, global.$mobile);
-    @include mixins.adaptiveValue('width', 740, 390, 3, global.$mobile, 400);
-    @include mixins.adaptiveValue('width', 390, 310, 3, 400, 320);
+    width: mixins.rem(1197);
+    background-color: #AFFCD0;
+    padding-right: mixins.rem(42);
+    padding-left: mixins.rem(42);
+    padding-bottom: mixins.rem(103);
+
     max-height: 95vh;
     overflow-y: auto;
 
@@ -28,19 +27,28 @@
     display: flex;
     min-width: 100%;
     justify-content: center;
+    text-transform: uppercase;
+    font-size: mixins.rem(24);
+    font-weight: 600;
+    font-family: globalIndex.$font_family_main;
+    align-items: center;
+    min-height: mixins.rem(68);
+
 }
 
 .title {
-    @extend .titleFontSize;
-    font-size: mixins.rem(globalIndex.$font_size_title);
-    font-weight: globalIndex.$font_weight_title;
-    background: #2ba296;
-    padding-top: mixins.rem(15);
-    padding-bottom: mixins.rem(15);
-    padding-left: mixins.rem(35);
-    padding-right: mixins.rem(35);
-    border-radius: mixins.rem(0) mixins.rem(0) mixins.rem(25) mixins.rem(25);
-    background: globalIndex.$background_colour_additional_accent_second;
+    color: globalIndex.$btn_color;
+    font-family: globalIndex.$font_family_main;
+}
+
+.coverBlock {
+    background: #C4FFE3;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: mixins.rem(372);
+    border-radius: 0 0 mixins.rem(20) mixins.rem(20);
 }
 
 .bodyBlock {

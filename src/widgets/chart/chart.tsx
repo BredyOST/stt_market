@@ -25,8 +25,12 @@ const CustomizedDot = (props) => {
 };
 
 
+interface Props {
+    indicator?: 'noAuth'
+}
 
-function ChartBlock(props) {
+
+function ChartBlock(props: Props) {
     const [chartData, setChartData] = useState([])
     const [shownDataChart, setShownDataChart] = useState([])
     const [chartStart, setChartStart] = useState(0.0)
@@ -108,8 +112,6 @@ function ChartBlock(props) {
     const {sttRates} = useAppSelector(state => state.authSlice)
 
     function changeChartPeriod(period) {
-        console.log(2)
-        console.log(period)
         setChartPeriod(period)
         let shownData = sttRates
         let cl = []
@@ -158,15 +160,18 @@ function ChartBlock(props) {
 
     return (
         <>
-            <div className={`${cls.wrapper} ${cls.ethCard}`}>
+            <div className={cls.wrapper}>
                 <div className={cls.block_chart_label}>
-                    <div className={cls.main_block__header_number}>{firstTick}</div>
-                    <div className={cls.main_block__header_number}>{chartEnd}</div>
+                    <div className={cls.main_block__header_number}>{firstTick} STT</div>
+                    <div className={cls.main_block__header_number}>{chartEnd} STT</div>
                 </div>
                 <div className={cls.chart_data_delta}>+ {chartDelta}%</div>
-                <ResponsiveContainer className={cls.cover_chart_block} height={100} width="100%">
-                    <LineChart data={shownDataChart}
-                               margin={{ top: 15, right: 20, left: -30, bottom: 15 }}>
+                <ResponsiveContainer className={cls.cover_chart_block} height="100%" width="100%"
+
+                >
+                    <LineChart  data={shownDataChart}
+                               margin={{ top: 15, right: 20, left: -30, bottom: 15 }}
+                    >
                         <defs>
                             <linearGradient id="lineColor" x1="0" y1="0" x2="1" y2="0">
                                 <stop offset="0%" stopColor="#7c84e5" />
@@ -188,7 +193,7 @@ function ChartBlock(props) {
                         />
                     </LineChart>
                 </ResponsiveContainer>
-                <div className={"chart_data-dates"}>
+                <div className={cls.chartData}>
                     <span>{chartStartDate}</span>
                     <span>today</span>
                 </div>
@@ -264,3 +269,5 @@ function ChartBlock(props) {
             }
 
             export default ChartBlock
+
+

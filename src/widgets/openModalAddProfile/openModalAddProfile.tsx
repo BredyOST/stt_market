@@ -5,12 +5,13 @@ import cls from './styled/openModalAddProfile.module.scss';
 import Portal from '../../shared/ui/portal/portal';
 import Modal from '../../shared/ui/modal/modal';
 import AddProfile from '../../pages/addProfile/addProfile';
-import {arbitrumCurrent} from "../../helpers/contracts";
-import { getAddress, formatEther } from "ethers";
-import { BrowserProvider,  } from "ethers";
+import {useTranslation} from "react-i18next";
+import CustomButton from "../../shared/ui/сustomButton/CustomButton";
 
 
 const OpenModalAddProfile = (props) => {
+    const {t} = useTranslation()
+
     const dispatch = useAppDispatch();
     const { modalAddProfileState } = useAppSelector((state) => state.modalWindow);
     const { changeModalAddProfileState } = modalAddProfileActions;
@@ -23,17 +24,25 @@ const OpenModalAddProfile = (props) => {
     return (
         <div>
             <div className={cls.wrapper}>
-                <h3 className={cls.title}>Want to add your profile?</h3>
+                <div className={cls.coverSubTitle}>
+                    <h3 className={cls.title}>
+                        {t("WantToAddProfile")}
+                    </h3>
+                </div>
                 <div>
-                    <button className={cls.buttonModal} onClick={changeStateModalWindow}>
-                        add
-                    </button>
+                    <CustomButton classNameBtn={cls.buttonModal} type='button'
+                                  onClick={changeStateModalWindow}>{t('addProfile')}
+                    </CustomButton>
+
+                    {/*<button className={cls.buttonModal} onClick={changeStateModalWindow}>*/}
+                    {/*    add*/}
+                    {/*</button>*/}
                 </div>
             </div>
             {modalAddProfileState && (
                 <Portal whereToAdd={document.body}>
-                    <Modal>
-                        <AddProfile account={props.account}  />
+                    <Modal show={true} closing={false}>
+                        <AddProfile account={props.account}/>
                     </Modal>
                 </Portal>
             )}

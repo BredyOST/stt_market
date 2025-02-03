@@ -4,6 +4,79 @@
 @use './global';
 
 // Файл для общих стилей
+// стиль для зеленой кнопки
+.btn_main {
+    background-color: globalIndex.$btn_background;
+    color: globalIndex.$btn_color;
+    border: none;
+    cursor: pointer;
+    box-shadow: mixins.rem(0) mixins.rem(0) mixins.rem(10) rgba(0, 0, 0, 0.2);
+    transition: background-color ease 0.3s, box-shadow ease 0.3s;
+
+    @media(any-hover: hover) {
+        &:hover {
+            background-color: darken(globalIndex.$btn_background_hover, 10%); // Темнее на 10%
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Тень при наведении
+            transition: background-color ease 0.3s, box-shadow ease 0.3s;
+        }
+    }
+}
+
+.btn_swap {
+    background-color: #DDFC91;
+    color: globalIndex.$btn_color;
+    border: none;
+    cursor: pointer;
+    box-shadow: mixins.rem(0) mixins.rem(0) mixins.rem(10) rgba(0, 0, 0, 0.2);
+    transition: background-color ease 0.3s, box-shadow ease 0.3s;
+
+    @media(any-hover: hover) {
+        &:hover {
+            background-color: darken(#c0df72, 10%); // Темнее на 10%
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Тень при наведении
+            transition: background-color ease 0.3s, box-shadow ease 0.3s;
+        }
+    }
+}
+
+
+
+
+
+
+.titleBlock {
+    text-align: center;
+    font-family: globalIndex.$font_family_main;
+    font-weight: 700;
+    font-size: mixins.rem(24);
+    line-height: globalIndex.$line_height;
+}
+
+
+
+//для попапов
+.titlePopup {
+    font-family: globalIndex.$font_family_main;
+    background-color: #8FFBA3;
+    width: mixins.rem(207);
+    height: mixins.rem(56);
+    color: #409798;
+    font-weight: 600;
+    border-bottom-left-radius: mixins.rem(25);
+    border-bottom-right-radius: mixins.rem(20);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+
+
+
+
+
 
 // отспупы для страниц
 .paddingPages {
@@ -76,7 +149,7 @@
 }
 
 .inputsStyle {
-    font-family: globalIndex.$font_family_input;
+    font-family: globalIndex.$font_family_main;
     font-size: mixins.rem(14);
     line-height: globalIndex.$line_height_main;
     letter-spacing: mixins.em(1.05);
@@ -94,17 +167,39 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-
-    padding: mixins.rem(15) mixins.rem(25);
-    border-radius: 50px;
+    border-radius: mixins.rem(50);
     background-color: #96fac5;
     text-align: center;
     font-weight: 500;
-    border: 2px transparent;
+    border: mixins.rem(2) transparent;
+    transition: background-color ease 0.3s 0s;
+
+    @media(any-hover: hover) {
+        &:hover {
+            transition: background-color ease 0.3s 0s;
+            background-color: #518f6f;
+        }
+    }
+
+}
+
+// -------------------------
+
+.close_svg {
+    width: mixins.rem(30);
+    height: mixins.rem(30);
+    fill: #CECECE;
+    transition: fill ease 0.3s 0s;
+
+    @media(any-hover: hover) {
+        &:hover {
+            transition: fill ease 0.3s 0s;
+            fill: #aeaaaa;
+        }
+    }
 }
 
 
-//
 .eth-card {
-    box-shadow: 10px 2px 12px 4px #e0e0e0;
+    box-shadow: mixins.rem(4) mixins.rem(2) mixins.rem(6) mixins.rem(2) rgba(41, 41, 41, 0.13);
 }

@@ -1,5 +1,4 @@
 
-
 /** объекты ошибок для формы*/
 export enum ERROR_ATTENTION_FOR_FORM {
     'name' = 'Please enter a valid name!',

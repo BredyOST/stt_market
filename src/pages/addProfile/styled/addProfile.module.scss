@@ -1,0 +1,199 @@
+@use '../../../shared/styles/variable/globalIndex';
+@use '../../../shared/styles/variable/global';
+@use '../../../shared/styles/mixins';
+@use '../../../shared/styles/variable/common';
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-top: 0;
+    row-gap: mixins.rem(10);
+    width: mixins.rem(900);
+    @extend .paddingsForContentModal;
+    @include mixins.adaptiveValue('width', 900, 740, 3, 940, global.$mobile);
+    @include mixins.adaptiveValue('padding-left', 40, 15, 3, 940, global.$mobile);
+    @include mixins.adaptiveValue('padding-right', 40, 15, 3, 940, global.$mobile);
+    @include mixins.adaptiveValue('width', 740, 390, 3, global.$mobile, 400);
+    @include mixins.adaptiveValue('width', 390, 310, 3, 400, 320);
+    max-height: 95vh;
+    overflow-y: auto;
+
+    @media (min-width: mixins.em(global.$mobile)) {
+    }
+
+    @media (max-width: mixins.em(global.$mobile)) {
+        min-width: 100%;
+    }
+}
+.coverTitle {
+    display: flex;
+    min-width: 100%;
+    justify-content: center;
+}
+
+.title {
+    @extend .titleFontSize;
+    font-size: mixins.rem(globalIndex.$font_size_title);
+    font-weight: globalIndex.$font_weight_title;
+    background: #2ba296;
+    padding-top: mixins.rem(15);
+    padding-bottom: mixins.rem(15);
+    padding-left: mixins.rem(35);
+    padding-right: mixins.rem(35);
+    border-radius: mixins.rem(0) mixins.rem(0) mixins.rem(25) mixins.rem(25);
+    background: globalIndex.$background_colour_additional_accent_second;
+}
+
+.bodyBlock {
+    display: flex;
+    column-gap: mixins.rem(80);
+    row-gap: mixins.rem(10);
+    @include mixins.adaptiveValue('column-gap', 80, 40, 3, 940, global.$mobile);
+
+    @media (max-width: mixins.em(global.$mobile)) {
+        flex-direction: column;
+    }
+}
+
+.leftBlock {
+    display: flex;
+    flex-direction: column;
+
+    flex: 0 1 50%;
+    align-items: center;
+    @media (max-width: mixins.em(global.$mobile)) {
+        row-gap: mixins.rem(10);
+    }
+}
+
+.coverBtns {
+    display: flex;
+    column-gap: mixins.rem(15);
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    font-family: globalIndex.$font_family_main;
+    flex: 1 1 auto;
+}
+
+.coverBtns {
+    display: flex;
+    column-gap: mixins.rem(15);
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    transition: fill ease 0.3s 0s;
+}
+
+.rightBlock {
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(10);
+    flex: 0 1 50%;
+    align-items: flex-start;
+
+    @media (min-width: mixins.em(global.$mobile)) {
+        padding-top: mixins.rem(30);
+    }
+
+    @media (max-width: mixins.em(global.$mobile)) {
+        //padding-top: mixins.rem(10);
+    }
+}
+
+.svgLogo {
+    background: transparent;
+    width: mixins.rem(50);
+    height: mixins.rem(50);
+    fill: globalIndex.$color_main_second;
+    stroke-width: 1;
+    transition: fill ease 0.3s 0s;
+    @media (any-hover: hover) {
+        &:hover {
+            fill: globalIndex.$color_title;
+            transition: fill ease 0.3s 0s;
+        }
+    }
+}
+
+.svgBanner {
+    background: transparent;
+    width: mixins.rem(50);
+    height: mixins.rem(50);
+    fill: globalIndex.$color_main_second;
+    transition: fill ease 0.3s 0s;
+    @media (any-hover: hover) {
+        &:hover {
+            fill: globalIndex.$color_title;
+            transition: fill ease 0.3s 0s;
+        }
+    }
+}
+
+.svgLogoBanner {
+    width: mixins.rem(40);
+    height: mixins.rem(50);
+}
+
+.aboutYou {
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(10);
+    flex: 1 1 auto;
+    min-width: 100%;
+    justify-content: center;
+}
+
+.coverValue {
+    display: flex;
+    column-gap: mixins.rem(10);
+    justify-content: space-between;
+    min-width: 95%;
+    padding-top: mixins.rem(10);
+    padding-bottom: mixins.rem(10);
+    @extend .titleFontSize;
+    font-size: mixins.rem(22);
+    flex: 1 1 auto;
+    align-items: center;
+}
+
+.coverTabs {
+    display: flex;
+    column-gap: mixins.rem(10);
+    min-width: 100%;
+    justify-content: center;
+
+    @media (min-width: mixins.em(420)) {
+        max-width: 80%;
+    }
+    @media (max-width: mixins.em(420)) {
+    }
+}
+
+.textBtnAdd {
+    display: flex;
+    flex-direction: column;
+}
+
+.lastSpan {
+    font-size: mixins.rem(15);
+    font-weight: 400;
+}
+
+.firstSpan {
+    font-size: mixins.rem(16);
+    font-weight: 600;
+}
+
+.coverIncognito {
+    padding-top: mixins.rem(20);
+    padding-bottom: mixins.rem(20);
+    justify-content: flex-start;
+}
+
+.coverAddBtn {
+    display: flex;
+    min-width: 100%;
+    justify-content: center;
+}

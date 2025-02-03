@@ -5,14 +5,15 @@ import { useAppSelector } from '../../redux/hooks/hooks';
 import Portal from '../portal/portal';
 
 interface IModalProps {
+    show: boolean;
+    closing: boolean;
     children: React.ReactNode;
 }
 
-const Modal = ({ children }: IModalProps) => {
-    const { modalAddProfileState, isClosingModalAddProfileState } = useAppSelector((state) => state.modalWindow);
+const Modal = ({ children, show, closing }: IModalProps) => {
 
     return (
-        <div className={`${cls.wrapper} ${modalAddProfileState && cls.active} ${isClosingModalAddProfileState && cls.isClosing}`}>
+        <div className={`${cls.wrapper} ${show && cls.active} ${closing && cls.isClosing}`}>
             <div className={cls.content}>{children}</div>
         </div>
     );
