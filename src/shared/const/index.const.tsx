@@ -234,3 +234,11 @@ export const ARBITRUM = {
     explorerUrl: "https://arbiscan.io",
     rpcUrl: "https://arb1.arbitrum.io/rpc",
 };
+export const arbitrum = {
+    name: 'Arbitrum',
+    chainId: 42161,
+    currency: "ETH",
+    rpcUrl: 'https://arb1.arbitrum.io/rpc',
+    blockExplorer: 'https://arbiscan.io',
+    multicallAddress: '0xca11bde05977b3631167028862be2a173976ca11',
+};

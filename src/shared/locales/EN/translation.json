@@ -12,5 +12,6 @@
     "GetSttToken": "Get the STT token from the community and dispose of it as you see fit",
     "WantToAddProfile": "Want to add your profile?",
     "ContactUs": "Contact Us",
-    "favorites": "Favorites"
+    "favorites": "Favorites",
+    "Transaction": "Transaction"
 }

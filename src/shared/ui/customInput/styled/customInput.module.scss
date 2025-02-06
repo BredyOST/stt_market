@@ -4,20 +4,7 @@
 @use '../../../../shared/styles/variable/common';
 
 .input {
-    width: 100%;
-    @extend .paddingInputs;
-    transition: border ease 0.3s 0s;
-    @extend .inputsStyle;
-    &::placeholder {
-        @extend .styleForAdditionalText;
-    }
-
-    @media (any-hover: hover) {
-        &:hover {
-            transition: border ease 0.3s 0s;
-            border: mixins.rem(1) solid globalIndex.$background_colour_additional_accent;
-        }
-    }
+    @extend .input_profile;
 }
 
 .inputGeo {
@@ -52,6 +39,11 @@
 
 .coverInput {
     position: relative;
+    height: mixins.rem(50);
+
+    input {
+
+    }
 }
 
 .inputSearch,

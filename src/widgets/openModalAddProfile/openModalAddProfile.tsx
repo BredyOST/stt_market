@@ -33,10 +33,6 @@ const OpenModalAddProfile = (props) => {
                     <CustomButton classNameBtn={cls.buttonModal} type='button'
                                   onClick={changeStateModalWindow}>{t('addProfile')}
                     </CustomButton>
-
-                    {/*<button className={cls.buttonModal} onClick={changeStateModalWindow}>*/}
-                    {/*    add*/}
-                    {/*</button>*/}
                 </div>
             </div>
             {modalAddProfileState && (

@@ -63,8 +63,6 @@ const CustomInput = ({
     }
 
 
-
-
     /** инпут для ввода url*/
     /** инпут для ввода имени*/
     if (indicators === InputsIndicators.addProfileSiteUrl || indicators === InputsIndicators.addProfileName) {

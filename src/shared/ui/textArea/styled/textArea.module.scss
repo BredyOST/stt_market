@@ -16,29 +16,13 @@
     display: flex;
     flex-direction: column;
     row-gap: mixins.rem(10);
+    height: mixins.rem(110);
+
 }
 
 .textArea {
+    @extend .input_profile;
     resize: none;
-    @extend .paddingInputs;
-    @extend .inputsStyle;
-    min-width: 100%;
-    @media (min-width: mixins.em(global.$mobile)) {
-        width: 100%;
-    }
-    @media (max-width: mixins.em(global.$mobile)) {
-    }
-
-    &::placeholder {
-        @extend .styleForAdditionalText;
-    }
-    transition: border ease 0.3s 0s;
-    @media (any-hover: hover) {
-        &:hover {
-            transition: border ease 0.3s 0s;
-            border: mixins.rem(1) solid globalIndex.$background_colour_additional_accent;
-        }
-    }
 }
 
 .textAreaHash {

@@ -6,24 +6,24 @@
 .wrapper {
 }
 
-.coverSubTitle {
+.cover_subtitle {
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.bodyBlock {
+.body_block {
   display: flex;
   justify-content: space-between;
   column-gap: mixins.rem(10);
   padding-top: mixins.rem(85);
 }
 
-.chartBlock {
+.chart_block {
   display: flex;
   flex-direction: column;
-  flex: 0 1 mixins.rem(337);
-  max-width: mixins.rem(337);
+  flex: 0 1 mixins.rem(341);
+  max-width: mixins.rem(341);
   row-gap: mixins.rem(60);
 }
 
@@ -32,7 +32,7 @@
   max-width: mixins.rem(420);
 }
 
-.coverTextInto {
+.cover_text_into {
   background-color: #FFFFFF;
   opacity: 60%;
   border-radius: mixins.rem(50);
@@ -75,7 +75,7 @@
   }
 }
 
-.cycleInfo {
+.cycle_info {
   display: flex;
   width: mixins.rem(418);
   height: mixins.rem(410);
@@ -89,7 +89,6 @@
   min-height: 100%;
   position: absolute;
   object-fit: cover;
-  //padding-bottom: 200px;
 }
 
 .text {
@@ -106,7 +105,7 @@
   font-size: mixins.rem(14);
 }
 
-.infoBlock {
+.info_block {
   border-radius: 50%;
   width: mixins.rem(192);
   height: mixins.rem(192);
@@ -117,7 +116,7 @@
   justify-content: center;
   position: relative;
   flex: 0 0 mixins.rem(192);
-
+  transition: box-shadow ease 0.3s 0s, color ease 0.3s 0s;
   &.first {
     background-color: #8FFBA3;
     //transform: translateX(mixins.rem(10));
@@ -126,21 +125,29 @@
     background-color: #58C89C;
     transform: translateX(mixins.rem(-46));
   }
+  @media(any-hover: hover) {
+    &:hover {
+      color: rgba(34, 82, 129, 0.68);
+      transition: box-shadow ease 0.3s 0s, color ease 0.3s 0s;
+      box-shadow: 0 mixins.rem(0) mixins.rem(15) mixins.rem(2) rgba(26, 30, 33, 0.27);
+    }
+  }
 }
 
-.coverInfoBlock {
+.cover_info_block {
   display: flex;
-
 }
 
-.infoBlockTitle {
+.info_block_title {
   font-family: globalIndex.$font_family_main;
   line-height: globalIndex.$line_height;
   font-weight: 400;
   font-size: mixins.rem(16);
+  max-width: mixins.rem(130);
+  text-align: center;
 }
 
-.infoBlockCount {
+.info_block_count {
   line-height: globalIndex.$line_height;
   font-family: globalIndex.$font_family_third;
   font-weight: 700;
@@ -148,7 +155,7 @@
 }
 
 
-.infoBlockLabel {
+.info_block_label {
   line-height: globalIndex.$line_height;
   font-family: globalIndex.$font_family_main;
   font-weight: 400;

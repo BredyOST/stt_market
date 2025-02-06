@@ -9,60 +9,50 @@
     gap: mixins.rem(10);
 }
 
-.checkbox {
+.toggleSwitch {
     display: flex;
     align-items: center;
     cursor: pointer;
     user-select: none;
 
     .input {
-        display: none;
+        display: none; // Скрываем стандартный чекбокс
     }
 
-    .customCheckbox {
-        width: mixins.rem(28);
-        height: mixins.rem(28);
-        border-radius: 50%;
-        background: #fff;
+    .slider {
+        width: mixins.rem(83); // Ширина переключателя (83px)
+        height: mixins.rem(42); // Высота переключателя (42px)
+        background-color: #ccc; // Цвет фона в выключенном состоянии
+        border-radius: mixins.rem(21); // Скругление углов (половина высоты)
         position: relative;
-        cursor: pointer;
-        transition:
-            background-color ease 0.3s 0s,
-            border-color ease 0.3s 0s,
-            box-shadow ease 0.3s 0s;
+        transition: background-color 0.3s ease;
 
-        @media (any-hover: hover) {
-            &:hover {
-                box-shadow: mixins.rem(2) mixins.rem(0) mixins.rem(10) mixins.rem(0) rgba(0, 0, 0, 0.38);
-                transition: box-shadow ease 0.2s 0s;
-            }
-        }
-
-        &:after {
+        &:before {
             content: '';
-            width: mixins.rem(16);
-            height: mixins.rem(16);
-            background-color: globalIndex.$color_title;
+            width: mixins.rem(36); // Размер ползунка (36px)
+            height: mixins.rem(36);
+            background-color: #fff; // Цвет ползунка
             border-radius: 50%;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.2s ease-in-out;
+            top: mixins.rem(3); // Отступ сверху (3px)
+            left: mixins.rem(3); // Отступ слева (3px)
+            transition: transform 0.3s ease;
         }
     }
 
-    .input:checked + .customCheckbox {
-        background-color: #fff;
+    .input:checked + .slider {
+        background-color: globalIndex.$color_title; // Зеленый цвет фона во включенном состоянии
 
-        &:after {
-            transform: translate(-50%, -50%) scale(1);
+        &:before {
+            transform: translateX(mixins.rem(41)); // Сдвиг ползунка вправо (83px - 36px - 6px)
         }
     }
 
     .label {
         margin-left: mixins.rem(10);
-        font-size: mixins.rem(16);
+        font-size: mixins.rem(20);
+        font-weight: 700;
+        font-family: globalIndex.$font_family_main;
         color: globalIndex.$color_title;
     }
 }

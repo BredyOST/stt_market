@@ -11,7 +11,7 @@
   height: mixins.rem(250);
 }
 
-.blockConvert{
+.balance_values{
   display: flex;
   justify-content: space-between;
   background-color: #96fac5;
@@ -28,14 +28,14 @@
   color: #365491;
 }
 
-.coverPrice {
+.cover_price {
   display: flex;
   border-radius: mixins.rem(25);
   flex-direction: column;
   height: 100%
 }
 
-.walletPrice {
+.balance_stt {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,7 +43,7 @@
   min-height: mixins.rem(100);
 }
 
-.wallet_card_balance {
+.balance_stt_ink {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -62,19 +62,19 @@
   color: #292929;
 }
 
-.stt_balnsce_usd {
+.balance_values_usd {
   font-family: globalIndex.$font_family_third;
   font-size: mixins.rem(14);
   color: #A2A1A1;
 }
 
-.help_usdt_balance {
+.balance_values_usdt {
   display: flex;
   justify-content: center;
   text-align: center;
 }
 
-.blockBtns {
+.block_action_btns {
   display: flex;
   justify-content: center;
   column-gap: mixins.rem(10);
@@ -108,7 +108,7 @@
   }
 }
 
-.btnSendToken {
+.btn_send_tokens {
   background-color: #71FAA2;
   transition: background-color ease 0.3s 0s;
 
@@ -120,7 +120,7 @@
   }
 }
 
-.btnSwap {
+.btn_swap {
   background-color: #D0F68C;
   transition: background-color ease 0.3s 0s;
 
@@ -133,7 +133,7 @@
   }
 }
 
-.btnDonation {
+.btn_donation {
   background-color: #FFC8C8;
   transition: background-color ease 0.3s 0s;
 
@@ -146,7 +146,7 @@
   }
 }
 
-.gift {
+.btn_gift {
   background-color: #C8EDFF;
   transition: background-color ease 0.3s 0s;
 
@@ -159,10 +159,10 @@
   }
 }
 
-.btnSendToken,
-.btnDonation,
-.btnSwap,
-.gift{
+.btn_send_tokens,
+.btn_donation,
+.btn_swap,
+.btn_gift{
   width: mixins.rem(55);
   height: mixins.rem(55);
   border-radius: 50%;

@@ -1,9 +1,9 @@
-import './history.css'
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import HistoryList from "../historyList/historyList";
 import {tokenContractAbi, tokenContractAddress} from "../../helpers/contracts";
 import {ethers} from "ethers";
-
+import cls from "./hystory.module.scss";
+import {useTranslation} from "react-i18next";
 
 function History(props) {
     const [history, setHistory] = useState([])
@@ -19,6 +19,9 @@ function History(props) {
     const [historyNeedLoad, setHistoryNeedLoad] = useState(false)
     const [leftScroll, setLeftScroll] = useState(0)
     const historyRef = useRef<any>(null)
+
+    const {t} = useTranslation();
+
 
     function dynamicSort(property) {
         var sortOrder = 1;
@@ -153,11 +156,21 @@ function History(props) {
     }, []);
 
     return (
-        <div className={"history_wrapper"} style={{height: 325}}>
-            <h5 className={"history_title"}>Transactions</h5>
-            <HistoryList history={history} historyWidth={historyWidth} fullHistory={fullHistory} loadHistoryShow={loadHistoryShow} a_list={aList} p_a_list={pAList} historyLoading={historyLoading} account={props.account} ready={historyReady} ref={historyRef} setWidth={setHistoryWidthInParent} setEvents={setHistoryInParent} setAddShow={setHistoryShowInParent} changeHistoryLoading={changeHistoryLoading} changeLeftScroll={changeLeftScroll} leftScroll={leftScroll} historyNeedLoad={historyNeedLoad} />
+        <div className={cls.wrapper}>
+            <div className={cls.coverSubTitle}>
+                <h3 className={cls.title}>
+                    {t("Transaction")}
+                </h3>
+            </div>
+            <HistoryList history={history} historyWidth={historyWidth} fullHistory={fullHistory}
+                         loadHistoryShow={loadHistoryShow} a_list={aList} p_a_list={pAList}
+                         historyLoading={historyLoading} account={props.account} ready={historyReady}
+                         ref={historyRef} setWidth={setHistoryWidthInParent} setEvents={setHistoryInParent}
+                         setAddShow={setHistoryShowInParent} changeHistoryLoading={changeHistoryLoading}
+                         changeLeftScroll={changeLeftScroll} leftScroll={leftScroll}
+                         historyNeedLoad={historyNeedLoad}/>
         </div>
-    )
+)
 }
 
 export default History

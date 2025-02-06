@@ -30,7 +30,7 @@ const VideoCard = ({videoUrl, posterUrl, classNameWrap, classNameCover, }:IVideo
             <video
                 className={classNameCover}
                 src={videoUrl}
-                poster={posterUrl} // Заменяется картинкой для предпросмотра
+                poster={posterUrl}
                 controls
                 loop
                 muted

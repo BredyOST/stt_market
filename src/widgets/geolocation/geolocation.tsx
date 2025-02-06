@@ -117,7 +117,7 @@ const Geolocation = React.memo(() => {
             >
                 <div className={cls.coverBtnFileText}>
                     <span> {coordinates?.geometry ? 1 : 0}</span>
-                    {`Geolocation`}
+                    <div className={cls.geolocation_text}>Geolocation</div>
                     <SvgArrow className={`${cls.svgArrow} ${isOpenSelectMenu && cls.active}`} />
                 </div>
             </CustomButton>

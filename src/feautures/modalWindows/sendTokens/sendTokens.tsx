@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import CustomInput from "../../../shared/ui/customInput/customInput";
-import {InputsIndicators} from "../../../entities/uiInterfaces/uiInterfaces";
 import {Button} from "react-bootstrap";
 import {useAppDispatch, useAppSelector} from "../../../shared/redux/hooks/hooks";
-import {authActions} from "../../../shared/redux/slices/authSlice/authSlice";
 import {modalAddProfileActions} from "../../../shared/redux/slices/modalWindowStatesSlice/modalWindowStateSlice";
 import {ReactComponent as SvgQr} from '../../../assets/svg/qr.svg';
 import {ReactComponent as SvgClose} from '../../../assets/svg/close.svg';
@@ -29,8 +27,9 @@ const SendTokens = () => {
     const {provider, account} = useAppSelector(state => state.authSlice)
     const [balance, setBalance] = useState<any>('0');
 
+    const value = React.useDeferredValue(recipientAddress)
+
     /** ACTIONS*/
-    const {changeStateLoggedIn, addAccount, addProvider, addSttRates, addWallet} = authActions;
     const {closeModal, openModal} = modalAddProfileActions
 
     /** FUNCTIONS*/
@@ -38,7 +37,6 @@ const SendTokens = () => {
     /** для ввода токенов для отправки*/
     const setTokensForTransfer = (e:React.ChangeEvent<HTMLInputElement>) => {
         if(+e.target.value > +balance) {
-            console.log('>>>')
             setTransferTokens(balance)
         } else {
             setTransferTokens(e.target.value)
@@ -53,12 +51,9 @@ const SendTokens = () => {
 
     const sttTokenAddress = "0x1635b6413d900D85fE45C2541342658F4E982185"; // Адрес контракта токена STT
 
-    //0xD60c6fdcF35fd8F33F0c2360439db89e117b869c
-
     /**Функция отправки токенов*/
     async function sendTokens(receiver, amount) {
-        const providerMain = provider;
-        const signer = await providerMain.getSigner(); // Подписант (пользователь, который выполняет транзакции)
+        const signer = await provider.getSigner();
 
         // Контракт токена STT
         const contractCommon = new ethers.Contract(tokenContractAddress, tokenContractAbi, signer);
@@ -67,6 +62,10 @@ const SendTokens = () => {
         // Получаем decimals для токена
         const decimals = await contractCommon.decimals();
         const tokenAmount = ethers.parseUnits(amount.toString(), parseInt(decimals)); // Преобразуем в нужный формат
+
+        // const res = await calculateTotalAmount(provider, contract, amount);
+        // console.log(`res ${res}`)
+        // // return
 
         // Проверяем allowance (разрешение) перед approve
         const allowanceBefore = await contractCommon.allowance(await signer.getAddress(), receiver);
@@ -125,6 +124,40 @@ const SendTokens = () => {
         })
     }
     checkBalance()
+
+
+
+
+// Функция для получения стоимости газа
+//     async function getGasCost(provider, gasEstimate) {
+//         const gasPrice = await provider.getGasPrice();
+//         return gasPrice.mul(gasEstimate);
+//     }
+//
+// // Функция для получения комиссии контракта
+//     async function getContractFee(contract) {
+//         const feePercentage = await contract.feePercentage();
+//         return feePercentage;
+//     }
+//
+// // Функция для расчёта итоговой суммы
+//     async function calculateTotalAmount(provider, contract, transferAmount) {
+//         // Оценка газа
+//         const gasEstimate = await contract.estimateGas.transfer(recipientAddress, transferAmount);
+//
+//         // Получение стоимости газа
+//         const gasCost = await getGasCost(provider, gasEstimate);
+//
+//         // Получение комиссии контракта
+//         const feePercentage = await getContractFee(contract);
+//         const feeAmount = transferAmount.mul(feePercentage).div(100);
+//
+//         // Итоговая сумма
+//         const totalAmount = transferAmount.add(gasCost).add(feeAmount);
+//
+//         return totalAmount;
+//     }
+
 
     return (
         <div className={cls.wrapper}>

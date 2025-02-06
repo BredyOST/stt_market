@@ -4,26 +4,36 @@
 @use '../../shared/styles/variable/common';
 
 
+.wrapper_transparent {
+  background-color: transparent;
+  height: mixins.rem(184);
+}
+
 .wrapper {
-  @extend .eth-card;
-  width: 100%;
   background-color: #ffffff;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  border-radius: mixins.rem(25);
+  @extend .eth-card;
   padding-top: mixins.rem(25);
   padding-bottom: mixins.rem(27);
   padding-left: mixins.rem(42);
   padding-right: mixins.rem(42);
+  border-radius: mixins.rem(25);
   height: mixins.rem(250);
 }
+
+.wrapper_transparent,
+.wrapper {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
 
 .cover_btn_time {
   display: flex;
   column-gap: mixins.rem(10);
 }
-.chartData {
+.chart_data {
   font-family: globalIndex.$font_family_third;
   font-size: mixins.rem(12);
   display: flex;

@@ -1,0 +1,26 @@
+@use '../../shared/styles/variable/globalIndex';
+@use '../../shared/styles/variable/global';
+@use '../../shared/styles/mixins';
+@use '../../shared/styles/variable/common';
+
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding-top: mixins.rem(40);
+  padding-bottom: mixins.rem(20);
+  row-gap: mixins.rem(20);
+}
+
+.coverSubTitle {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  @extend .titleBlock;
+  max-width: mixins.rem(537);
+}

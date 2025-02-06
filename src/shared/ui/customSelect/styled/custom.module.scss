@@ -3,6 +3,35 @@
 @use '../../../../shared/styles/mixins';
 @use '../../../../shared/styles/variable/common';
 
+.wrapper_language {
+    min-height: mixins.rem(50);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    transition: border ease 0.3s 0s;
+    border: mixins.rem(1) solid transparent;
+
+
+    background: globalIndex.$background_colour_additional_accent_second;
+    border-radius: mixins.rem(10);
+    padding-top: mixins.rem(7);
+    padding-bottom: mixins.rem(7);
+    padding-left: mixins.rem(15);
+    padding-right: mixins.rem(15);
+    outline: mixins.rem(1) transparent;
+    cursor: pointer;
+
+
+    @media (any-hover: hover) {
+        &:hover {
+            transition: border ease 0.3s 0s;
+            border: mixins.rem(1) solid globalIndex.$background_colour_additional_accent;
+        }
+    }
+}
+
+
 .wrapper {
     border-radius: mixins.rem(10);
     padding-top: mixins.rem(7);
@@ -167,8 +196,19 @@
 }
 
 .CustomSelect {
+    display: flex;
+    //align-self: center;
+    width: 100%;
+    font-family: globalIndex.$font_family_main;
+    font-weight: 600;
+    font-size: mixins.rem(16);
+    line-height: globalIndex.$line_height;
+    color: #7C7C7C;
     cursor: pointer;
-    @extend .styleForAdditionalText;
+    align-items: center;
+    //justify-content: center;
+    height: 100%;
+    //@extend .styleForAdditionalText;
 }
 
 .svgOkay {
@@ -177,15 +217,15 @@
 
 .svgArrow {
     @extend .svgIconArrow;
-    transform: translate(-50%, 37%);
+    transform: translate(-50%, 57%);
     transform-origin: 50% 50%;
     transition: transform ease 0.3s 0s;
-    fill: globalIndex.$color_title;
-
+    fill: #58C89C;
     &.active {
-        transform: translate(-50%, 37%) rotate(-90deg);
+        transform: translate(-50%, 57%) rotate(-90deg);
         transition: transform ease 0.3s 0s;
     }
+
 }
 
 .coverTitle {

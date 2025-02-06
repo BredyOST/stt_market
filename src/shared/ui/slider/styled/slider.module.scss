@@ -7,7 +7,7 @@
     width: 100%;
     position: relative;
     text-align: center;
-    height: mixins.rem(40);
+    height: mixins.rem(42);
     border-radius: mixins.rem(15);
     align-items: center;
 }
@@ -16,6 +16,7 @@
 .line {
     border-radius: mixins.rem(35);
     position: absolute;
+    min-height: 100%;
 }
 
 .coverLine {
@@ -27,15 +28,15 @@
 
 .line {
     height: 100%;
-    background: globalIndex.$color_title;
+    background: #409798;
     transition: width ease 0.3s 0s;
 }
 
 .input {
+    height: mixins.rem(42);
     width: 100%;
     outline: none;
     background: transparent;
-    height: mixins.rem(30);
     cursor: pointer;
     position: absolute;
     left: 0;

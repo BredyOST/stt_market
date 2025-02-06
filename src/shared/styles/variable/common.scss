@@ -15,8 +15,8 @@
 
     @media(any-hover: hover) {
         &:hover {
-            background-color: darken(globalIndex.$btn_background_hover, 10%); // Темнее на 10%
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Тень при наведении
+            background-color: darken(globalIndex.$btn_background_hover, 10%);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: background-color ease 0.3s, box-shadow ease 0.3s;
         }
     }
@@ -32,17 +32,43 @@
 
     @media(any-hover: hover) {
         &:hover {
-            background-color: darken(#c0df72, 10%); // Темнее на 10%
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Тень при наведении
+            background-color: darken(#c0df72, 10%);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: background-color ease 0.3s, box-shadow ease 0.3s;
         }
     }
 }
 
+.input_profile {
+    overflow: auto;
+    border-radius: mixins.rem(10);
+    background: globalIndex.$background_colour_additional_accent_second;
+    border: mixins.rem(1) solid transparent;
+    outline: mixins.rem(1) transparent;
+    padding-top: mixins.rem(7);
+    padding-bottom: mixins.rem(7);
+    padding-left: mixins.rem(20);
+    padding-right: mixins.rem(20);
+    font-size: mixins.rem(16);
+    font-family: globalIndex.$font_family_main;
+    line-height: globalIndex.$line_height;
+    color: #7C7C7C;
+    height: 100%;
+    width: 100%;
+    &::placeholder {
+        color: #7C7C7C;
+        font-size: mixins.rem(16);
+        font-family: globalIndex.$font_family_main;
+    }
+    transition: border ease 0.3s 0s;
 
-
-
-
+    @media (any-hover: hover) {
+        &:hover {
+            transition: border ease 0.3s 0s;
+            border: mixins.rem(1) solid globalIndex.$background_colour_additional_accent;
+        }
+    }
+}
 
 .titleBlock {
     text-align: center;
@@ -122,7 +148,7 @@
 .svgIconArrow {
     width: mixins.rem(22);
     height: mixins.rem(22);
-    fill: #2f572f;
+    fill: #58C89C;
     position: absolute;
     right: 0;
     top: 0;

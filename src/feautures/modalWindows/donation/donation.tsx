@@ -145,8 +145,7 @@ const Donation = () => {
                 </CustomButton>
                 <SvgHurt className={cls.hurt}/>
             </div>
-            <div>
-                <div>
+                <div className={cls.block_values}>
                     <div className={cls.cover}>
                         <div className={cls.max}>
                             <div className={cls.count}>
@@ -175,8 +174,7 @@ const Donation = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
+            <div className={cls.cover_btn}>
                 <Button className={cls.btn_send_tokens}>send</Button>
             </div>
             <div/>

@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {Line, LineChart, ResponsiveContainer, YAxis} from "recharts";
 import {useAppSelector} from "../../shared/redux/hooks/hooks";
 import cls from "./chart.module.scss";
+import axios from "axios";
 
 const CustomizedDot = (props) => {
     const { cx, cy, index, data } = props;
@@ -19,18 +20,16 @@ const CustomizedDot = (props) => {
             r={6}
             fill={isFirst ? "#7c84e5" : "#fc46aa"}
             stroke="white"
-            style={{ filter: "drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.3))" }} // Тень
+            style={{ filter: "drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.3))"}}
         />
     );
 };
 
-
-interface Props {
+interface IChartProps {
     indicator?: 'noAuth'
 }
 
-
-function ChartBlock(props: Props) {
+function ChartBlock({indicator}: IChartProps) {
     const [chartData, setChartData] = useState([])
     const [shownDataChart, setShownDataChart] = useState([])
     const [chartStart, setChartStart] = useState(0.0)
@@ -111,9 +110,22 @@ function ChartBlock(props: Props) {
     /** states */
     const {sttRates} = useAppSelector(state => state.authSlice)
 
-    function changeChartPeriod(period) {
+    /** functions*/
+    /** для смены периода графика*/
+    async function changeChartPeriod(period) {
         setChartPeriod(period)
-        let shownData = sttRates
+        let shownData = null
+
+        if(!sttRates){
+            const result = await axios.get('https://stt.market/rates')
+            shownData = result?.data?.map(el => ({
+                date: el.date,
+                tick: parseFloat(el.tick.toFixed(7))
+            }));
+        } else {
+            shownData = sttRates
+        }
+
         let cl = []
         shownData = shownData.slice(period * -1)
         shownData[0] = {"tick": shownData[0]["tick"], "date": shownData[0]["date"],  visible: true}
@@ -152,15 +164,14 @@ function ChartBlock(props: Props) {
         }
     }
 
+    /** по умолчанию период - месяц*/
     useEffect(() => {
-        if (sttRates) {
             changeChartPeriod(31)
-        }
     }, [sttRates]);
 
     return (
         <>
-            <div className={cls.wrapper}>
+            <div className={`${indicator ? cls.wrapper_transparent : cls.wrapper}`}>
                 <div className={cls.block_chart_label}>
                     <div className={cls.main_block__header_number}>{firstTick} STT</div>
                     <div className={cls.main_block__header_number}>{chartEnd} STT</div>
@@ -170,7 +181,7 @@ function ChartBlock(props: Props) {
 
                 >
                     <LineChart  data={shownDataChart}
-                               margin={{ top: 15, right: 20, left: -30, bottom: 15 }}
+                                margin={{ top: 15, right: 20, left: -30, bottom: 15 }}
                     >
                         <defs>
                             <linearGradient id="lineColor" x1="0" y1="0" x2="1" y2="0">
@@ -193,7 +204,7 @@ function ChartBlock(props: Props) {
                         />
                     </LineChart>
                 </ResponsiveContainer>
-                <div className={cls.chartData}>
+                <div className={cls.chart_data}>
                     <span>{chartStartDate}</span>
                     <span>today</span>
                 </div>
@@ -215,59 +226,10 @@ function ChartBlock(props: Props) {
                     </div>
                 </div>
             </div>
+        </>
+    )
+}
 
-            {/*<div className={"main-block eth-card"}>*/}
-            {/*    <div className={"main-block__header"}>DYNAMICS*/}
-            {/*        <div className={"main-block__header-number"}>{chartEnd}</div>*/}
-            {/*    </div>*/}
-            {/*    <div className={"chart_data-delta"}>+ {chartDelta}%</div>*/}
-            {/*        /!*<Chart type={"line"} options={chartOptions} series={[{data: chartLine}]} height={'200px'} />*!/*/}
-            {/*        <ResponsiveContainer height={180} width="100%">*/}
-            {/*            <LineChart data={shownDataChart}*/}
-            {/*                       margin={{top: 5, right: 20, left: -30, bottom: 15}}>*/}
-            {/*                <YAxis style={{fontFamily: 'Ubuntu, sans-serif', fontSize: '.5rem'}}*/}
-            {/*                       domain={[firstTick, 'dataMax']} tick={false} stroke={"transparent"}/>*/}
-            {/*                <Line type="monotone" strokeLinejoin="round" dataKey="tick" stroke="#31d59b" strokeWidth={2}*/}
-            {/*                      dot={<CustomizedDot/>} isAnimationActive={false}/>*/}
-            {/*            </LineChart>*/}
-            {/*        </ResponsiveContainer>*/}
-            {/*        /!*<div className={"main-block__header-number"}>{firstTick}</div>*!/*/}
-            {/*        /!*<div className={"chart_data-dates"}>*!/*/}
-            {/*        /!*    <span>{chartStartDate}</span>*!/*/}
-            {/*        /!*    <span>today</span>*!/*/}
-            {/*        /!*</div>*!/*/}
-            {/*    </div>*/}
-            {/*    <Row>*/}
-            {/*        <Col style={{width: '20%'}}>*/}
-            {/*            <div className={zero ? "period-button eth-card _active" : "period-button eth-card"}*/}
-            {/*                 onClick={() => changeChartPeriod(0)}>All*/}
-            {/*            </div>*/}
-            {/*        </Col>*/}
-            {/*        <Col style={{width: '20%'}}>*/}
-            {/*            <div className={threeSixty ? "period-button eth-card _active" : "period-button eth-card"}*/}
-            {/*                 onClick={() => changeChartPeriod(366)}>1Y*/}
-            {/*            </div>*/}
-            {/*        </Col>*/}
-            {/*        <Col style={{width: '20%'}}>*/}
-            {/*            <div className={oneEighty ? "period-button eth-card _active" : "period-button eth-card"}*/}
-            {/*                 onClick={() => changeChartPeriod(181)}>6m*/}
-            {/*            </div>*/}
-            {/*        </Col>*/}
-            {/*        <Col style={{width: '20%'}}>*/}
-            {/*            <div className={ninety ? "period-button eth-card _active" : "period-button eth-card"}*/}
-            {/*                 onClick={() => changeChartPeriod(91)}>3m*/}
-            {/*            </div>*/}
-            {/*        </Col>*/}
-            {/*        <Col style={{width: '20%'}}>*/}
-            {/*            <div className={thirty ? "period-button eth-card _active" : "period-button eth-card"}*/}
-            {/*                 onClick={() => changeChartPeriod(31)}>1m*/}
-            {/*            </div>*/}
-            {/*        </Col>*/}
-            {/*    </Row>*/}
-            </>
-            )
-            }
-
-            export default ChartBlock
+export default ChartBlock
 
 

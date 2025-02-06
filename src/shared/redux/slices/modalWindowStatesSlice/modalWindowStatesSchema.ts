@@ -19,6 +19,9 @@ export interface IModalWindowStatesSchema {
     isClosingModalSafetyConnection: boolean,
 
     modalTelegram: boolean,
-    isClosingModalTelegram: boolean
+    isClosingModalTelegram: boolean,
+
+    modalSttBonus: boolean,
+    isClosingSttBonus: boolean
 
 }

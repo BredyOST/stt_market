@@ -6,11 +6,12 @@ interface ICustomInputProps extends HTMLAttributes<HTMLInputElement> {
     type: 'file';
     loadedFile: boolean;
     isLoadingFile: boolean;
-    indicator: IndicatorsForUi;
+    indicator?: IndicatorsForUi;
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     children?: React.ReactNode;
     errorLoaded: boolean;
+    classNameWrapper?:string
 }
 
 const CustomInputFile = ({
@@ -20,14 +21,15 @@ const CustomInputFile = ({
     onChange,
     type = 'file',
     isLoadingFile,
-    errorLoaded
+    errorLoaded,
+    classNameWrapper
 }: ICustomInputProps) => {
 
     /** для добавления логотипа и видео*/
-    if (indicator === IndicatorsForUi.addBannerToProfile || indicator === IndicatorsForUi.addLogoToProfile) {
+    if (indicator === IndicatorsForUi.addBannerToProfile || indicator === IndicatorsForUi.addLogoToProfile || !indicator) {
         return (
-            <div className={`${cls.coverBtnFiles} ${loadedFile && cls.loaded} ${errorLoaded && cls.errorLoaded}`}>
-                <label className={cls.customButton}>
+            <div className={`${classNameWrapper} ${loadedFile && cls.loaded} ${errorLoaded && cls.errorLoaded}`}>
+                <label className={cls.cover}>
                     <input
                         className={cls.hiddenBtn}
                         type={type}
@@ -35,14 +37,15 @@ const CustomInputFile = ({
                         multiple
                         disabled={isLoadingFile}
                     />
-                    {children}
-                    {isLoadingFile
-                        ? <span>загрузка...</span>
-                        : <span>{indicator === IndicatorsForUi.addLogoToProfile ? 'logo' : 'banner'}</span>}
-                    {indicator === IndicatorsForUi.addBannerToProfile &&<span className={cls.minSize}>9:16</span>}
-                </label>
+                    <div>
+                        {children}
 
-                <div className={cls.maxSize}>{indicator === IndicatorsForUi.addLogoToProfile ? `Max 3 MB` : `Max 15 MB`}</div>
+                        {isLoadingFile && <div>загрузка...</div> }
+                        {/*     <div className={cls.text_info}>{indicator === IndicatorsForUi.addLogoToProfile ? 'logo' : 'Image or video'}</div>}*/}
+                        {/*{indicator === IndicatorsForUi.addBannerToProfile && <span className={cls.minSize}>9:16</span>}*/}
+
+                    </div>
+                </label>
             </div>
         );
     }

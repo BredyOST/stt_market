@@ -1,5 +1,12 @@
-import React from 'react';
+import React  from 'react';
 import cls from './cartBlock.module.scss';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+// import {EffectCards} from "swiper/types/modules";
+import {Autoplay, EffectCards} from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/effect-cards';
 
 const arrayCart = [
     { id: 1, title: "MLM 1" },
@@ -22,26 +29,36 @@ const CartBlock = () => {
         };
     }, []);
 
-    return (
-        <div className={cls.wrapper}>
-            {arrayCart.map((item, index) => {
-                const isActive = index === activeSlide;
-                const position = isActive ? cls.activeCard : cls.inactiveCard;
 
-                return (
-                    <div key={item.id} className={`${cls.card} ${position}`}>
-                        <div className={cls.imgCover}>
-                            <img
-                                src="/img/cart.jpg"
-                                alt="каринка"
-                                className={cls.image}
-                            />
-                        </div>
-                        <div className={cls.subTitle}>{item.title}</div>
-                    </div>
-                );
-            })}
-        </div>
+    return (
+        <>
+            <div className={cls.wrapper}>
+                <Swiper
+                    effect={'cards'}
+                    grabCursor={true}
+                    modules={[EffectCards, Autoplay]}
+                    className={cls.swiper}
+                    autoplay={{delay: 3000, disableOnInteraction: false}}
+                    cardsEffect={{slideShadows: false}}
+                    loop={true}
+                >
+                    {arrayCart.map((item) => (
+                        <SwiperSlide key={item.id}>
+                            <div className={cls.card}>
+                                <div className={cls.imgCover}>
+                                    <img
+                                        src="/img/cart.jpg"
+                                        alt="картинка"
+                                        className={cls.image}
+                                    />
+                                </div>
+                                <div className={cls.subTitle}>{item.title}</div>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+        </>
     );
 };
 

@@ -82,7 +82,7 @@ const CustomSelect = ({ options, onSelect, placeholder, arrowIndicator, indicato
 
     if(indicator === SelectsIndicators.address) {
         return (
-            <div className={cls.wrapper}>
+            <div className={cls.wrapper_language}>
                 <div className={cls.CustomSelect} onClick={openMenu}>
                     {language ? ` Language ${language}` : placeholder}
                     {arrowIndicator &&

@@ -21,7 +21,10 @@ const initialState: IModalWindowStatesSchema = {
     isClosingModalSafetyConnection: false,
 
     modalTelegram: false,
-    isClosingModalTelegram: false
+    isClosingModalTelegram: false,
+
+    modalSttBonus: false,
+    isClosingSttBonus: false
 };
 
 const modalWindowStateSlice = createSlice({

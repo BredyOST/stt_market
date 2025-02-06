@@ -4,16 +4,17 @@
 @use '../../shared/styles/variable/common';
 
 .wrapper {
+    border-radius: mixins.rem(15);
     display: flex;
     flex-direction: column;
     position: relative;
     padding-top: 0;
-    row-gap: mixins.rem(10);
+    row-gap: mixins.rem(75);
     width: mixins.rem(1197);
     background-color: #AFFCD0;
     padding-right: mixins.rem(42);
     padding-left: mixins.rem(42);
-    padding-bottom: mixins.rem(103);
+    padding-bottom: mixins.rem(42);
 
     max-height: 95vh;
     overflow-y: auto;
@@ -55,21 +56,31 @@
     display: flex;
     column-gap: mixins.rem(80);
     row-gap: mixins.rem(10);
-    @include mixins.adaptiveValue('column-gap', 80, 40, 3, 940, global.$mobile);
+
+    //@include mixins.adaptiveValue('column-gap', 80, 40, 3, 940, global.$mobile);
 
     @media (max-width: mixins.em(global.$mobile)) {
         flex-direction: column;
     }
 }
 
-.leftBlock {
+.left_block {
     display: flex;
     flex-direction: column;
-    flex: 0 1 50%;
+    flex: 1 0 mixins.rem(300);
+    max-width: mixins.rem(300);
     align-items: center;
     @media (max-width: mixins.em(global.$mobile)) {
         row-gap: mixins.rem(10);
     }
+}
+
+.centered_block {
+    flex: 1 0  mixins.rem(300);
+    max-width: mixins.rem(300);
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(16);
 }
 
 .coverBtns {
@@ -80,6 +91,16 @@
     justify-content: center;
     font-family: globalIndex.$font_family_main;
     flex: 1 1 auto;
+    flex-direction: column;
+    row-gap: mixins.rem(8);
+}
+
+.max {
+    font-family: globalIndex.$font_family_title;
+    font-size: mixins.rem(20);
+    font-weight: 700;
+    line-height: globalIndex.$line_height;
+    color: #7C7C7C;
 }
 
 .coverBtns {
@@ -91,21 +112,19 @@
     transition: fill ease 0.3s 0s;
 }
 
-.rightBlock {
+.right_block {
+    flex: 1 0  mixins.rem(300);
+    max-width: mixins.rem(300);
     display: flex;
     flex-direction: column;
-    row-gap: mixins.rem(10);
-    flex: 0 1 50%;
+    row-gap: mixins.rem(16);
     align-items: flex-start;
-    @media (min-width: mixins.em(global.$mobile)) {
-        padding-top: mixins.rem(30);
-    }
 }
 
-.svgLogo {
+.svg_logo {
     background: transparent;
-    width: mixins.rem(50);
-    height: mixins.rem(50);
+    width: mixins.rem(42);
+    height: mixins.rem(35);
     fill: globalIndex.$color_main_second;
     stroke-width: 1;
     transition: fill ease 0.3s 0s;
@@ -119,8 +138,8 @@
 
 .svgBanner {
     background: transparent;
-    width: mixins.rem(50);
-    height: mixins.rem(50);
+    width: mixins.rem(37);
+    height: mixins.rem(37);
     fill: globalIndex.$color_main_second;
     transition: fill ease 0.3s 0s;
     @media (any-hover: hover) {
@@ -139,24 +158,36 @@
 .aboutYou {
     display: flex;
     flex-direction: column;
-    row-gap: mixins.rem(10);
+    row-gap: mixins.rem(16);
     flex: 1 1 auto;
     min-width: 100%;
     justify-content: center;
 }
 
 .coverValue {
+    padding-top: mixins.rem(40);
+    min-width: 100%;
     display: flex;
     column-gap: mixins.rem(10);
     justify-content: space-between;
-    min-width: 95%;
-    padding-top: mixins.rem(10);
-    padding-bottom: mixins.rem(10);
-    @extend .titleFontSize;
-    font-size: mixins.rem(22);
-    flex: 1 1 auto;
     align-items: center;
+
+    color: #409798;
+    line-height: globalIndex.$line_height;
 }
+
+.mlm_text {
+    font-family: globalIndex.$font_family_main;
+    font-weight: 700;
+    font-size: mixins.rem(20);
+}
+
+.mlm_percent {
+    font-family: globalIndex.$font_family_third;
+    font-weight: 700;
+    font-size: mixins.rem(20);
+}
+
 
 .coverTabs {
     display: flex;
@@ -177,13 +208,17 @@
 }
 
 .lastSpan {
-    font-size: mixins.rem(15);
+    font-size: mixins.rem(14);
     font-weight: 400;
+    font-family: globalIndex.$font_family_third;
+    line-height: globalIndex.$line_height;
 }
 
 .firstSpan {
     font-size: mixins.rem(16);
     font-weight: 600;
+    font-family: globalIndex.$font_family_main;
+    line-height: globalIndex.$line_height;
 }
 
 .coverIncognito {
@@ -196,4 +231,98 @@
     display: flex;
     min-width: 100%;
     justify-content: center;
+}
+
+
+.cover_btn_banner {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background: rgba(242, 242, 242, 0.59);
+    border: mixins.rem(3) transparent;
+    border-radius: mixins.rem(15);
+    transition:
+            background ease 0.3s 0s,
+            box-shadow ease 0.3s 0s;
+
+    .loaded & {
+        border: mixins.rem(3) solid globalIndex.$color_title;
+        background: #8ff3e6;
+    }
+    .errorLoaded & {
+        background-color: #ddc9c7;
+    }
+
+    @media (any-hover: hover) {
+        &:hover {
+            background: rgba(195, 192, 192, 0.59);
+            transition:
+                    background ease 0.3s 0s,
+                    box-shadow ease 0.3s 0s;
+            box-shadow: mixins.rem(0) mixins.rem(0) mixins.rem(10) mixins.rem(3) rgba(0, 0, 0, 0.15);
+        }
+    }
+}
+
+.cover_btn_logo {
+    width: mixins.rem(126);
+    height: mixins.rem(126);
+    background: rgba(242, 242, 242, 0.59);
+    border: mixins.rem(3) transparent;
+    border-radius: 50%;
+    transition:
+            background ease 0.3s 0s,
+            box-shadow ease 0.3s 0s;
+
+    .loaded & {
+        border: mixins.rem(3) solid globalIndex.$color_title;
+        background: #8ff3e6;
+    }
+    .errorLoaded & {
+        background-color: #ddc9c7;
+    }
+    @media (any-hover: hover) {
+        &:hover {
+            background: rgba(195, 192, 192, 0.59);
+            transition:
+                    background ease 0.3s 0s,
+                    box-shadow ease 0.3s 0s;
+            box-shadow: mixins.rem(0) mixins.rem(0) mixins.rem(10) mixins.rem(3) rgba(0, 0, 0, 0.15);
+        }
+    }
+
+}
+
+.cover_btn_banner_text {
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(5);
+    justify-content: center;
+    align-items: center;
+}
+
+.text_info {
+    font-family: globalIndex.$font_family_main;
+    font-weight: 700;
+    line-height: globalIndex.$line_height;
+    font-size: mixins.rem(20);
+    color: #7C7C7C;
+}
+
+.text_info_logo {
+    font-family: globalIndex.$font_family_title;
+    font-weight: 700;
+    line-height: globalIndex.$line_height;
+    font-size: mixins.rem(20);
+    color: #7C7C7C;
+}
+
+
+.maxSize {
+    text-align: center;
+    font-size: mixins.rem(20);
+    font-weight: 700;
+    font-family: globalIndex.$font_family_third;
+    line-height: globalIndex.$line_height;
+    color: #7C7C7C;
 }

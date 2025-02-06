@@ -4,6 +4,7 @@
 @use '../../../shared/styles/variable/common';
 
 .wrapper {
+    min-height: mixins.rem(52);
     width: 100%;
     border-radius: mixins.rem(8);
     display: flex;
@@ -71,22 +72,35 @@
 }
 
 .coverBtnFileText {
+    width: 100%;
+    font-family: globalIndex.$font_family_third;
+    font-weight: 600;
+    font-size: mixins.rem(16);
     display: flex;
     column-gap: mixins.rem(20);
     @extend .styleForAdditionalText;
     span {
-        color: globalIndex.$color_title;
+        color: #58C89C;
     }
 }
 
+.geolocation_text {
+    font-family: globalIndex.$font_family_main;
+    font-weight: 600;
+    font-size: mixins.rem(16);
+    line-height: globalIndex.$line_height;
+    color: #7C7C7C;
+}
+
+
 .svgArrow {
     @extend .svgIconArrow;
-    transform: translate(-50%, 37%);
+    transform: translate(-50%, 57%);
     transform-origin: 50% 50%;
     transition: transform ease 0.3s 0s;
-    fill: globalIndex.$color_title;
+    fill: #58C89C;
     &.active {
-        transform: translate(-50%, 37%) rotate(-90deg);
+        transform: translate(-50%, 57%) rotate(-90deg);
         transition: transform ease 0.3s 0s;
     }
 }
@@ -100,7 +114,7 @@
 
 .title {
     @extend .titleFontSize;
-    font-size: mixins.rem(globalIndex.$font_size_title);
+    font-size: mixins.rem(20);
     font-weight: globalIndex.$font_weight_title;
     background: #2ba296;
     padding-top: mixins.rem(15);

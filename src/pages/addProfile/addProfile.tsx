@@ -36,6 +36,10 @@ import {
     IInputsForFormAddProfile, IndicatorsForUi,
     SelectsIndicators
 } from "../../entities/uiInterfaces/uiInterfaces";
+import { ReactComponent as  SvgLogo } from '../../assets/svg/uploadLogo.svg';
+import { ReactComponent as  SvgBanner } from '../../assets/svg/uploadBanner.svg';
+import Toggle from "../../shared/ui/checkbox/checkbox";
+
 
 const AddProfile = (props) => {
 
@@ -160,6 +164,10 @@ const AddProfile = (props) => {
         checkLocalStorage();
     }, []);
 
+    const itemList = [
+        { id: 1, label: 'Public' },
+    ];
+
     return (
         <div className={cls.wrapper}>
             <div className={cls.coverTitle}>
@@ -169,24 +177,42 @@ const AddProfile = (props) => {
             </div>
             <ClosePopup/>
             <div className={cls.bodyBlock}>
-                <div className={cls.leftBlock}>
+                <div className={cls.left_block}>
+                    <CustomInputFile
+                        type='file'
+                        errorLoaded={Boolean(banner.error)}
+                        loadedFile={Boolean(bannerLink)}
+                        isLoadingFile={banner.isPending}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            addFile(e, 'banner' as keyof FormsAddProfileSchema)
+                        }
+                        classNameWrapper={cls.cover_btn_banner}
+                    >
+                        <div className={cls.cover_btn_banner_text}>
+                            <SvgBanner className={cls.svgBanner}/>
+                            <div className={cls.text_info}>Image or video</div>
+                            <div className={cls.maxSize}>9:16</div>
+                        </div>
+                    </CustomInputFile>
+                </div>
+                <div className={cls.centered_block}>
                     <div className={cls.coverBtns}>
-                        {BUTTONS_FOR_ADD_PROFILE?.length >= 1 &&
-                            BUTTONS_FOR_ADD_PROFILE?.map((item: IButtonsForFormAddProfile) => (
-                                <CustomInputFile
-                                    key={item.id}
-                                    type='file'
-                                    errorLoaded={item.name === 'logo' ? Boolean(logo.error) : Boolean(banner.error)}
-                                    loadedFile={item.name === 'logo' ? Boolean(logoLink) : Boolean(bannerLink)}
-                                    isLoadingFile={item.name === 'logo' ? logo.isPending : banner.isPending}
-                                    indicator={item.indicator}
-                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                                        addFile(e, item.name as keyof FormsAddProfileSchema)
-                                    }
-                                >
-                                    {item.urlSvg}
-                                </CustomInputFile>
-                            ))}
+                        <CustomInputFile
+                            type='file'
+                            errorLoaded={Boolean(logo.error)}
+                            loadedFile={Boolean(logoLink)}
+                            isLoadingFile={logo.isPending}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                addFile(e, 'logo' as keyof FormsAddProfileSchema)
+                            }
+                            classNameWrapper={cls.cover_btn_logo}
+                        >
+                            <div className={cls.cover_btn_banner_text}>
+                                <SvgLogo className={cls.svg_logo}/>
+                                <div className={cls.text_info_logo}>Logo</div>
+                            </div>
+                        </CustomInputFile>
+                        <div className={cls.max}>Max 2/3</div>
                     </div>
                     <div className={cls.aboutYou}>
                         {INPUTS_FOR_ADD_PROFILE?.length >= 1 &&
@@ -231,19 +257,19 @@ const AddProfile = (props) => {
                             ))}
                     </div>
                 </div>
-                <div className={cls.rightBlock}>
+                <div className={cls.right_block}>
                     <Geolocation />
                     <CustomSelect indicator={SelectsIndicators.address} options={LANGUAGE_OPTION} placeholder='Choose Language' arrowIndicator={true} />
                     <div className={cls.coverValue}>
-                        <div>MLM</div>
-                        <span>{mlm}%</span>
+                        <div className={cls.mlm_text}>MLM</div>
+                        <div className={cls.mlm_percent}>{mlm}%</div>
                     </div>
                     <Slider />
                     <div className={cls.coverTabs}>
                         <Tabs options={TABS_OPTIONS} />
                     </div>
                     <div className={cls.coverIncognito}>
-                        <Checkbox itemList={CHECKBOX_INCOGNITO} checked={is_incognito} onChange={changeIncognito} />
+                    <Toggle itemList={itemList} checked={is_incognito} onChange={changeIncognito}/>
                     </div>
                     <div className={cls.coverAddBtn}>
                         <CustomButton onClick={sendForm} type='button' indicator={IndicatorsForUi.simpleButton}>

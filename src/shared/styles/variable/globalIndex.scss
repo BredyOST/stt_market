@@ -1,8 +1,6 @@
 @use 'sass:math';
 
 //backgrounds
-
-
 $btn_background: #93FBBC; // цвет для кнопок
 $btn_background_hover: #9eecbd; // цвет для кнопок
 $btn_color: #409798; // текст в зеленой кнопке
@@ -12,6 +10,7 @@ $main_color_text: #000000; // черный цвет текста
 $font_family_main: 'Comfortaa'; // основной шрифт
 $font_family_title: 'Golos Text'; // дополнительный шрифт
 $font_family_third: 'Agdasima';
+$font_family_fourth: 'Lato';
 
 $font_family_btn_first:'Comfortaa';
 

@@ -2,19 +2,46 @@ import React from 'react';
 import cls from './styled/checkbox.module.scss';
 import {CheckBoxIncognito} from "../../../entities/uiInterfaces/uiInterfaces";
 
-interface ICheckboxProps {
-    itemList: CheckBoxIncognito[];
+// interface ICheckboxProps {
+//     itemList: CheckBoxIncognito[];
+//     checked: boolean;
+//     onChange: (arg: number) => void;
+// }
+//
+// const Checkbox = React.memo(({ itemList, checked, onChange }: ICheckboxProps) => {
+//     return (
+//         <div className={cls.checkboxGroup}>
+//             {itemList.map((item) => (
+//                 <label key={item.id} className={cls.checkbox}>
+//                     <input type='checkbox' checked={checked} onChange={() => onChange(item.id)} className={cls.input} />
+//                     <span className={cls.customCheckbox}></span>
+//                     {item.label && <span className={cls.label}>{item.label}</span>}
+//                 </label>
+//             ))}
+//         </div>
+//     );
+// });
+//
+// export default Checkbox;
+
+interface IToggleSwitchProps {
+    itemList: any;
     checked: boolean;
     onChange: (arg: number) => void;
 }
 
-const Checkbox = React.memo(({ itemList, checked, onChange }: ICheckboxProps) => {
+const ToggleSwitch = React.memo(({ itemList, checked, onChange }: IToggleSwitchProps) => {
     return (
         <div className={cls.checkboxGroup}>
             {itemList.map((item) => (
-                <label key={item.id} className={cls.checkbox}>
-                    <input type='checkbox' checked={checked} onChange={() => onChange(item.id)} className={cls.input} />
-                    <span className={cls.customCheckbox}></span>
+                <label key={item.id} className={cls.toggleSwitch}>
+                    <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => onChange(item.id)}
+                        className={cls.input}
+                    />
+                    <span className={cls.slider}></span>
                     {item.label && <span className={cls.label}>{item.label}</span>}
                 </label>
             ))}
@@ -22,4 +49,4 @@ const Checkbox = React.memo(({ itemList, checked, onChange }: ICheckboxProps) =>
     );
 });
 
-export default Checkbox;
+export default ToggleSwitch;

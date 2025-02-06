@@ -32,6 +32,8 @@
     clip-path: inset(50%);
     overflow: hidden;
     white-space: nowrap;
+    display: flex;
+    flex-direction: column;
 }
 
 .customButton,
@@ -55,7 +57,6 @@
     }
     .errorLoaded & {
         background-color: #ddc9c7;
-
     }
 
     @media (any-hover: hover) {
@@ -109,6 +110,7 @@
     outline: mixins.rem(1) transparent;
     width: 100%;
     cursor: pointer;
+    position: relative;
 
     &.span {
         background: transparent;
@@ -140,16 +142,20 @@
 }
 
 .tabs {
-    width: mixins.rem(40);
-    height: mixins.rem(40);
+    width: mixins.rem(42);
+    height: mixins.rem(42);
     border-radius: mixins.rem(10);
+    font-family: globalIndex.$font_family_third;
+    font-size: mixins.rem(14);
+    font-weight: 600;
     background: globalIndex.$background_colour_additional_accent_second;
     transition: background ease 0.3s 0s;
     color: globalIndex.$color_title;
-    font-weight: 600;
+
     &.active {
-        background: globalIndex.$background_colour_additional_accent;
+        background: #73E4BF;
         transition: background ease 0.3s 0s;
+        color: #ffffff;
     }
 
     @media (any-hover: hover) {
@@ -168,11 +174,13 @@
 }
 
 .simple {
+    width: mixins.rem(170);
+    height: mixins.rem(62);
     padding-top: mixins.rem(15);
     padding-bottom: mixins.rem(15);
     padding-left: mixins.rem(40);
     padding-right: mixins.rem(40);
-    background-color: globalIndex.$color_title;
+    background-color: #409798;
     border-radius: mixins.rem(30);
     color: #ffffff;
     font-weight: 500;
@@ -194,11 +202,7 @@
     row-gap: mixins.rem(10);
 }
 
-.maxSize {
-    text-align: center;
-    font-size: mixins.rem(10);
-    @extend .styleForAdditionalText;
-}
+
 
 .greenBtn {
     @extend .btnGreen;
@@ -206,3 +210,14 @@
     padding-right: mixins.rem(30);
     margin: 0;
 }
+
+
+
+.cover {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    min-width: 100%;
+    min-height: 100%;
+}
+
