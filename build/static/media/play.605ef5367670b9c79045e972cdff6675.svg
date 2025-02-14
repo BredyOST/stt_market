@@ -1,0 +1,14 @@
+var _path, _path2;
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+import * as React from "react";
+const SvgPlay = props => /*#__PURE__*/React.createElement("svg", _extends({
+  xmlns: "http://www.w3.org/2000/svg",
+  xmlSpace: "preserve",
+  viewBox: "0 0 512 512"
+}, props), _path || (_path = /*#__PURE__*/React.createElement("path", {
+  d: "M256 0C114.609 0 0 114.609 0 256s114.609 256 256 256 256-114.609 256-256S397.391 0 256 0m0 472c-119.297 0-216-96.703-216-216S136.703 40 256 40s216 96.703 216 216-96.703 216-216 216"
+})), _path2 || (_path2 = /*#__PURE__*/React.createElement("path", {
+  d: "m353.661 237.879-154.174-89.594c-16.844-9.969-32.987-1.938-32.987 17.844v179.766c0 19.75 16.143 27.797 32.987 17.812l152.956-89.578c16.905-9.969 18.109-26.281 1.218-36.25"
+})));
+export { SvgPlay as ReactComponent };
+export default __webpack_public_path__ + "fdd19672e4baa13c2fe6aafb8cf2b706.svg";

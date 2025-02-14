@@ -1,0 +1,16 @@
+var _path;
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+import * as React from "react";
+const SvgLongArrow = props => /*#__PURE__*/React.createElement("svg", _extends({
+  xmlns: "http://www.w3.org/2000/svg",
+  width: 26,
+  height: 26,
+  fill: "none"
+}, props), _path || (_path = /*#__PURE__*/React.createElement("path", {
+  fill: "#fff",
+  stroke: "#fff",
+  d: "m12.135 16.971-8.05 7.998c-.623.29-1.142.346-1.58.237-.447-.112-.885-.415-1.303-.982-.341-.714-.331-1.395.03-2.092l8.006-8.059 8.057-8.11.847-.853H12.17c-.477-.103-.848-.29-1.132-.548-.288-.26-.512-.615-.66-1.084a2.23 2.23 0 0 1 .398-1.757q.422-.42.964-.668.584-.114 1.181-.138Q18.05.94 23.172.862c.787.096 1.385.468 1.827 1.143q.218.37.296.786v10.285q-.026.705-.141 1.398c-.258.557-.584.917-.96 1.128-.38.213-.86.302-1.473.226-.464-.148-.815-.37-1.074-.656-.257-.285-.444-.655-.547-1.132V8.067l-.853.846z",
+  opacity: 0.987
+})));
+export { SvgLongArrow as ReactComponent };
+export default __webpack_public_path__ + "1b6a29a14ab76a301d1143ea8ecfe417.svg";
