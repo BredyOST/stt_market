@@ -4,9 +4,44 @@
 @use '../../shared/styles/variable/common';
 
 
-.wrapper {
-  display: flex;
-  column-gap: mixins.rem(64);
+.wrapper_header {
+  @media (min-width: mixins.em(global.$mobile)) {
+    display: flex;
+    column-gap: mixins.rem(64);
+    @include mixins.adaptiveValue('column-gap', 64, 20, 3, 991, 700);
+  }
+  @media (max-width: mixins.em(global.$mobile)) {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+.wrapper_body {
+  @media (min-width: mixins.em(global.$mobile)) {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+  @media (max-width: mixins.em(global.$mobile)) {
+    display: flex;
+    column-gap: mixins.rem(64);
+    @include mixins.adaptiveValue('column-gap', 64, 20, 3, 991, 700);
+    justify-content: center;
+    padding-top: mixins.rem(20);
+  }
+
+  @media (max-width: mixins.em(600)) {
+    flex-direction: column;
+    row-gap: mixins.rem(10);
+    align-items: center;
+  }
+
+
+}
+
+.wrapper_header,
+.wrapper_body{
+
 }
 
 .logo {
@@ -85,4 +120,71 @@
   border-radius: 50%;
   height: mixins.rem(161);
   width: mixins.rem(161);
+}
+
+.header_left_block {
+  display: flex;
+  align-items: center;
+
+  @media (min-width: mixins.em(700)) {
+    column-gap: mixins.rem(40);
+  }
+
+  @media (max-width: mixins.em(700)) {
+    column-gap: mixins.rem(10);
+  }
+
+}
+
+
+.btn_add_profile {
+  @extend .btn_main;
+  padding-left: mixins.rem(28);
+  padding-right: mixins.rem(28);
+  padding-top: mixins.rem(14);
+  padding-bottom: mixins.rem(14);
+  font-size: mixins.rem(16);
+  font-weight: 700;
+  font-family: globalIndex.$font_family_btn_first;
+  border-radius: mixins.rem(30);
+  min-width: mixins.rem(182);
+  min-height: mixins.rem(54);
+
+  @media (max-width: mixins.em(700)) {
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+  }
+}
+
+
+.btn_add_profile_text {
+  display: flex;
+  align-items: center;
+  column-gap: mixins.rem(9);
+}
+
+.svgLogoProfile {
+  width: mixins.rem(26);
+  height: mixins.rem(26);
+}
+
+.btn_connect {
+  @extend .btn_main;
+  padding-left: mixins.rem(28);
+  padding-right: mixins.rem(28);
+  padding-top: mixins.rem(14);
+  padding-bottom: mixins.rem(14);
+  font-size: mixins.rem(16);
+  font-weight: 700;
+  font-family: globalIndex.$font_family_btn_first;
+  border-radius: mixins.rem(30);
+  min-height: mixins.rem(54);
+  min-width: mixins.rem(137);
+
+  @media (min-width: mixins.em(701)) {
+      display: none;
+      opacity: 0;
+      visibility: hidden;
+    }
 }

@@ -79,7 +79,6 @@
 }
 
 
-
 //для попапов
 .titlePopup {
     font-family: globalIndex.$font_family_main;
@@ -87,7 +86,7 @@
     width: mixins.rem(207);
     height: mixins.rem(56);
     color: #409798;
-    font-weight: 600;
+    font-weight: 900;
     border-bottom-left-radius: mixins.rem(25);
     border-bottom-right-radius: mixins.rem(20);
     display: flex;

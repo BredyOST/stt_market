@@ -75,7 +75,7 @@ export interface IButtonsForFormAddProfile {
 
 export interface TabsOptions {
     id: number;
-    label: number;
+    label: number | string;
 }
 
 

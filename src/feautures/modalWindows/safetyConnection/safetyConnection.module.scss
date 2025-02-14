@@ -97,7 +97,9 @@
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(50%, 30%);
+  transform: translate(mixins.rem(20), mixins.rem(12));
+  @include mixins.adaptiveValueTransformSeparate('transform', 20, -10, 12, 12, 3, 380, 320);
+
 }
 
 .svgSafety {

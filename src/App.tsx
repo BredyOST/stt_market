@@ -1,8 +1,8 @@
 import './shared/styles/index.scss'
 import React from "react";
 import {
-  exchangeContractAddress,
-  tokenContractAbi,
+  exchangeContractAddress, sttAffiliateAddress,
+  tokenContractAbi, tokenContractAbiCb31,
   tokenContractAddress,
   usdtContractAbi,
   usdtContractAddress
@@ -28,8 +28,9 @@ import { arbitrum } from '@reown/appkit/networks'
 import {ToastContainer} from "react-toastify";
 import History from "./pages/history/history";
 import SliderVideo from "./widgets/sliderVideo/sliderVideo";
-
-
+import Loader from "./widgets/loader/loader";
+import Portal from "./shared/ui/portal/portal";
+import '@reown/appkit-wallet-button/react'
 const projectId = 'd63219dbf5faf0a8dba4e3a892b1e2d1'
 
 // 2. Set the networks
@@ -50,7 +51,13 @@ createAppKit({
   metadata,
   projectId,
   features: {
-    analytics: true // Optional - defaults to your Cloud configuration
+    analytics: true, // Optional - defaults to your Cloud configuration
+    email: false, // default to true
+    socials: false,
+    swaps: false, // Optional - true by default
+    send: false,
+    onramp: false,// убрать buy cripto
+
   }
 })
 
@@ -59,10 +66,10 @@ function App() {
   const dispatch = useAppDispatch()
 
   /** states */
-  const {loggedIn, account, provider } = useAppSelector(state => state.authSlice)
-
+  const {loggedIn, account, provider, isLoader} = useAppSelector(state => state.authSlice)
+  const {modalReals} = useAppSelector(state => state.modalWindow)
   /** actions*/
-  const {changeStateLoggedIn, addAccount, addProvider, addSttRates, addWithoutWallet, addAllowLogin, addTelegramUsername, addWalletKit} = authActions;
+  const {changeStateLoggedIn, addAccount, addProvider, addSttRates, addWithoutWallet, addAllowLogin, addTelegramUsername, addWalletKit, addLoader} = authActions;
 
   /** appkit*/
   const { address, isConnected  } = useAppKitAccount()
@@ -163,31 +170,41 @@ function App() {
     if (isConnected && chainId !== ARBITRUM.chainId) {
       showAttention(`Please, connect to Arbitrum Network (${ARBITRUM.chainId})`, 'error')
       switchNetwork(arbitrum)
+    } else if(!isConnected) {
+      dispatch(changeStateLoggedIn(false))
+      dispatch(addProvider(null))
+      dispatch(addAccount(null))
     }
   }, [chainId, isConnected]);
 
   return (
       <>
-        <div>
-          <Header />
-          {/*<SliderVideo/>*/}
-          {!loggedIn
-              ? <UnauthorizedUser/>
-              : <AuthorizedUser/>
-          }
-          <div className={`cover__container`}>
-            {!loggedIn && <SmartContractData/>}
-            <Favorites/>
-            <Reels/>
-            <Map/>
-            <OpenModalAddProfile account={account}/>
-            <Help/>
-            <History/>
+        <div className="wrapper">
+          <div>
+            <Header/>
+            {!loggedIn
+                ? <UnauthorizedUser/>
+                : <AuthorizedUser/>
+            }
+            <div className={`cover__container`}>
+              {!loggedIn && <SmartContractData/>}
+              <Favorites/>
+              <Reels/>
+              <Map/>
+              {loggedIn && <OpenModalAddProfile account={account}/>}
+              <Help/>
+              {loggedIn && <History/>}
+            </div>
           </div>
+          <ToastContainer/>
+          <Portal whereToAdd={document.body}>
+            <Loader isLoading={isLoader} />
+          </Portal>
+          <SliderVideo show={modalReals}/>
         </div>
-        <ToastContainer />
       </>
   );
 }
 
 export default App;
+

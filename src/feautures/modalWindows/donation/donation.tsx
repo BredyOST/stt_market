@@ -3,9 +3,9 @@ import cls from "./donation.module.scss";
 import CustomButton from "../../../shared/ui/сustomButton/CustomButton";
 import {ReactComponent as SvgClose} from '../../../assets/svg/close.svg';
 import {useAppDispatch, useAppSelector} from "../../../shared/redux/hooks/hooks";
-import {authActions} from "../../../shared/redux/slices/authSlice/authSlice";
 import {modalAddProfileActions} from "../../../shared/redux/slices/modalWindowStatesSlice/modalWindowStateSlice";
 import {ReactComponent as SvgHurt} from '../../../assets/svg/hart.svg';
+import {ReactComponent as SvgDonation} from '../../../assets/svg/donation.svg';
 import CustomInput from "../../../shared/ui/customInput/customInput";
 import {ethers} from "ethers";
 import {
@@ -143,7 +143,17 @@ const Donation = () => {
                               classNameBtn={cls.cover_btn} type='button'>
                     <SvgClose className={cls.close_svg}/>
                 </CustomButton>
-                <SvgHurt className={cls.hurt}/>
+                {/*<div className={cls.cover_svg}>*/}
+                {/*    <SvgHurt className={cls.hurt}/>*/}
+                {/*</div>*/}
+                <SvgDonation className={cls.svgDonation}/>
+                <div className={cls.title}>DONATION</div>
+                <div className={cls.donation_text}>The tokens that you transfer as
+                    donations go directly the smart
+                    contracts of the STT platform. This
+                    helps our community to develop
+                    and ensures the growth of the
+                    token rate.</div>
             </div>
                 <div className={cls.block_values}>
                     <div className={cls.cover}>
@@ -156,7 +166,11 @@ const Donation = () => {
                                     type='text'
                                     classNameWrapper={cls.wrap_input_tokens}
                                     classNameInput={cls.input_cover_tokens}
-                                    style={{width: `${transferTokens?.length === 0 ? '4' : transferTokens?.length}ch`}}
+                                    style={{
+                                        width: `${transferTokens?.length === 0 ? '4' : transferTokens?.length}ch`,
+                                        minWidth: '4ch',
+                                        maxWidth: '8ch'
+                                }}
                                 >
                                 </CustomInput>
                             </div>

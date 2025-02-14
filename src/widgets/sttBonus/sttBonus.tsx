@@ -13,7 +13,11 @@ import {ForFunc} from "../../entities/others";
 import SttBonusWindow from "../../feautures/modalWindows/sttBonus/sttBonus";
 
 
-const SttBonus = () => {
+interface ISttBonus {
+    visibility: boolean
+}
+
+const SttBonus = ({visibility}: ISttBonus) => {
 
     const dispatch = useAppDispatch();
 
@@ -58,21 +62,21 @@ const SttBonus = () => {
     }
 
     return (
-        <div className={cls.wrapper}>
+        <div className={`${visibility ? cls.wrapper_big : cls.wrapper_compact}`}>
             <div className={cls.cover_block}>
-                <CustomButton onClick={showModalSttBonus} classnameWrapper={cls.cover_btn} classNameBtn={cls.btn_stt_bonus} type='button'>
-                    <div className={cls.btn_stt_text}>
-                        <img src="/img/giftStt.png" alt="pictures"/>
+                <CustomButton onClick={showModalSttBonus} classnameWrapper={`${cls.cover_btn} ${visibility ? cls.cover_btn_big : cls.cover_btn_compact}`} classNameBtn={cls.btn_stt_bonus} type='button'>
+                    <div className={visibility ? cls.btn_stt_text : cls.btn_stt_text_compact}>
+                        <img src={visibility ? "/img/giftStt.svg" : "/img/giftCompact.jpg"} alt="pictures"/>
                         <div>STT bonus</div>
                     </div>
                 </CustomButton>
             </div>
             <div className={cls.cover_block}>
-                <CustomButton onClick={prepareTelegram}  classnameWrapper={`${cls.cover_btn} ${cls.height}`} classNameBtn={cls.btn_stt_bonus} type='button'>
-                    <img src="/img/notificztionsStt.png" alt="pictures"/>
+                <CustomButton onClick={prepareTelegram}  classnameWrapper={`${cls.cover_btn} ${visibility ? cls.cover_btn_big_other : cls.cover_btn_compact_other}`} classNameBtn={cls.btn_stt_bonus} type='button'>
+                    <img src={visibility ? "/img/notificationsStt.svg" : "/img/notificationsCompact.jpg" } alt="pictures"/>
                 </CustomButton>
-                <CustomButton classnameWrapper={`${cls.cover_btn} ${cls.height}`} classNameBtn={cls.btn_stt_bonus} type='button'>
-                    <img src="/img/sentStt.png" alt="pictures"/>
+                <CustomButton classnameWrapper={`${cls.cover_btn} ${visibility ? cls.cover_btn_big_other : cls.cover_btn_compact_other}`} classNameBtn={cls.btn_stt_bonus} type='button'>
+                    <img src={visibility ? "/img/sentStt.png" : "/img/sendCompact.jpg"} alt="pictures"/>
                 </CustomButton>
             </div>
             <Portal whereToAdd={document.body}>

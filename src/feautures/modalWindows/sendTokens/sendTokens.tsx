@@ -7,157 +7,180 @@ import {ReactComponent as SvgQr} from '../../../assets/svg/qr.svg';
 import {ReactComponent as SvgClose} from '../../../assets/svg/close.svg';
 import {ethers} from "ethers";
 import {
-    exchangeContractAddress, sttAffiliateAddress,
+   sttAffiliateAddress,
     tokenContractAbi,
     tokenContractAbiCb31,
-    tokenContractAddress, usdtContractAbi, usdtContractAddress,
+    tokenContractAddress,
 } from "../../../helpers/contracts";
 import cls from './sendTokens.module.scss';
 import CustomButton from "../../../shared/ui/сustomButton/CustomButton";
+import {useTranslation} from "react-i18next";
+import {showAttention} from "../../../shared/helpers/attention";
+import {authActions} from "../../../shared/redux/slices/authSlice/authSlice";
+import {walletActions} from "../../../shared/redux/slices/walletSlice/walletSlice";
+import {IModalWindowStatesSchema} from "../../../shared/redux/slices/modalWindowStatesSlice/modalWindowStatesSchema";
 
 
 const SendTokens = () => {
 
     const dispatch = useAppDispatch()
+    const {t} = useTranslation();
 
     /** STATES */
     /** Для хранения адреса с инпута, куда осуществлеяется перевод*/
     const [recipientAddress, setRecipientAddress] = useState<string>('')
-    const [transferTokens, setTransferTokens] = useState<string>(``);
-    const {provider, account} = useAppSelector(state => state.authSlice)
-    const [balance, setBalance] = useState<any>('0');
+    const [transferTokens, setTransferTokens] = useState<number>(0);
+    const {provider} = useAppSelector(state => state.authSlice)
+    const [sendTokensValue, setSendTokensValue] = useState<number>(0);
+    const [mlm, setMlm] = React.useState<number>(0);
+    const [validateAddress, setValidateAddress] = useState<boolean>(false)
 
-    const value = React.useDeferredValue(recipientAddress)
+    const deferredAddress = React.useDeferredValue(recipientAddress)
+
+    const {successTransferTokens, sttBalance} = useAppSelector(state => state.walletSlice)
 
     /** ACTIONS*/
     const {closeModal, openModal} = modalAddProfileActions
+    const {addLoader} = authActions;
+    const {addSuccessTransferToken, addBalanceStt, addUdtStt, addEtcStt, addHelpUsdt} = walletActions;
 
     /** FUNCTIONS*/
 
     /** для ввода токенов для отправки*/
     const setTokensForTransfer = (e:React.ChangeEvent<HTMLInputElement>) => {
-        if(+e.target.value > +balance) {
-            setTransferTokens(balance)
+        if(+e?.target?.value > +sttBalance) {
+            setTransferTokens(+sttBalance)
+            calculateReceivedAmount(sttBalance)
         } else {
-            setTransferTokens(e.target.value)
+            setTransferTokens(+e.target.value)
+            calculateReceivedAmount(e.target.value)
         }
     }
 
     /** для закрытия модального окна*/
     const closeModalSendMoney = () => {
-        const modalSendTokens:any = 'modalSendTokens'
-        dispatch(closeModal({modalName: modalSendTokens}))
+        const modalSendTokens:string = 'modalSendTokens'
+        dispatch(closeModal({modalName: modalSendTokens as keyof IModalWindowStatesSchema}))
     }
 
-    const sttTokenAddress = "0x1635b6413d900D85fE45C2541342658F4E982185"; // Адрес контракта токена STT
 
     /**Функция отправки токенов*/
     async function sendTokens(receiver, amount) {
-        const signer = await provider.getSigner();
+        if (!validateAddress) {
+            showAttention(`Please check the entered ERC20 account.`, 'error')
+            return
+        }
 
-        // Контракт токена STT
-        const contractCommon = new ethers.Contract(tokenContractAddress, tokenContractAbi, signer);
-        const contract = new ethers.Contract(sttAffiliateAddress, tokenContractAbiCb31, signer);
+        if (+transferTokens <= 0) {
+            showAttention(`Please enter tokens for transfer`, 'error')
+            return
+        }
 
-        // Получаем decimals для токена
-        const decimals = await contractCommon.decimals();
-        const tokenAmount = ethers.parseUnits(amount.toString(), parseInt(decimals)); // Преобразуем в нужный формат
+            dispatch(addLoader(true))
+            const signer = await provider.getSigner();
 
-        // const res = await calculateTotalAmount(provider, contract, amount);
-        // console.log(`res ${res}`)
-        // // return
+            // Контракт токена STT
+            const contractCommon = new ethers.Contract(tokenContractAddress, tokenContractAbi, signer);
+            const contract = new ethers.Contract(sttAffiliateAddress, tokenContractAbiCb31, signer);
 
-        // Проверяем allowance (разрешение) перед approve
-        const allowanceBefore = await contractCommon.allowance(await signer.getAddress(), receiver);
-        console.log("Allowance before approve:", allowanceBefore.toString());
+            // Получаем decimals для токена
+            const decimals = await contractCommon.decimals();
+            const tokenAmount = ethers.parseUnits(amount.toString(), parseInt(decimals)); // Преобразуем в нужный формат
 
-        // Выполняем approve
-        // const txApprove = await contractCommon.approve(receiver, tokenAmount);
-        const txApprove = await contractCommon.approve(sttAffiliateAddress, tokenAmount);
+            // Проверяем allowance (разрешение) перед approve
+            const allowanceBefore = await contractCommon.allowance(await signer.getAddress(), receiver);
+            console.log("Allowance before approve:", allowanceBefore.toString());
 
+            // Выполняем approve
+            // const txApprove = await contractCommon.approve(receiver, tokenAmount);
+            const txApprove = await contractCommon.approve(sttAffiliateAddress, tokenAmount);
 
-        console.log("Approve transaction sent:", txApprove.hash);
-        const receiptApprove = await txApprove.wait();
-        console.log("Approve transaction confirmed:", receiptApprove);
+            console.log("Approve transaction sent:", txApprove.hash);
+            const receiptApprove = await txApprove.wait();
+            console.log("Approve transaction confirmed:", receiptApprove);
 
-        // Проверяем allowance после approve
-        const allowanceAfter = await contractCommon.allowance(await signer.getAddress(), receiver);
-        console.log("Allowance after approve:", allowanceAfter.toString());
+            // Проверяем allowance после approve
+            const allowanceAfter = await contractCommon.allowance(await signer.getAddress(), receiver);
+            console.log("Allowance after approve:", allowanceAfter.toString());
 
-        // Проверяем баланс подписанта
-        const balance = await contractCommon.balanceOf(await signer.getAddress());
-        console.log("Balance:", balance.toString());
+            // Проверяем баланс подписанта
+            const balance = await contractCommon.balanceOf(await signer.getAddress());
+            console.log("Balance:", balance.toString());
 
-        // Выполняем перевод токенов
-        try {
-            const tx = await contract.paymentFromTheShop(receiver, tokenAmount); // Используем transfer для перевода токенов
-            console.log("Transaction sent:", tx.hash);
-            const receipt = await tx.wait();
-            console.log("Transaction confirmed:", receipt);
-        } catch (error) {
-            console.error("Error sending tokens:", error);
+            // Выполняем перевод токенов
+            try {
+                const tx = await contract.paymentFromTheShop(receiver, tokenAmount); // Используем transfer для перевода токенов
+                // console.log("Transaction sent:", tx?.hash);
+                showAttention(`Transaction sent`, 'success')
+                const receipt = await tx.wait();
+                console.log("Transaction confirmed:", receipt);
+                showAttention(`Transaction confirmed:, ${receipt}`, 'success')
+                setTransferTokens(0)
+                setSendTokensValue(0)
+                closeModalSendMoney()
+                // checkBalance()
+            } catch (error) {
+                showAttention(`Error sending tokens`, 'error')
+                console.error("Error sending tokens:", error);
+            } finally {
+                dispatch(addSuccessTransferToken(!successTransferTokens))
+                dispatch(addLoader(false))
+            }
+    }
+
+    /** проверка адреса*/
+     async function isValidAddress (address: string): Promise<void>  {
+        const res = await ethers.isAddress(address);
+        if(res) {
+            setValidateAddress(true)
+        } else {
+            setValidateAddress(false)
         }
     }
 
-    /** Функция проверки баланса*/
-    async function checkBalance () {
-        const contract = new ethers.Contract(tokenContractAddress, tokenContractAbi, provider);
-        const usdtContract = new ethers.Contract(usdtContractAddress, usdtContractAbi, provider);
 
-        let totalSt = 0.0
-        let totalUs = 0.0
-        // setBalance(balance.toString);
-        const balance = await provider.getBalance(account);
-        contract.totalSupply().then(res => {
-            totalSt = +(Number(res) / Math.pow(10, 9)).toFixed(2)
-            usdtContract.balanceOf(exchangeContractAddress).then(res => {
-                totalUs = +(Number(res) / Math.pow(10, 6)).toFixed(2)
-                contract.balanceOf(account).then(res => {
-                    let stBalance:any = (parseFloat(String((Number(res) / Math.pow(10, 9)) - 0.01)).toFixed(2))
-                    if (+stBalance < 0) {
-                        stBalance = 0.0
-                    }
-                    let rate = totalUs / totalSt
-                    setBalance(stBalance)
-                })
-            })
-        })
+    /** Функция расчета итоговой суммы с учетом комиссии */
+    async function calculateReceivedAmount(amount) {
+        if(!amount) {
+            setSendTokensValue(0)
+            setMlm(30)
+            return
+        }
+
+        try {
+            const signer = await provider.getSigner();
+            const contractCommon = new ethers.Contract(tokenContractAddress, tokenContractAbi, signer);
+            const contract = new ethers.Contract(sttAffiliateAddress, tokenContractAbiCb31, signer);
+
+            // Получаем decimals для токена
+            const decimals = await contractCommon.decimals();
+            const tokenAmount = ethers.parseUnits(amount.toString(), parseInt(decimals));
+            // Получаем маркетинговую ставку (если есть метод в контракте)
+            let rate = 30
+                if(validateAddress) {
+                    rate = await contract.marketingRate(deferredAddress);
+                    setMlm(rate)
+                }
+            const externalFee = tokenAmount * BigInt(1) / BigInt(100); // Внешняя комиссия 1%
+            const paymentBase = tokenAmount - externalFee;
+            const receiverAmount = paymentBase * (100n - BigInt(rate)) / 100n;
+
+            const result =  ethers.formatUnits(receiverAmount, parseInt(decimals));
+            setSendTokensValue(+Number(result)?.toFixed(2));
+
+        } catch (error) {
+            console.error("Error calculating received amount:", error);
+            return null;
+        }
     }
-    checkBalance()
 
-
-
-
-// Функция для получения стоимости газа
-//     async function getGasCost(provider, gasEstimate) {
-//         const gasPrice = await provider.getGasPrice();
-//         return gasPrice.mul(gasEstimate);
-//     }
-//
-// // Функция для получения комиссии контракта
-//     async function getContractFee(contract) {
-//         const feePercentage = await contract.feePercentage();
-//         return feePercentage;
-//     }
-//
-// // Функция для расчёта итоговой суммы
-//     async function calculateTotalAmount(provider, contract, transferAmount) {
-//         // Оценка газа
-//         const gasEstimate = await contract.estimateGas.transfer(recipientAddress, transferAmount);
-//
-//         // Получение стоимости газа
-//         const gasCost = await getGasCost(provider, gasEstimate);
-//
-//         // Получение комиссии контракта
-//         const feePercentage = await getContractFee(contract);
-//         const feeAmount = transferAmount.mul(feePercentage).div(100);
-//
-//         // Итоговая сумма
-//         const totalAmount = transferAmount.add(gasCost).add(feeAmount);
-//
-//         return totalAmount;
-//     }
-
+    React.useEffect(() => {
+        if(deferredAddress.length >= 1) {
+            isValidAddress(deferredAddress)
+        } else {
+            setValidateAddress(false)
+        }
+    }, [deferredAddress])
 
     return (
         <div className={cls.wrapper}>
@@ -174,40 +197,49 @@ const SendTokens = () => {
                     onChange={(e) => setRecipientAddress(e.target.value)}
                     type='text'
                     classNameWrapper={cls.wrap_input}
-                    classNameInput={cls.input_cover}
+                    classNameInput={`${cls.input_cover} ${deferredAddress?.length >= 1 && !validateAddress && cls.notValidated}`}
                 >
                     confirm
                 </CustomInput>
                 <button className={cls.svgQr}><SvgQr className={cls.svgQrs}/></button>
             </div>
-            <div className={cls.coverBlockMoney}>
+            <div className={cls.cover_block_money}>
                 <div className={cls.tokensForSend}>
                     <div className={cls.value}>
                         <div className={cls.coverTokensInput}>
                             <CustomInput
                                 placeholder='0.00'
-                                value={transferTokens}
+                                value={transferTokens === 0 ? '' : transferTokens}
                                 onChange={(e:React.ChangeEvent<HTMLInputElement>) => setTokensForTransfer(e)}
                                 type='text'
                                 classNameWrapper={cls.wrap_input_tokens}
                                 classNameInput={cls.input_cover_tokens}
-                                style={{ width: `${transferTokens?.length === 0 ? '4' : transferTokens?.length}ch` }} // Исправлено здесь
+                                style={{
+                                    width: `${transferTokens?.toString?.length === 0 ? '4ch' : transferTokens?.toString()?.length}ch`,
+                                    minWidth: '4ch',
+                                    maxWidth: '8ch'
+                                }}
+
                             >
                             </CustomInput>
                         </div>
                        STT
                     </div>
-                    <div className={cls.range}>15 - {balance}</div>
+                    <div className={cls.range}>15 - {sttBalance}</div>
                 </div>
                 <div className={cls.wallet}>
-                    <div>8099.00 STT</div>
+                    <div>{sendTokensValue == 0 ? `0.00` : sendTokensValue} STT</div>
                 </div>
-                <div className={cls.textInfo}>
-                    <div>to recelve</div>
-                    <div>MLM 30%</div>
-                </div>
+                {mlm > 0 &&
+                    <div className={cls.textInfo}>
+                        <div>to recelve</div>
+                        <div>MLM {mlm}%</div>
+                    </div>
+                }
                 <Button onClick={() => sendTokens(recipientAddress, transferTokens)}
-                        className={cls.btn_send_tokens}>send</Button>
+                        className={cls.btn_send_tokens}>
+                {t("send")}
+                </Button>
             </div>
         </div>
     );

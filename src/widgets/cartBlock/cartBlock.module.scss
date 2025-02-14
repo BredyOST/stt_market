@@ -6,36 +6,68 @@
 
 .wrapper {
   position: relative;
-  width: mixins.rem(277);
-  height: mixins.rem(364);
-  //margin: auto;
-  //border-radius: mixins.rem(20);
+
+  @media (min-width: mixins.em(global.$mobile)) {
+    width: mixins.rem(277);
+    height: mixins.rem(364);
+  }
+  @media (max-width: mixins.em(global.$mobile)) {
+    width: mixins.rem(265);
+    height: mixins.rem(300);
+  }
+  @media (max-width: mixins.em(650)) {
+    width: mixins.rem(200);
+    height: mixins.rem(226);
+  }
+
 }
 
 .swiper {
-  width: mixins.rem(277);
-  height: mixins.rem(364);
   background-color: transparent;
 }
 
 .card {
-  width: 100%;
-  height: 100%;
+  border: mixins.rem(1) solid rgba(28, 28, 28, 0.07);
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   border-radius: mixins.rem(20);
-  //overflow: hidden;
 
+  @media (min-width: mixins.em(global.$mobile)) {
+    width: mixins.rem(277);
+    height: mixins.rem(364);
+  }
+  @media (max-width: mixins.em(global.$mobile)) {
+    width: mixins.rem(265);
+    height: mixins.rem(300);
+  }
+  @media (max-width: mixins.em(650)) {
+    width: mixins.rem(200);
+    height: mixins.rem(226);
+  }
 }
 
 .imgCover {
-  width: mixins.rem(240);
-  height: mixins.rem(238);
-  min-height: mixins.rem(238);
   padding-top: mixins.rem(17);
+
+  @media (min-width: mixins.em(global.$mobile)) {
+    width: mixins.rem(240);
+    height: mixins.rem(238);
+    min-height: mixins.rem(238);
+  }
+  @media (max-width: mixins.em(global.$mobile)) {
+    width: mixins.rem(200);
+    height: mixins.rem(186);
+    min-height: mixins.rem(186);
+  }
+
+  @media (max-width: mixins.em(650)) {
+    width: mixins.rem(151);
+    height: mixins.rem(150);
+    min-height: mixins.rem(160);
+  }
 }
 
 .image {

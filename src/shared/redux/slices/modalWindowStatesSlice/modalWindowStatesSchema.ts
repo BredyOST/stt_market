@@ -24,4 +24,9 @@ export interface IModalWindowStatesSchema {
     modalSttBonus: boolean,
     isClosingSttBonus: boolean
 
+    modalReals:boolean,
+    isClosingModalReals: boolean,
+
+    modalTransferForm:boolean,
+    isClosingModalTransferForm:boolean,
 }

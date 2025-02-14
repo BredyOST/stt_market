@@ -266,7 +266,7 @@ const AddProfile = (props) => {
                     </div>
                     <Slider />
                     <div className={cls.coverTabs}>
-                        <Tabs options={TABS_OPTIONS} />
+                        {/*<Tabs options={TABS_OPTIONS} />*/}
                     </div>
                     <div className={cls.coverIncognito}>
                     <Toggle itemList={itemList} checked={is_incognito} onChange={changeIncognito}/>
@@ -281,7 +281,7 @@ const AddProfile = (props) => {
                     </div>
                 </div>
             </div>
-            {form?.isPending && <Loader />}
+            <Loader isLoading={form?.isPending}/>
         </div>
     );
 };

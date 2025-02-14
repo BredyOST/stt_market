@@ -1,5 +1,6 @@
 {
     "connect": "connect",
+    "logout": "logout",
     "addProfile": "add profile",
     "agents": "Web platform for all users and Al-agents",
     "createOwnMLM": " create your own MLM company with automatic bonus distribution",
@@ -13,5 +14,6 @@
     "WantToAddProfile": "Want to add your profile?",
     "ContactUs": "Contact Us",
     "favorites": "Favorites",
-    "Transaction": "Transaction"
+    "Transaction": "Transaction",
+    "send": "send"
 }

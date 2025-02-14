@@ -14,8 +14,8 @@
   background: linear-gradient(
                   135deg,
                   #EB9AA2 0%,
-                  #946EF3 38%,
-                  #C12F98 75%,
+                  #946EF3 57%,
+                  #C12F98 100%,
   );
   color: #FFFFFF;
   border-radius: mixins.rem(14);
@@ -30,7 +30,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(50%, 30%);
+  transform: translate(mixins.rem(20), mixins.rem(12));
 }
 
 .close_svg {
@@ -71,13 +71,24 @@
 }
 
 .wrapper_inp {
-  height: mixins.rem(58);
-  width: mixins.rem(310);
+
   font-family: globalIndex.$font_family_main;
   font-size: mixins.rem(16);
   font-weight: 600;
   line-height: globalIndex.$line_height;
   position: relative;
+
+  @media (min-width: mixins.em(380)) {
+    height: mixins.rem(58);
+    width: mixins.rem(310);
+  }
+
+  @media (max-width: mixins.em(380)) {
+    height: mixins.rem(58);
+    width: mixins.rem(250);
+  }
+
+
 }
 
 .input_block {
@@ -103,6 +114,11 @@
   &::placeholder {
     font-family: globalIndex.$font_family_main;
   }
+}
+
+.notValidated {
+  background-color: #FBE6EF;
+  transition: background-color ease 0.3s 0s;
 }
 
 .cover_btn {
@@ -132,6 +148,20 @@
   font-size: mixins.rem(12);
   line-height: globalIndex.$line_height;
 }
+
+.red {
+  color: #ecd387;
+}
+
+
+.svgQr {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: mixins.rem(30);
+  transform: translate(mixins.rem(-10), mixins.rem(-15));
+}
+
 
 .stt_values {
   color: #FDCC8A;
@@ -165,11 +195,13 @@
   border-radius: mixins.rem(30);
   min-width: mixins.rem(137);
   min-height: mixins.rem(54);
-  background-color: #ff968f;
+  background-color: rgba(239, 239, 239, 0.5);
+  transition: background-color ease 0.3s, box-shadow ease 0.3s;
 
   @media(any-hover: hover) {
     &:hover {
-      background-color: #ff968f;
-    }
+      background-color: #f16590;
+      box-shadow: 0 mixins.rem(4) mixins.rem(8) rgba(0, 0, 0, 0.2);
+      transition: background-color ease 0.3s, box-shadow ease 0.3s;    }
   }
 }

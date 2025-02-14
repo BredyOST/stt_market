@@ -38,9 +38,8 @@ const CartBlock = () => {
                     grabCursor={true}
                     modules={[EffectCards, Autoplay]}
                     className={cls.swiper}
-                    autoplay={{delay: 3000, disableOnInteraction: false}}
+                    autoplay={{delay: 3000, disableOnInteraction: true}}
                     cardsEffect={{slideShadows: false}}
-                    loop={true}
                 >
                     {arrayCart.map((item) => (
                         <SwiperSlide key={item.id}>

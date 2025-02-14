@@ -19,4 +19,8 @@ export interface AuthSchemaState {
     sourceToken: string;
     targetToken: string ;
     walletKit:any;
+    isLoader:boolean;
+    chosenFavouritesIdReals: number | null,
+    hasUpliner: boolean,
+    tabRealsOrServices: number
 }

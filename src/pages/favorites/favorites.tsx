@@ -2,15 +2,17 @@ import React from 'react';
 import cls from './favotites.module.scss';
 import CustomButton from "../../shared/ui/сustomButton/CustomButton";
 import {useTranslation} from "react-i18next";
-import {useAppSelector} from "../../shared/redux/hooks/hooks";
+import {useAppDispatch, useAppSelector} from "../../shared/redux/hooks/hooks";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination } from 'swiper/modules';
 
 import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
 
-export const profiles = [
+import {IModalWindowStatesSchema} from "../../shared/redux/slices/modalWindowStatesSlice/modalWindowStatesSchema";
+import {modalAddProfileActions} from "../../shared/redux/slices/modalWindowStatesSlice/modalWindowStateSlice";
+import {ForFunc} from "../../entities/others";
+import {authActions} from "../../shared/redux/slices/authSlice/authSlice";
+
+export const profilesFavourite = [
     {
         profile_data: {
             id:1,
@@ -27,7 +29,7 @@ export const profiles = [
             wallet_number: "0x123456789ABCDEF"
         },
         image_data: '/test.jpg',
-        video_data: 'http://127.0.0.1:8000/video_temp/3cec27a2-4ab7-44f6-8876-b62cc7f01d4b_v2.mp4',
+        video_data: '1.mp4',
     },
     {
         profile_data: {
@@ -45,7 +47,7 @@ export const profiles = [
             wallet_number: "0x123456789ABCDEF"
         },
         image_data: '/test.jpg',
-        video_data: 'http://127.0.0.1:8000/video_temp/3cec27a2-4ab7-44f6-8876-b62cc7f01d4b_v2.mp4',
+        video_data: '2.mp4',
     },
     {
         profile_data: {
@@ -63,7 +65,7 @@ export const profiles = [
             wallet_number: "0x123456789ABCDEF"
         },
         image_data: '/test.jpg',
-        video_data: 'http://127.0.0.1:8000/video_temp/3cec27a2-4ab7-44f6-8876-b62cc7f01d4b_v2.mp4',
+        video_data: '3.mp4',
     },
     {
         profile_data: {
@@ -81,19 +83,160 @@ export const profiles = [
             wallet_number: "0x123456789ABCDEF"
         },
         image_data: '/test.jpg',
-        video_data: 'http://127.0.0.1:8000/video_temp/3cec27a2-4ab7-44f6-8876-b62cc7f01d4b_v2.mp4',
+        video_data: '4.mp4',
+    },
+    {
+        profile_data: {
+            id:5,
+            activity_hobbies: "Gaming, Traveling",
+            adress: "123 Example Street, Example City",
+            coordinates: [
+                37.7749,
+                -122.4194
+            ],
+            hashtags: `#gaming #traveling`,
+            is_incognito: false,
+            name: "John Doe",
+            url: "https://example.com",
+            wallet_number: "0x123456789ABCDEF"
+        },
+        image_data: '/test.jpg',
+        video_data: '5.mp4',
+    },
+    {
+        profile_data: {
+            id:6,
+            activity_hobbies: "Gaming, Traveling",
+            adress: "123 Example Street, Example City",
+            coordinates: [
+                37.7749,
+                -122.4194
+            ],
+            hashtags: `#gaming #traveling`,
+            is_incognito: false,
+            name: "John Doe",
+            url: "https://example.com",
+            wallet_number: "0x123456789ABCDEF"
+        },
+        image_data: '/test.jpg',
+        video_data: '6.mp4',
+    },
+    {
+        profile_data: {
+            id:7,
+            activity_hobbies: "Gaming, Traveling",
+            adress: "123 Example Street, Example City",
+            coordinates: [
+                37.7749,
+                -122.4194
+            ],
+            hashtags: `#gaming #traveling`,
+            is_incognito: false,
+            name: "John Doe",
+            url: "https://example.com",
+            wallet_number: "0x123456789ABCDEF"
+        },
+        image_data: '/test.jpg',
+        video_data: '7.mp4',
+    },
+    {
+        profile_data: {
+            id:8,
+            activity_hobbies: "Gaming, Traveling",
+            adress: "123 Example Street, Example City",
+            coordinates: [
+                37.7749,
+                -122.4194
+            ],
+            hashtags: `#gaming #traveling`,
+            is_incognito: false,
+            name: "John Doe",
+            url: "https://example.com",
+            wallet_number: "0x123456789ABCDEF"
+        },
+        image_data: '/test.jpg',
+        video_data: '8.mp4',
+    },
+    {
+        profile_data: {
+            id:9,
+            activity_hobbies: "Gaming, Traveling",
+            adress: "123 Example Street, Example City",
+            coordinates: [
+                37.7749,
+                -122.4194
+            ],
+            hashtags: `#gaming #traveling`,
+            is_incognito: false,
+            name: "John Doe",
+            url: "https://example.com",
+            wallet_number: "0x123456789ABCDEF"
+        },
+        image_data: '/test.jpg',
+        video_data: '11.mp4',
+    },
+    {
+        profile_data: {
+            id:10,
+            activity_hobbies: "Gaming, Traveling",
+            adress: "123 Example Street, Example City",
+            coordinates: [
+                37.7749,
+                -122.4194
+            ],
+            hashtags: `#gaming #traveling`,
+            is_incognito: false,
+            name: "John Doe",
+            url: "https://example.com",
+            wallet_number: "0x123456789ABCDEF"
+        },
+        image_data: '/test.jpg',
+        video_data: '22.mp4',
+    },
+    {
+        profile_data: {
+            id:11,
+            activity_hobbies: "Gaming, Traveling",
+            adress: "123 Example Street, Example City",
+            coordinates: [
+                37.7749,
+                -122.4194
+            ],
+            hashtags: `#gaming #traveling`,
+            is_incognito: false,
+            name: "John Doe",
+            url: "https://example.com",
+            wallet_number: "0x123456789ABCDEF"
+        },
+        image_data: '/test.jpg',
+        video_data: '33.mp4',
     },
 ]
 
+
 const Favorites = () => {
+
+    const dispatch = useAppDispatch()
 
     /** states */
     const { loggedIn } = useAppSelector(state => state.authSlice)
 
+    /** actions*/
+    const {openModal } = modalAddProfileActions
+    const {addChosenFavouritesIdReals} = authActions
+
+    /** functions*/
+    /** для отображения попапа донатов*/
+    const openVideo:ForFunc<number, void> = (id:number) => {
+        dispatch(addChosenFavouritesIdReals(id))
+        const modalReals:string = 'modalReals'
+        dispatch(openModal({modalName: modalReals as keyof IModalWindowStatesSchema}))
+    }
+
     const {t} = useTranslation()
 
     return (
-        <div className={cls.wrapper}>
+        <div className={`${cls.wrapper} ${loggedIn ? cls.loggedIn : cls.without_logged_in}`}>
             <div className={cls.cover_sub_title}>
                 <h3 className={cls.title}>
                     {loggedIn
@@ -103,36 +246,37 @@ const Favorites = () => {
                 </h3>
             </div>
             <div className={cls.cover}>
-                {profiles?.length > 0 &&
-                    profiles?.map((item: any) => (
-                            <CustomButton key={item?.id} classNameBtn={cls.profile_logo} type='button'>
+                {profilesFavourite?.length > 0 && profilesFavourite?.length <= 3
+                    ? profilesFavourite?.map((item: any) => (
+                            <CustomButton key={item?.id} classNameBtn={cls.profile_logo} type='button' onClick={() => openVideo(item?.profile_data?.id)}>
                                 <img src={item?.image_data} alt="логотип"/>
                             </CustomButton>
                     ))
+
+                    : <Swiper
+                    slidesPerView= {'auto'}
+                    spaceBetween={23}
+                    loop={true}
+                    centeredSlides={false}
+                    freeMode={false}
+                    className={cls.wrapper_slider}
+
+                >
+                    <div className={cls.cover}>
+                        {profilesFavourite?.length > 0 &&
+                            profilesFavourite?.map((item: any) => (
+                                <SwiperSlide style={{ width: "fit-content" }} key={item?.id}>
+                                    <CustomButton  classNameBtn={cls.profile_logo} type='button' onClick={() => openVideo(item?.profile_data?.id)}>
+                                        <img src={item?.image_data} alt="логотип"/>
+                                    </CustomButton>
+                                </SwiperSlide>
+                            ))
+                        }
+                    </div>
+                </Swiper>
                 }
             </div>
-            {/*<Swiper*/}
-            {/*    slidesPerView={3}*/}
-            {/*    spaceBetween={5}*/}
-            {/*    freeMode={true}*/}
-            {/*    pagination={{*/}
-            {/*        clickable: false,*/}
-            {/*    }}*/}
-            {/*    modules={[FreeMode]}*/}
-            {/*    className={cls.wrapper_slider}*/}
-            {/*>*/}
-            {/*    <div className={cls.cover}>*/}
-            {/*        {profiles?.length > 0 &&*/}
-            {/*            profiles?.map((item: any) => (*/}
-            {/*                <SwiperSlide>*/}
-            {/*                    <CustomButton key={item?.id} classNameBtn={cls.profile_logo} type='button'>*/}
-            {/*                        <img src={item?.image_data} alt="логотип"/>*/}
-            {/*                    </CustomButton>*/}
-            {/*                </SwiperSlide>*/}
-            {/*            ))*/}
-            {/*        }*/}
-            {/*    </div>*/}
-            {/*</Swiper>*/}
+
         </div>
     );
 };

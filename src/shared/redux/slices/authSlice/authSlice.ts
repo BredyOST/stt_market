@@ -1,7 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AuthSchemaState} from "./authShema";
 import {FROM_OPTIONS, TO_OPTIONS} from "../../../const/index.const";
-import {SwapOptionsFrom} from "../../../../entities/others";
 
 const initialState: AuthSchemaState = {
     loggedIn: false,
@@ -17,6 +16,10 @@ const initialState: AuthSchemaState = {
     sourceToken: FROM_OPTIONS[0].label,
     targetToken: TO_OPTIONS[FROM_OPTIONS[0].value][0].label,
     walletKit:null,
+    isLoader:false,
+    chosenFavouritesIdReals: null,
+    hasUpliner: false,
+    tabRealsOrServices: 1
 }
 
 const authSlice = createSlice({
@@ -61,6 +64,18 @@ const authSlice = createSlice({
         },
         addWalletKit: (state, action: PayloadAction<any>) => {
             state.walletKit = action.payload;
+        },
+        addLoader: (state, action: PayloadAction<boolean>) => {
+            state.isLoader = action.payload;
+        },
+        addChosenFavouritesIdReals: (state, action: PayloadAction<number>) => {
+            state.chosenFavouritesIdReals = action.payload;
+        },
+        addHasUpliner: (state, action: PayloadAction<boolean>) => {
+            state.hasUpliner = action.payload;
+        },
+        changeTabRealsOrServices: (state, action: PayloadAction<number>) => {
+            state.tabRealsOrServices = action.payload;
         }
     }
 })

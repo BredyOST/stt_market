@@ -7,12 +7,22 @@
 .wrapper {
     background-color: globalIndex.$btn_background;
     color: globalIndex.$btn_color;
-    height: mixins.rem(54);
-    width: mixins.rem(57);
     border-radius: mixins.rem(50) mixins.rem(10) mixins.rem(50) mixins.rem(50);
     font-weight: 800;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: mixins.rem(16);
+    box-shadow: mixins.rem(0) mixins.rem(0) mixins.rem(10) rgba(0, 0, 0, 0.2);
+
+    @media (min-width: mixins.em(global.$mobile)) {
+        height: mixins.rem(54);
+        width: mixins.rem(57);
+        font-size: mixins.rem(16);
+    }
+
+    @media (max-width: mixins.em(global.$mobile)) {
+        height: mixins.rem(40);
+        width: mixins.rem(38);
+        font-size: mixins.rem(13);
+    }
 }

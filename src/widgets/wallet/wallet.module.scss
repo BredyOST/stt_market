@@ -4,17 +4,22 @@
 @use '../../shared/styles/variable/common';
 
 .wrapper {
-  background-color: #FFFFFF;
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: mixins.rem(25);
   @extend .eth-card;
-  padding-bottom: mixins.rem(10);
   height: mixins.rem(250);
+  padding-bottom: mixins.rem(10);
+
+  //@media (min-width: mixins.em(global.$mobile)) {
+  //  padding-bottom: mixins.rem(10);
+  //}
+
 }
 
 .balance_values{
   display: flex;
   justify-content: space-between;
-  background-color: #96fac5;
+  background-color: #AFFCD0;
   border-radius: mixins.rem(25) mixins.rem(25) mixins.rem(0) mixins.rem(0);
   height: mixins.rem(48);
   padding-left: mixins.rem(32);
@@ -32,7 +37,7 @@
   display: flex;
   border-radius: mixins.rem(25);
   flex-direction: column;
-  height: 100%
+  height: 100%;
 }
 
 .balance_stt {
@@ -41,6 +46,11 @@
   justify-content: center;
   row-gap: mixins.rem(10);
   min-height: mixins.rem(100);
+
+  @media (max-width: mixins.em(global.$mobile)) {
+    flex: 1 1 auto;
+    }
+
 }
 
 .balance_stt_ink {
@@ -63,9 +73,18 @@
 }
 
 .balance_values_usd {
-  font-family: globalIndex.$font_family_third;
-  font-size: mixins.rem(14);
-  color: #A2A1A1;
+
+  @media (min-width: mixins.em(global.$mobile)) {
+    color: #A2A1A1;
+    font-size: mixins.rem(14);
+    font-family: globalIndex.$font_family_third;
+  }
+
+  @media (max-width: mixins.em(global.$mobile)) {
+    color: #365491;
+    font-size: mixins.rem(20);
+    font-family: globalIndex.$font_family_third;
+  }
 }
 
 .balance_values_usdt {
@@ -74,15 +93,56 @@
   text-align: center;
 }
 
-.block_action_btns {
+.balance_values_usd_cover {
   display: flex;
   justify-content: center;
   column-gap: mixins.rem(10);
 }
 
+.block_action_btns {
+  display: flex;
+  justify-content: center;
+  column-gap: mixins.rem(10);
+
+  @media (max-width: mixins.em(global.$mobile)) {
+    //background-color: #71FAA2;
+    //max-width: mixins.rem(295);
+    //width: mixins.rem(295);
+    //border-radius:  mixins.rem(15) mixins.rem(15) 0 0;
+    //justify-content: space-between;
+  }
+
+  @media (max-width: mixins.em(390)) {
+    //background-color: #71FAA2;
+    //max-width: mixins.rem(250);
+    //width: mixins.rem(250);
+    //border-radius:  mixins.rem(15) mixins.rem(15) 0 0;
+    //justify-content: space-between;
+  }
+
+}
+
+.btnGiftSvg {
+  //@media (max-width: mixins.em(global.$mobile)) {
+  //  visibility: hidden;
+  //  opacity: 0;
+  //  display: none;
+  //}
+  }
+
+.btnGiftSecondSvg {
+  @media (min-width: mixins.em(global.$mobile)) {
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+  }
+}
+
 .btnSenTokensSvg,
 .btnSwapSvg,
-.btnDonationSvg {
+.btnDonationSvg,
+.btnGiftSvg,
+.btnGiftSecondSvg{
   width: mixins.rem(25);
   height: mixins.rem(25);
   flex: 0 0 mixins.rem(25);
@@ -90,81 +150,94 @@
 }
 
 .wallet_link {
-  //margin-top: 15px;
-  //display: flex;
-  //flex-direction: row;
-  //align-items: center;
-  //justify-content: space-between;
-  //width: 100%;
-  //background-color: #96fac5;
-  //border-radius: 25px;
-  //padding: 10px 20px;
-  //text-decoration: none;
-  //color: #008279!important;
-  //font-weight: 500;
 
-  span {
-    //font-size: 20px;
-  }
+
 }
 
 .btn_send_tokens {
-  background-color: #71FAA2;
-  transition: background-color ease 0.3s 0s;
 
-  @media (any-hover: hover) {
-    &:hover {
-      background-color: #51d17f;
-      transition: background-color ease 0.3s 0s;
+  //@media (min-width: mixins.em(global.$mobile)) {
+    background-color: #71FAA2;
+    transition: background-color ease 0.3s 0s;
+
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: #51d17f;
+        transition: background-color ease 0.3s 0s;
+      }
     }
-  }
+  //}
 }
 
-.btn_swap {
-  background-color: #D0F68C;
-  transition: background-color ease 0.3s 0s;
+.btn_swap_tokens {
 
-  @media (any-hover: hover) {
-    &:hover {
-      background-color: #b3dc6a;
-      transition: background-color ease 0.3s 0s;
+  //@media (min-width: mixins.em(global.$mobile)) {
+    background-color: #D0F68C;
+    transition: background-color ease 0.3s 0s;
 
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: #b3dc6a;
+        transition: background-color ease 0.3s 0s;
+
+      }
     }
-  }
+  //}
 }
 
 .btn_donation {
-  background-color: #FFC8C8;
-  transition: background-color ease 0.3s 0s;
 
-  @media (any-hover: hover) {
-    &:hover {
-      background-color: #efa5a5;
-      transition: background-color ease 0.3s 0s;
+  //@media (min-width: mixins.em(global.$mobile)) {
+    background-color: #FFC8C8;
+    transition: background-color ease 0.3s 0s;
 
-    }
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: #efa5a5;
+        transition: background-color ease 0.3s 0s;
+
+      }
+    //}
   }
 }
 
 .btn_gift {
-  background-color: #C8EDFF;
-  transition: background-color ease 0.3s 0s;
 
-  @media (any-hover: hover) {
-    &:hover {
-      background-color: #a0d5ed;
-      transition: background-color ease 0.3s 0s;
+  //@media (min-width: mixins.em(global.$mobile)) {
+    background-color: #C8EDFF;
+    transition: background-color ease 0.3s 0s;
 
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: #a0d5ed;
+        transition: background-color ease 0.3s 0s;
+
+      }
     }
-  }
+  //}
+
 }
 
 .btn_send_tokens,
 .btn_donation,
-.btn_swap,
+.btn_swap_tokens,
 .btn_gift{
   width: mixins.rem(55);
   height: mixins.rem(55);
   border-radius: 50%;
-  @extend .eth-card
+
+  @media (min-width: mixins.em(global.$mobile)) {
+    box-shadow: mixins.rem(4) mixins.rem(2) mixins.rem(6) mixins.rem(2) rgba(41, 41, 41, 0.13);
+  }
+
+  @media (max-width: mixins.em(global.$mobile)) {
+    transition: color ease 0.3s 0s;
+
+    @media(any-hover: hover) {
+      color: #7C7C7C ;
+      transition: color ease 0.3s 0s;
+    }
+
+  }
+
 }

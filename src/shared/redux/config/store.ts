@@ -10,6 +10,7 @@ import LanguageReducer from './../slices/Language/languageSlice';
 import authReducer from './../slices/authSlice/authSlice';
 import {watchFileUpload} from "../sagas/sagaUploadFiles/sagaUploadFiles";
 import {watchFetchForm} from "../sagas/sagaCheckProfile/sagaCheckProfile";
+import WalletReducer from './../slices/walletSlice/walletSlice'
 
 const rootReducer: ReducersMapObject<IReduxStore> = {
     authSlice: authReducer,
@@ -17,6 +18,7 @@ const rootReducer: ReducersMapObject<IReduxStore> = {
     formsAddProfile: FormsAddProfileReducer,
     requestAddProfile: requestAddProfileReducer,
     Language: LanguageReducer,
+    walletSlice: WalletReducer
 };
 
 export const FETCH_REQUEST_UPLOAD_FILE = 'FETCH_REQUEST';

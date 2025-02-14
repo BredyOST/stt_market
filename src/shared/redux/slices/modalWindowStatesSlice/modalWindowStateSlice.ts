@@ -1,5 +1,6 @@
 import { IModalWindowStatesSchema } from './modalWindowStatesSchema';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {lockScroll, removeLockScroll} from "../../../helpers/functions";
 
 const initialState: IModalWindowStatesSchema = {
     modalAddProfileState: false,
@@ -24,7 +25,13 @@ const initialState: IModalWindowStatesSchema = {
     isClosingModalTelegram: false,
 
     modalSttBonus: false,
-    isClosingSttBonus: false
+    isClosingSttBonus: false,
+
+    modalReals:false,
+    isClosingModalReals: false,
+
+    modalTransferForm:false,
+    isClosingModalTransferForm:false,
 };
 
 const modalWindowStateSlice = createSlice({
@@ -32,10 +39,12 @@ const modalWindowStateSlice = createSlice({
     initialState,
     reducers: {
         openModal: (state, action: PayloadAction<{modalName: keyof IModalWindowStatesSchema}>) => {
+            lockScroll()
             const {modalName} = action.payload;
             state[modalName] = true;
         },
         closeModal: (state, action: PayloadAction<{modalName: keyof IModalWindowStatesSchema}>) => {
+            removeLockScroll()
             const {modalName} = action.payload;
             state[modalName] = false;
             state[`isClosingModal${modalName.at(0).toUpperCase()}`] = true;

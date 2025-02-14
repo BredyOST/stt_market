@@ -1,4 +1,23 @@
+@use '../../shared/styles/variable/globalIndex';
+@use '../../shared/styles/variable/global';
+@use '../../shared/styles/mixins';
+@use '../../shared/styles/variable/common';
+
 .leaflet-container {
   z-index: 0; /* Установите z-index, чтобы карта не перекрывала другие элементы */
   position: relative;
+}
+
+.cover_map {
+
+  width: 100%;
+  z-index: 0;
+  border-radius: mixins.rem(30);
+
+  @media (min-width: mixins.em(global.$mobile)) {
+    height: mixins.rem(421);
+  }
+  @media (max-width: mixins.em(global.$mobile)) {
+    height: mixins.rem(440);
+  }
 }

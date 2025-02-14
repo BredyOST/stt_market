@@ -3,11 +3,13 @@ import { FormsAddProfileSchema } from '../slices/formsAddProfileSlice/formsAddPr
 import { RequestAddProfileSchema } from '../slices/requestAddProfileSlice/requestAddProfileSchema';
 import {LanguageSchema} from "../slices/Language/languageShema";
 import {AuthSchemaState} from "../slices/authSlice/authShema";
+import {WalletState} from "../slices/walletSlice/walletSchema";
 
 export interface IReduxStore {
     authSlice: AuthSchemaState
     modalWindow: IModalWindowStatesSchema;
     formsAddProfile: FormsAddProfileSchema;
     requestAddProfile: RequestAddProfileSchema;
-    Language: LanguageSchema
+    Language: LanguageSchema,
+    walletSlice: WalletState
 }

@@ -153,7 +153,7 @@ const CustomSelect = ({ options, onSelect, placeholder, arrowIndicator, indicato
                     {indicator === SelectsIndicators.swapFrom ? sourceToken : targetToken}
                 </div>
                 {isOpenSwapMenu && (
-                    <ul className={`${cls.bodySelectLanguage} ${isOpenSwapMenu && cls.show}`}>
+                    <ul className={`${cls.bodySelectSwap} ${isOpenSwapMenu && cls.show}`}>
                         {isOpenSwapMenu &&
                             options?.length > 0 &&
                             options?.map((option) => (

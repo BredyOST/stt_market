@@ -36,6 +36,7 @@
     opacity: 0;
     pointer-events: none;
     animation: fadeOut 0.3s forwards;
+    z-index: 10;
 
     &.active {
         pointer-events: auto;
@@ -75,13 +76,13 @@
     border-radius: mixins.rem(15);
     left: 50%;
     transform: translate(-50%, -50%);
-
     z-index: 150;
-    //max-height: mixins.rem(550);
     display: flex;
 
-    @media (max-width: mixins.em(global.$mobile)) {
-        min-height: 98vh;
+    @media (max-width: mixins.em(380)) {
+        justify-content: center;
+        min-width: 95%;
+        width: 97vw;
     }
 
     .active & {

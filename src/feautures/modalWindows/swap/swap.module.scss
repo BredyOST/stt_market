@@ -20,7 +20,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(50%, 30%);
+  transform: translate(mixins.rem(20), mixins.rem(12));
 }
 
 .close_svg {
@@ -66,11 +66,23 @@
 .changeBlock{
   height: mixins.rem(119);
   row-gap: mixins.rem(18);
-  padding-left: mixins.rem(28);
-  padding-right: mixins.rem(28);
-  padding-top: mixins.rem(28);
-  padding-bottom: mixins.rem(28);
   border-radius: mixins.rem(20);
+
+  @media (min-width: mixins.em(381)) {
+    padding-left: mixins.rem(28);
+    padding-right: mixins.rem(28);
+    padding-top: mixins.rem(28);
+    padding-bottom: mixins.rem(28);
+  }
+
+  @media (max-width: mixins.em(380)) {
+    padding-left: mixins.rem(20);
+    padding-right: mixins.rem(20);
+    padding-top: mixins.rem(28);
+    padding-bottom: mixins.rem(28);
+  }
+
+
 }
 
 .valueBlock, {
@@ -97,7 +109,10 @@
 }
 
 .cover {
-
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  row-gap: mixins.rem(10);
 }
 
 .valueBlock {
@@ -154,6 +169,14 @@ color: #A2A1A1;
   padding-top: mixins.rem(3);
   padding-right: mixins.rem(5);
   padding-left: mixins.rem(5);
+  transition: background-color ease 0.3s 0s;
+  cursor: pointer;
+  @media (any-hover: hover) {
+    &:hover {
+      background-color: #d5cece;
+      transition: background-color ease 0.3s 0s;
+    }
+  }
 }
 
 .range {
@@ -206,9 +229,21 @@ color: #A2A1A1;
   color: #A2A1A1;
   font-family: globalIndex.$font_family_third;
   font-weight: 600;
-  max-width: mixins.rem(80);
+  min-width: 100%;
   background-color: transparent;
-  text-align: right;
+  text-align: left;
+
+  @media (min-width: mixins.em(381)) {
+    max-width: mixins.rem(80);
+  }
+
+  @media (max-width: mixins.em(380)) {
+    max-width: mixins.rem(60);
+  }
+  @media (max-width: mixins.em(340)) {
+    max-width: mixins.rem(43);
+  }
+
   &::placeholder{
     color: #A2A1A1;
   }

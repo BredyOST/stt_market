@@ -4,13 +4,13 @@
 @use '../../../shared/styles/variable/common';
 
 .wrapper {
-  padding-left: mixins.rem(30);
-  padding-right: mixins.rem(30);
-  padding-bottom: mixins.rem(30);
   display: flex;
   flex-direction: column;
   width: mixins.rem(371);
   row-gap: mixins.rem(30);
+  padding-left: mixins.rem(30);
+  padding-right: mixins.rem(30);
+  padding-bottom: mixins.rem(30);
 }
 
 .notification_header {
@@ -21,7 +21,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(50%, 30%);
+  transform: translate(mixins.rem(20), mixins.rem(12));
 }
 
 .hurt {
@@ -48,7 +48,7 @@
   top: 50%;
   right: 0;
   width: mixins.rem(30);
-  transform: translate(-50%, -50%);
+  transform: translate(mixins.rem(-10), mixins.rem(-15));
 }
 
 
@@ -68,16 +68,28 @@
 
 .cover_text_block {
   position: relative;
+
+  @media (max-width: mixins.em(380)) {
+    max-width: mixins.rem(290);
+  }
 }
 
 .wrap_input {
   height: mixins.rem(58);
-  width: mixins.rem(310);
   font-family: globalIndex.$font_family_main;
   font-size: mixins.rem(16);
   font-weight: 600;
   line-height: globalIndex.$line_height;
   position: relative;
+
+  @media (min-width: mixins.em(381)) {
+    width: mixins.rem(310);
+  }
+
+  @media (max-width: mixins.em(380)) {
+    max-width: mixins.rem(290);
+  }
+
 }
 
 .input_cover {
@@ -89,13 +101,29 @@
   width: 100%;
   background-color: #D3FDDE;
   border-radius: mixins.rem(15);
-  padding-left: mixins.rem(30);
-  padding-right: mixins.rem(64);
+
   padding-top: mixins.rem(5);
   padding-bottom: mixins.rem(5);
+  transition: background-color ease 0.3s 0s;
+
+  @media (min-width: mixins.em(380)) {
+    padding-left: mixins.rem(30);
+    padding-right: mixins.rem(64);
+  }
+
+  @media (max-width: mixins.em(380)) {
+    padding-left: mixins.rem(15);
+    padding-right: mixins.rem(64);
+  }
+
   &::placeholder {
     font-family: globalIndex.$font_family_main;
   }
+}
+
+.notValidated {
+  background-color: #FBE6EF;
+  transition: background-color ease 0.3s 0s;
 }
 
 .tokensForSend {
@@ -106,12 +134,13 @@
   row-gap: mixins.rem(20);
 }
 
-.coverBlockMoney {
+.cover_block_money {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   row-gap: mixins.rem(20);
+  text-align: center;
 }
 
 .value {

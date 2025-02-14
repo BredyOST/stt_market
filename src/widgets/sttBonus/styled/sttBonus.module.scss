@@ -3,11 +3,38 @@
 @use '../../../shared/styles/mixins';
 @use '../../../shared/styles/variable/common';
 
-.wrapper {
+
+.wrapper_big {
   display: flex;
   flex-direction: column;
-  row-gap: mixins.rem(0);
+  row-gap: mixins.rem(5);
   justify-content: space-between;
+
+  @media( max-width: mixins.em(1230)) {
+      display: none;
+      opacity: 0;
+      visibility: hidden;
+      width: 0;
+      max-height: 0;
+    }
+}
+
+.wrapper_compact {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: mixins.rem(14);
+  //max-height: mixins.rem(100);
+
+  @media(min-width: mixins.em(1231)) {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  @media (max-width: mixins.em(402)) {
+    min-width: 100%;
+  }
 }
 
 
@@ -18,6 +45,7 @@
   height: auto;
   justify-content: space-between;
 }
+
 .btn_stt_text {
   display: flex;
   column-gap: mixins.rem(10);
@@ -27,7 +55,20 @@
   -webkit-background-clip: text;
   color: transparent;
   font-size: mixins.rem(24);
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.btn_stt_text_compact {
+  color:#68379A;
+  font-weight: 700;
+  font-family: globalIndex.$font_family_title;
+  font-size: mixins.rem(14);
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  column-gap: mixins.rem(5);
   text-transform: uppercase;
 }
 
@@ -36,19 +77,50 @@
   display: flex;
   flex: 1 1 auto;
   height: mixins.rem(109);
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: mixins.rem(25);
+  transition: background-color ease 0.3s 0s;
 
-  &.height {
-      height: mixins.rem(115);
+  @media(any-hover: hover) {
+    &:hover {
+      transition: background-color ease 0.3s 0s;
+      background-color: rgba(218, 213, 213, 0.77);
+    }
   }
+
+}
+
+.cover_btn_big,
+.cover_btn_big_other{
+  height: mixins.rem(115);
+}
+
+.cover_btn_compact{
+  max-height: mixins.rem(61);
+  min-width: mixins.rem(204);
+}
+
+.cover_btn_compact_other {
+  min-width: mixins.rem(93);
+  max-height: mixins.rem(61);
 }
 
 .btn_stt_bonus {
   flex: 1 1 auto;;
   border-radius: mixins.rem(25);
   min-width: 100%;
-  padding-top: mixins.rem(27);
-  padding-bottom: mixins.rem(27);
+
   position: relative;
+
+  &.line {
+    padding-top: mixins.rem(27);
+    padding-bottom: mixins.rem(27);
+  }
+
+  &.column {
+    padding-top: mixins.rem(5);
+    padding-bottom: mixins.rem(5);
+  }
+
 }
+

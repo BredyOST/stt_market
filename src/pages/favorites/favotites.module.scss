@@ -3,28 +3,34 @@
 @use '../../shared/styles/mixins';
 @use '../../shared/styles/variable/common';
 
+.wrapper {
+
+  row-gap: mixins.rem(62);
+  display: flex;
+  flex-direction: column;
+
+  &.loggedIn {
+    padding-top: mixins.rem(30);
+  }
+
+  &.without_logged_in {
+    padding-top: mixins.rem(86);
+  }
+}
+
 .wrapper_slider {
-  max-width: 100%;
-  overflow: hidden;
+  max-width: mixins.rem(450);
 }
 
 .swiper-slide {
   text-align: center;
-  font-size: 18px;
+  font-size: mixins.rem(18);
   background: #fff;
-
-  /* Center slide text vertically */
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.wrapper {
-  padding-top: mixins.rem(60);
-  padding-bottom: mixins.rem(20);
-  row-gap: mixins.rem(55);
-  display: flex;
-  flex-direction: column;
-}
+
 
 .cover_sub_title {
   width: 100%;
@@ -35,12 +41,15 @@
 .title {
   @extend .titleBlock;
   max-width: mixins.rem(537);
+  @include mixins.adaptiveValue('font-size', 24, 16, 3, 800, 440);
 }
 
 .cover {
   display: flex;
   column-gap: mixins.rem(20);
   justify-content: center;
+  height: mixins.rem(85);
+  z-index: 0;
 }
 
 .profile_logo {
@@ -48,4 +57,14 @@
   max-width: mixins.rem(80);
   border-radius: 50%;
   overflow: hidden;
+  transform: scale(1);
+  transition: transform ease 0.3s 0s;
+
+  @media (any-hover: hover) {
+    &:hover {
+      transform: scale(1.1);
+      transition: transform ease 0.3s 0s;
+    }
+  }
+
 }

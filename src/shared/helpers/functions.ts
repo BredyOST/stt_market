@@ -13,3 +13,11 @@ export const handleFileSize = (file: File, item: string) => {
     }
     return true;
 };
+
+export const lockScroll = () => {
+    document.documentElement.classList.add('lock');
+}
+
+export const removeLockScroll = () => {
+    document.documentElement.classList.remove('lock');
+}

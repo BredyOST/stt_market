@@ -9,7 +9,7 @@ import {useAppDispatch, useAppSelector} from "../../shared/redux/hooks/hooks";
 import CustomButton from "../../shared/ui/сustomButton/CustomButton";
 import SafetyConnection from "../../feautures/modalWindows/safetyConnection/safetyConnection";
 import {authActions} from "../../shared/redux/slices/authSlice/authSlice";
-import ProfileInfo from "../profileInfo/profileInfo";
+import ProfileInfo, {activeProfile} from "../profileInfo/profileInfo";
 import Portal from "../../shared/ui/portal/portal";
 import Modal from "../../shared/ui/modal/modal";
 import {ReactComponent as SvgSafety} from './../../assets/svg/safety.svg';
@@ -44,6 +44,7 @@ function Header() {
         try {
             const data = {'username': telegramUsername ?? userName}
             const response = await axios.post('https://stt.market/api/notifications/safety/', data)
+            console.log(response)
         } catch(err) {
             console.log(err);
         }
@@ -98,15 +99,21 @@ function Header() {
         <>
             {loggedIn
                 ?<div className={'cover__container'}>
-                    <div className={`${cls.wrapper} ${cls.additional}`}>
-                        <ProfileInfo/>
+                    <div className={`${cls.wrapper_ath} ${activeProfile ? cls.active : cls.additional}`}>
+                        <ProfileInfo showInTheHeader={true}/>
+                        {activeProfile &&
+                            <CustomButton classNameBtn={activeProfile && cls.btn_connect_loggin_mobile_auth_with_profile} type='button'
+                                          onClick={handleLogin}>{loggedIn ? t('logout') : t('connect')}
+                            </CustomButton>
+                        }
                         <div className={cls.header_right_block}>
                             <div className={cls.language_safety}>
                                 <CustomSelect options={LANGUAGES} indicator={SelectsIndicators.language}/>
                                 <CustomButton type='button' onClick={showModalSafetyConnection}><SvgSafety className={cls.svg_safety}/></CustomButton>
                             </div>
-                            <CustomButton classNameBtn={cls.btn_connect} type='button'
-                                          onClick={handleLogin}>{t('connect')}</CustomButton>
+                            <CustomButton classNameBtn={cls.btn_connect_loggin} type='button'
+                                          onClick={handleLogin}>{loggedIn ? t('logout') : t('connect')}
+                            </CustomButton>
                         </div>
                         <Portal whereToAdd={document.body}>
                             <Modal show={modalSafetyConnection} closing={isClosingModalSafetyConnection}>
@@ -120,20 +127,23 @@ function Header() {
                         <div className={cls.wrapper}>
                             <div className={cls.header_left_block}>
                                 <Logo/>
-                                <CustomButton
-                                    classNameBtn={cls.btn_add_profile}
-                                    type='button'
-                                >
-                                    <div className={cls.btn_add_profile_text}>
-                                        <SvgProfile className={cls.svgLogoProfile}/>
-                                        {t('addProfile')}
-                                    </div>
+                                {/*<CustomButton*/}
+                                {/*    classNameBtn={cls.btn_add_profile}*/}
+                                {/*    type='button'*/}
+                                {/*>*/}
+                                {/*    <div onClick={handleLogin} className={cls.btn_add_profile_text}>*/}
+                                {/*        <SvgProfile className={cls.svgLogoProfile}/>*/}
+                                {/*        <span>{t('addProfile')}</span>*/}
+                                {/*    </div>*/}
+                                {/*</CustomButton>*/}
+                                <CustomButton classNameBtn={`${cls.btn_connect} ${cls.min}` } type='button'
+                                              onClick={handleLogin}>{loggedIn ? t('logout') : t('connect')}
                                 </CustomButton>
                             </div>
-                            <div className={cls.header_right_block}>
+                            <div className={`${!loggedIn ? cls.header_right_block_no_auth : cls.header_right_block}`}>
                                 <CustomSelect options={LANGUAGES} indicator={SelectsIndicators.language}/>
-                                <CustomButton classNameBtn={cls.btn_connect} type='button'
-                                              onClick={handleLogin}>{t('connect')}
+                                <CustomButton classNameBtn={`${cls.btn_connect} ${cls.max}`} type='button'
+                                              onClick={handleLogin}>{loggedIn ? t('logout') : t('connect')}
                                 </CustomButton>
                             </div>
                         </div>

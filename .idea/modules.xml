@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../sttMarket/stt-market/.idea/stt-market.iml" filepath="$PROJECT_DIR$/../../sttMarket/stt-market/.idea/stt-market.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/walletV2.iml" filepath="$PROJECT_DIR$/.idea/walletV2.iml" />
     </modules>
   </component>

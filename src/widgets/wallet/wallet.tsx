@@ -12,6 +12,8 @@ import {ReactComponent as SvgArrowRight} from "./../../assets/svg/arrow-rigth.sv
 import {ReactComponent as SvgSwap} from "./../../assets/svg/swap.svg";
 import {ReactComponent as SvgDonation} from "./../../assets/svg/donation.svg";
 import {ReactComponent as SvgGift} from "./../../assets/svg/gift.svg";
+import {ReactComponent as SvgGiftSecond} from "./../../assets/svg/giveTokens.svg";
+
 import CustomButton from "../../shared/ui/сustomButton/CustomButton";
 import {modalAddProfileActions} from "../../shared/redux/slices/modalWindowStatesSlice/modalWindowStateSlice";
 import SendTokens from "../../feautures/modalWindows/sendTokens/sendTokens";
@@ -21,22 +23,20 @@ import Swap from "../../feautures/modalWindows/swap/swap";
 import Donation from "../../feautures/modalWindows/donation/donation";
 import {ForFunc} from "../../entities/others";
 import {IModalWindowStatesSchema} from "../../shared/redux/slices/modalWindowStatesSlice/modalWindowStatesSchema";
-
+import {walletActions} from "../../shared/redux/slices/walletSlice/walletSlice";
 
 function Wallet(props) {
-    const [sttBalance, setSttBalance] = useState(0)
-    const [usdtBalance, setUsdtBalance] = useState(0)
-    const [etcBalance, setEthBalance] = useState(0)
-    const [helpUsdtBalance, setHelpUsdtBalance] = useState(0)
 
     const dispatch = useAppDispatch()
 
     /** states */
     const {provider, account} = useAppSelector(state => state.authSlice)
     const {modalSendTokens, modalSwap, modalDonation, isClosingModalSendTokens, isClosingModalSwap, isClosingModalDonation} = useAppSelector(state => state.modalWindow)
+    const {successTransferTokens, successSwap,sttBalance, etcBalance, helpUsdtBalance, usdtBalance} = useAppSelector(state => state.walletSlice)
 
     /** actions*/
     const {openModal} = modalAddProfileActions
+    const {addSuccessTransferToken, addBalanceStt, addUdtStt, addEtcStt, addHelpUsdt} = walletActions;
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -59,23 +59,23 @@ function Wallet(props) {
                         }
                         let rate = totalUs / totalSt
                         let usBalance = (parseInt(String(parseFloat(String((rate * stBalance))) * 100)) /100)
-                        setSttBalance(stBalance)
-                        setHelpUsdtBalance(usBalance)
-
+                        dispatch(addBalanceStt(stBalance))
+                        dispatch(addHelpUsdt(usBalance))
                     })
                 })
             })
             usdtContract.balanceOf(account).then(res => {
                 let walletUsdtBalance = (parseInt(String(parseFloat(String(Number(res) / Math.pow(10, 6))) * 100)) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ').replace('.', ',')
-                setUsdtBalance(+walletUsdtBalance)
+                dispatch(addUdtStt(+walletUsdtBalance))
+
             })
             provider?.getBalance(account).then((balance) => {
                 const balanceInEth = parseFloat(ethers.formatEther(balance)).toFixed(5).toString().replace('.', ',')
-                setEthBalance(+balanceInEth)
-                setEthBalance(Number(balanceInEth.replace(',', '.')))
+                dispatch(addEtcStt(Number(balanceInEth.replace(',', '.'))))
             })
         }
-    }, [account]);
+        dispatch(addSuccessTransferToken(false))
+    }, [account, successTransferTokens, successSwap]);
 
     /**Functions*/
     /** для отображения попапа отправки токенов*/
@@ -112,19 +112,21 @@ function Wallet(props) {
                         </a>
 
                     </div>
+                    <div className={cls.balance_values_usd_cover}>
                     <div className={cls.block_action_btns}>
                         <CustomButton classnameWrapper={cls.btn_wrapper} classNameBtn={cls.btn_send_tokens} type='button' onClick={showModalSendMoney}>
                             <SvgArrowRight className={cls.btnSenTokensSvg}/>
                         </CustomButton>
-                        <CustomButton classnameWrapper={cls.btn_wrapper} classNameBtn={cls.btn_swap} type='button' onClick={showModalSendSwap}>
+                        <CustomButton classnameWrapper={cls.btn_wrapper} classNameBtn={cls.btn_swap_tokens} type='button' onClick={showModalSendSwap}>
                             <SvgSwap className={cls.btnSwapSvg}/>
                         </CustomButton>
                         <CustomButton classnameWrapper={cls.btn_wrapper} classNameBtn={cls.btn_donation} type='button' onClick={sendDonation}>
                             <SvgDonation className={cls.btnDonationSvg}/>
                         </CustomButton>
                         <CustomButton classnameWrapper={cls.btn_wrapper} classNameBtn={cls.btn_gift} type='button'>
-                            <SvgGift className={cls.btnDonationSvg}/>
+                            <SvgGift className={cls.btnGiftSvg}/>
                         </CustomButton>
+                    </div>
                     </div>
                 </div>
             </div>

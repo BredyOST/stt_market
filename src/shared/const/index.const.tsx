@@ -88,6 +88,11 @@ const array = Array.from({ length: 45 }, (_, index) => index + 1);
 export const BUBBLE_COUNT = [...array]
 
 
+export const tabOption = [
+    {id:1, label: 'reals'},
+    {id:2, label: 'services'}
+]
+
 /** Для работы с контрактами*/
 
 /** Для swap компонента*/
@@ -112,6 +117,7 @@ export const TO_OPTIONS:SwapOptionsTo = {
         {value: 'eth', label: 'ETH', icon: '/img/eth-logo.png'},
     ]
 }
+
 export const to_list = {'stt': ['usdt', 'usdc', 'weth', 'arb', 'wbtc', 'link', 'dai'], 'usdt': ['stt', 'eth']}
 export const EXTRA_TOKENS_INFO = {
     'usdc': {

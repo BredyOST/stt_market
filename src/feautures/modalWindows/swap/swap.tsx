@@ -9,7 +9,6 @@ import {ReactComponent as SvgClose} from '../../../assets/svg/close.svg';
 import {ReactComponent as SvgArrow} from '../../../assets/svg/arrow.svg';
 import {ethers} from "ethers";
 import {
-    arbitrumCurrent,
     exchangeContractAbi,
     exchangeContractAddress,
     extraTokenInfo,
@@ -23,17 +22,18 @@ import {
     usdtContractAddress
 } from "../../../helpers/contracts";
 import CustomSelect from "../../../shared/ui/customSelect/customSelect";
-import {EXTRA_TOKENS_INFO, FROM_OPTIONS, ICONS_TOKENS, to_list, TO_OPTIONS} from "../../../shared/const/index.const";
+import { FROM_OPTIONS, TO_OPTIONS} from "../../../shared/const/index.const";
 import {SelectsIndicators} from "../../../entities/uiInterfaces/uiInterfaces";
 import {authActions} from "../../../shared/redux/slices/authSlice/authSlice";
+import {showAttention} from "../../../shared/helpers/attention";
+import {walletActions} from "../../../shared/redux/slices/walletSlice/walletSlice";
+import {IModalWindowStatesSchema} from "../../../shared/redux/slices/modalWindowStatesSlice/modalWindowStatesSchema";
 
 const Swap = () => {
 
     const dispatch = useAppDispatch()
 
     /** STATES*/
-    // const [sourceToken, setSourceToken] = useState('stt')
-    // const [targetToken, setTargetToken] = useState('usdt')
     const [rate, setRate] = useState(0.0)
     const [correctRate, setCorrectRate] = useState(0.0)
     const [extraBalances, setExtraBalances] = useState({})
@@ -41,38 +41,31 @@ const Swap = () => {
     const [targetValue, setTargetValue] = useState(0.0)
     const [maxValue, setMaxValue] = useState(0.0)
     const [inputWidth, setInputWidth] = useState(3)
-    const [toastText, setToastText] = useState('')
-    const [toastErrorShow, setToastErrorShow] = useState(false)
-    const [toastCompleteShow, setToastCompleteShow] = useState(false)
     const [preloader, setPreloader] = useState({display: 'none'})
     const [availableStt, setAvailableStt] = useState(0.0)
     const [availableUsdt, setAvailableUsdt] = useState(0.0)
-    const [showWwModal, setWwModal] = useState(false)
     const [fee, setFee] = useState(100)
 
     const [swapTokens, setSwapTokens] = useState<string>(``);
     const {provider, account} = useAppSelector(state => state.authSlice)
     const [balance, setBalance] = useState<any>('0');
+
     const { targetToken, sourceToken } = useAppSelector((state) => state.authSlice);
+    const { sttBalance, successSwap} = useAppSelector(state => state.walletSlice)
+
 
     /** ACTIONS*/
     const {closeModal, openModal} = modalAddProfileActions
+    const {addTargetToken, addSourceToken} = authActions;
+    const {addLoader} = authActions;
+    const {addSuccessSwap} = walletActions;
+
 
     /** FUNCTIONS*/
-
-    /** для ввода токенов для обмена*/
-    const setTokensForTransfer = (e:React.ChangeEvent<HTMLInputElement>) => {
-        if(+e.target.value > +balance) {
-            setSwapTokens(balance)
-        } else {
-            setSwapTokens(e.target.value)
-        }
-    }
-
     /** для закрытия модального окна*/
     const closeModalSwap = () => {
-        const modalSendTokens:any = 'modalSwap'
-        dispatch(closeModal({modalName: modalSendTokens}))
+        const modalSendTokens:string = 'modalSwap'
+        dispatch(closeModal({modalName: modalSendTokens as keyof IModalWindowStatesSchema}))
     }
 
     /** Функция проверки баланса*/
@@ -99,15 +92,14 @@ const Swap = () => {
             })
         })
     }
-    checkBalance()
 
+    React.useEffect(() => {
+        checkBalance();
+    }, [account]);
 
     /** */
     function handleBalances() {
         if (account) {
-            // const acc = account
-            const providerMain = provider;
-            // const provider_balance = new ethers.BrowserProvider(window.ethereum)
             const contract = new ethers.Contract(tokenContractAddress, tokenContractAbi, provider);
             const usdtContract = new ethers.Contract(usdtContractAddress, usdtContractAbi, provider);
             let totalSt = 0.0
@@ -162,7 +154,6 @@ const Swap = () => {
                         let factor = parseFloat(String(Number(res) / Math.pow(10,18)))
                         let fee = 1 - (feeView / 100)
                         let correctRateView = (1 / (totalSupplyView / contractBalanceView * factor * fee))
-
                         setCorrectRate(correctRateView)
                     })
                     sttContract.balanceOf(reverseUsdtSttAddress).then((res) => {
@@ -174,11 +165,11 @@ const Swap = () => {
                 })
             })
 
-            // usdtContract.balanceOf(acc).then(res => {
+            // usdtContract.balanceOf(account).then(res => {
             //     let walletUsdtBalance = (parseInt(parseFloat(Number(res) / Math.pow(10, 6)) * 100) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ').replace('.', ',')
             //     setUsdtBalance(walletUsdtBalance)
             // })
-            // provider_balance.getBalance(acc).then((balance) => {
+            // provider_balance.getBalance(account).then((balance) => {
             //     const balanceInEth = parseFloat(ethers.formatEther(balance)).toFixed(5).toString().replace('.', ',')
             //     setEthBalance(balanceInEth)
             // })
@@ -189,7 +180,7 @@ const Swap = () => {
         // setSourceToken(dir.value)
         setSourceValue(0)
         // setTargetToken(to_list[dir.value][0])
-        setInputWidth(3)
+        // setInputWidth(3)
         setTargetValue(0.0)
         if (window.ethereum) {
             const provider = new ethers.BrowserProvider(window.ethereum)
@@ -221,40 +212,43 @@ const Swap = () => {
         }
     }
 
-    function changeTargetToken(dir) {
-        // setTargetToken(dir.value)
+    function changeTargetToken() {
         setSourceValue(0.0)
-        setInputWidth(3)
         setTargetValue(0.0)
     }
 
     function handleChange(e) {
         const reqAmount = parseFloat(e.target.value)
         if (reqAmount > parseFloat(String(maxValue))) {
-            setToastText('Requested amount exceeds your balance')
-            setToastErrorShow(true)
+            // showAttention(`Please check the entered ERC20 account.`, 'error')
+            setSourceValue(balance)
         } else {
             setSourceValue(e.target.value)
             setInputWidth(e.target.value.toString().length + 1)
             if (!reqAmount) {
                 setTargetValue(0.0)
             } else {
-                if (sourceToken?.toLowerCase() === 'stt') {
-                    if (targetToken?.toLowerCase() === 'usdt') {
-                        const rateV = parseFloat(rate.toString().replace(',', '.')) * (1 - (fee / 100))
-                        let tValue = +(reqAmount * rateV).toFixed(4)
-                        setTargetValue(tValue)
-                    } else {
-                        const rateV = parseFloat(extraBalances[targetToken?.toLowerCase()].rate.replace(',', '.')) * (1 - (fee / 100))
-                        let tValue = +(reqAmount * rateV).toFixed(4)
-                        setTargetValue(tValue)
-                    }
-                } else if (sourceToken?.toLowerCase() === 'usdt') {
-                    if (targetToken?.toLowerCase() === 'stt') {
-                        let tValue = +(reqAmount / +correctRate.toFixed(8)).toFixed(2)
-                        setTargetValue(tValue)
-                    }
-                }
+                setTarget(reqAmount)
+            }
+        }
+    }
+
+    /** для проверки конечного значения после конвертации токена*/
+    function setTarget(reqAmount) {
+        if (sourceToken?.toLowerCase() === 'stt') {
+            if (targetToken?.toLowerCase() === 'usdt') {
+                const rateV = parseFloat(rate.toString().replace(',', '.')) * (1 - (fee / 100))
+                let tValue = +(reqAmount * rateV).toFixed(4)
+                setTargetValue(tValue)
+            } else {
+                const rateV = parseFloat(extraBalances[targetToken?.toLowerCase()].rate.replace(',', '.')) * (1 - (fee / 100))
+                let tValue = +(reqAmount * rateV).toFixed(4)
+                setTargetValue(tValue)
+            }
+        } else if (sourceToken?.toLowerCase() === 'usdt') {
+            if (targetToken?.toLowerCase() === 'stt') {
+                let tValue = +(reqAmount / +correctRate.toFixed(8)).toFixed(2)
+                setTargetValue(tValue)
             }
         }
     }
@@ -267,131 +261,87 @@ const Swap = () => {
         handleChange(e)
     }
 
-    function handleSwap() {
-        if (window.ethereum) {
-            if (sourceToken === 'stt') {
-                if (sourceValue >= 1000) {
-                    setPreloader({display: 'flex'})
-                    if (targetToken === 'usdt') {
-                        window.ethereum.request({method: "eth_chainId"}).then((result) => {
-                            if (result === arbitrumCurrent[0]['chainId'] || result === 42161) {
-                                const provider_balance = new ethers.BrowserProvider(window.ethereum)
-                                provider_balance.listAccounts().then(async (result) => {
-                                    const signer = await provider_balance.getSigner()
-                                    const ExChangeContract = new ethers.Contract(exchangeContractAddress, exchangeContractAbi, signer)
-                                    const SttContract = new ethers.Contract(tokenContractAddress, tokenContractAbi, signer)
-                                    let amount = (sourceValue * Math.pow(10,9)).toString().toLocaleString()
-                                    SttContract.approve(exchangeContractAddress, amount.toString()).then((res) => {
-                                        setTimeout(function (){
-                                            ExChangeContract.swap(amount.toString()).then(() => {
-                                                setPreloader({display: 'none'})
-                                                setTimeout(() => {
-                                                    setToastCompleteShow(true)
-                                                    setSourceValue(0)
-                                                    setInputWidth(3)
-                                                    setTargetValue(0)
-                                                }, 100)
-                                            }).catch((error) => {
-                                                setPreloader({display: 'none'})
-                                                console.log(error)
-                                            });
-                                        }, 1500)
-                                    }).catch((error) => {
-                                        setPreloader({display: 'none'})
-                                        console.log(error)
-                                    });
-                                })
-                            } else {
-                                alert('Please, connect to Arbitrum Network')
-                            }
-                        })
-                    } else {
-                        window.ethereum.request({method: "eth_chainId"}).then((result) => {
-                            if (result === arbitrumCurrent[0]['chainId'] || result === 42161) {
-                                const provider_balance = new ethers.BrowserProvider(window.ethereum)
-                                provider_balance.listAccounts().then(async (result) => {
-                                    const signer = await provider_balance.getSigner()
-                                    const AnyExChangeContract = new ethers.Contract(newExchangeAddress, newExchangeAbi, signer)
-                                    const SttContract = new ethers.Contract(tokenContractAddress, tokenContractAbi, signer)
-                                    let amount = (sourceValue * Math.pow(10,9)).toString().toLocaleString()
-                                    SttContract.approve(newExchangeAddress, amount.toString()).then((res) => {
-                                        setTimeout(function (){
-                                            AnyExChangeContract.swap(extraBalances[targetToken].id, amount.toString()).then(() => {
-                                                setPreloader({display: 'none'})
-                                                setTimeout(() => {
-                                                    setToastCompleteShow(true)
-                                                    setSourceValue(0)
-                                                    setInputWidth(3)
-                                                    setTargetValue(0)
-                                                }, 100)
+    async function handleSwap() {
 
-                                            }).catch((error) => {
-                                                setPreloader({display: 'none'})
-                                                console.log(error)
-                                            });
-                                        }, 1500)
-                                    }).catch((error) => {
-                                        setPreloader({display: 'none'})
-                                        console.log(error)
-                                    });
-                                })
-                            } else {
-                                alert('Please, connect to Arbitrum Network')
-                            }
-                        })
-                    }
+        try {
+            const signer = await provider.getSigner(); // Получаем signer через AppKit
+            dispatch(addLoader(true))
+            if (sourceToken?.toLowerCase() === 'stt') {
+                if (sourceValue < 1000) {
+                    showAttention(`Minimum amount for STT swap is 1000`, 'error')
+                    return;
                 }
-            } else if (sourceToken === 'usdt') {
-                if (targetToken === 'stt') {
-                    if (sourceValue > 1) {
-                        setPreloader({display: 'flex'})
-                        window.ethereum.request({method: "eth_chainId"}).then((result) => {
-                            if (result === arbitrumCurrent[0]['chainId'] || result === 42161) {
-                                const provider_balance = new ethers.BrowserProvider(window.ethereum)
-                                provider_balance.listAccounts().then(async (result) => {
-                                    const signer = await provider_balance.getSigner()
-                                    const UsdtContract = new ethers.Contract(usdtContractAddress, usdtContractAbi, signer)
-                                    const reverseExchangeContract = new ethers.Contract(reverseUsdtSttAddress, reverseUsdtSttAbi, signer)
-                                    let amount = (sourceValue * (10**6)).toString().toLocaleString()
-                                    UsdtContract.approve(reverseUsdtSttAddress, amount.toString()).then((res) => {
-                                        setTimeout(function (){
-                                            reverseExchangeContract.swap(amount.toString()).then(() => {
-                                                setPreloader({display: 'none'})
-                                                setTimeout(() => {
-                                                    setToastCompleteShow(true)
-                                                    setSourceValue(0)
-                                                    setInputWidth(3)
-                                                    setTargetValue(0)
-                                                }, 100)
-                                            }).catch((error) => {
-                                                setPreloader({display: 'none'})
-                                                console.log(error)
-                                            });
-                                        }, 1500)
-                                    }).catch((error) => {
-                                        setPreloader({display: 'none'})
-                                        console.log(error)
-                                    });
-                                })
-                            } else {
-                                alert('Please, connect to Arbitrum Network')
-                            }
-                        })
-                    } else {
-                        setToastText('Requested amount less than minimal')
-                        setToastErrorShow(true)
-                    }
+
+                const amount = ethers.parseUnits(sourceValue.toString(), 9);
+
+                if (targetToken?.toLowerCase() === 'usdt') {
+                    const ExChangeContract = new ethers.Contract(exchangeContractAddress, exchangeContractAbi, signer);
+                    const SttContract = new ethers.Contract(tokenContractAddress, tokenContractAbi, signer);
+
+                    // Вызываем approve
+                    const approveTx = await SttContract.approve(exchangeContractAddress, amount);
+                    await approveTx.wait();
+
+                    // Вызываем swap
+                    const swapTx = await ExChangeContract.swap(amount);
+                    await swapTx.wait();
+
+                    showAttention(`Swap completed`, 'success')
+
+                } else {
+                    const AnyExChangeContract = new ethers.Contract(newExchangeAddress, newExchangeAbi, signer);
+                    const SttContract = new ethers.Contract(tokenContractAddress, tokenContractAbi, signer);
+                    // Вызываем approve
+                    const approveTx = await SttContract.approve(newExchangeAddress, amount);
+                    await approveTx.wait();
+
+                    // Вызываем swap
+                    const swapTx = await AnyExChangeContract.swap(extraBalances[targetToken?.toLowerCase()]?.id, amount);
+                    await swapTx.wait();
+
+                    showAttention(`Swap completed`, 'success')
+
                 }
+            } else if (sourceToken?.toLowerCase() === 'usdt' && targetToken === 'stt') {
+                if (sourceValue <= 1) {
+                    showAttention(`Requested amount less than minimal`, 'error')
+                    return;
+                }
+
+                const amount = ethers.parseUnits(sourceValue.toString(), 6); // 6 decimals для USDT
+
+                const reverseExchangeContract = new ethers.Contract(reverseUsdtSttAddress, reverseUsdtSttAbi, signer);
+                const UsdtContract = new ethers.Contract(usdtContractAddress, usdtContractAbi, signer);
+
+                // Вызываем approve
+                const approveTx = await UsdtContract.approve(reverseUsdtSttAddress, amount);
+                await approveTx.wait();
+
+                // Вызываем swap
+                const swapTx = await reverseExchangeContract.swap(amount);
+                await swapTx.wait();
+
+                console.log("Swap completed!");
+                showAttention(`Swap completed`, 'success')
+
             }
+
+            setPreloader({ display: 'none' });
+            setSourceValue(0);
+            setTargetValue(0);
+        } catch (error) {
+            console.error("Error during swap:", error);
+            showAttention(`Error during swap. Please try again`, 'error')
+
+        } finally {
+            dispatch(addLoader(false))
+            dispatch(addSuccessSwap(!successSwap))
         }
     }
 
     useEffect(() => {
         handleBalances();
     }, [sourceToken]);
-
-
-    const {addTargetToken, addSourceToken} = authActions;
 
     React.useEffect(() => {
         if (sourceToken === 'stt') {
@@ -401,6 +351,14 @@ const Swap = () => {
         }
     }, [sourceToken]);
 
+    React.useEffect(() => {
+        changeTargetToken()
+    },[sourceToken]);
+
+    React.useEffect(() => {
+        const e = {target: {value: sourceValue}}
+        handleChange(e)
+    },[targetToken]);
 
     return (
         <div className={cls.wrapper}>
@@ -423,7 +381,7 @@ const Swap = () => {
                                     type='text'
                                     classNameWrapper={cls.wrap_input_tokens}
                                     classNameInput={cls.input_cover_tokens}
-                                    style={{ width: `${swapTokens?.length === 0 ? '4' : swapTokens?.length}ch` }} // Исправлено здесь
+                                    style={{ width: `${sourceValue?.toString()?.length === 0 ? '4' : sourceValue?.toString()?.length}ch` }}
                                 >
                                 </CustomInput>
                             </div>
@@ -431,7 +389,7 @@ const Swap = () => {
                                 <div onClick={setMaxSource} className={cls.countText}>max</div>
                             </div>
                         </div>
-                        <div className={cls.range}>15 - {balance}</div>
+                        <div className={cls.range}>15 - {sttBalance}</div>
                     </div>
                     <div className={cls.sttSign}>
                         <div className={cls.textStt}>
@@ -463,14 +421,14 @@ const Swap = () => {
                             <div className={cls.infoSwap}>
                                 <h3>Swap rate</h3>
                                 {targetToken.toUpperCase() === 'USDT'
-                                    ? <div>1 STT
-                                        = {rate ? (parseFloat(rate?.toString().replace(',', '.')) * (1 - (fee / 100))).toFixed(6) : 'Loading...'} USDT</div>
+                                    ? <div>1 STT = {rate ? (parseFloat(rate?.toString().replace(',', '.')) * (1 - (fee / 100))).toFixed(6) : 'Loading...'} USDT</div>
                                     : <>
                                         {targetToken.toLowerCase() === 'stt'
-                                            ? <span>1 STT = {correctRate ? correctRate.toFixed(8) : 'Loading...'} USDT</span>
-                                            : extraBalances[targetToken.toLowerCase()] ? (
+                                                ? <span>1 STT = {correctRate && !isNaN(correctRate) ? correctRate.toFixed(8) : 'Loading...'} USDT</span>
+                                                : extraBalances[targetToken.toLowerCase()] ? (
                                                 <span>
                                                         1 STT = {extraBalances[targetToken.toLowerCase()]?.rate} {extraBalances[targetToken.toLowerCase()]?.name}
+
                                                     </span>
                                             ) : (
                                                 <span>Loading...</span>
@@ -510,7 +468,7 @@ const Swap = () => {
                 </div>
             </div>
             <div className={cls.coverBlockMoney}>
-                <Button className={cls.btn_send_tokens}>swap</Button>
+                <Button onClick={handleSwap} className={cls.btn_send_tokens}>swap</Button>
             </div>
         </div>
     );

@@ -6,6 +6,7 @@ import {Grid} from "react-loader-spinner";
 import ScrollContainer from "react-indiana-drag-scroll";
 import HistoryItem from "../historyItem/historyItem";
 import {exchangeContractAddress} from "../../helpers/contracts";
+import {ReactComponent as SvgCheck} from "./../../assets/svg/check.svg";
 
 
 const HistoryList = forwardRef(function (props:any, ref) {
@@ -16,7 +17,6 @@ const HistoryList = forwardRef(function (props:any, ref) {
     const [s_leftScroll, setLeftScroll] = useState(props.leftScroll)
 
     async function handleHistory(len=5) {
-        console.log(len)
         if (props.fullHistory.length > 0) {
             if (historyLoading === false) {
                 setHistoryLoading(true)
@@ -326,6 +326,7 @@ const HistoryList = forwardRef(function (props:any, ref) {
         <>
             {historyLoading
                 ? <div className={"history-preloader-block"}>
+                    {/*<SvgCheck style={{width:'104px',height:'104px'}}/>*/}
                     <i className="fa-regular fa-arrows-rotate fa-spin" style={{display: "block", margin: '75px auto 0', fontSize: 62, color: '#888888', textAlign: "center"}}></i>
                 </div>
                 : <>
@@ -342,6 +343,7 @@ const HistoryList = forwardRef(function (props:any, ref) {
                                     {props.historyNeedLoad
                                         ? <div className={"history_card"} style={{cursor:"default", backgroundColor: 'transparent', justifyContent: "center", width: 230, paddingTop: 80, height: 150}} >
                                             <i className="fa-light fa-receipt"></i>
+
                                             <div className={"history_button"} onClick={() => handleHistory(5)} style={{justifyContent: "center", cursor: "pointer"}}>
                                                 <p>Load</p>
                                             </div>

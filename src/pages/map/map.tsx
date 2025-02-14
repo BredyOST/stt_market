@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap} from 'react-leaflet';
 import L, {LatLngBounds, LatLngTuple} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import cls from './map.module.scss';
 
 // Настраиваем пути к иконкам по умолчанию
 L.Icon.Default.mergeOptions({
@@ -87,7 +88,7 @@ const Map = () => {
     const centerPosition: LatLngTuple = [51.505, -0.09]; // Центральная позиция карты
 
     return (
-        <MapContainer center={centerPosition} zoom={13} scrollWheelZoom={false} style={{ height: '421px', width: '100%', zIndex: 0, borderRadius: '30px'}}>
+        <MapContainer className={cls.cover_map} center={centerPosition} zoom={13} scrollWheelZoom={false}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
