@@ -4,7 +4,6 @@ import CustomButton from "../../../shared/ui/сustomButton/CustomButton";
 import {ReactComponent as SvgClose} from '../../../assets/svg/close.svg';
 import {useAppDispatch, useAppSelector} from "../../../shared/redux/hooks/hooks";
 import {modalAddProfileActions} from "../../../shared/redux/slices/modalWindowStatesSlice/modalWindowStateSlice";
-import {ReactComponent as SvgHurt} from '../../../assets/svg/hart.svg';
 import {ReactComponent as SvgDonation} from '../../../assets/svg/donation.svg';
 import CustomInput from "../../../shared/ui/customInput/customInput";
 import {ethers} from "ethers";
@@ -16,9 +15,11 @@ import {
     usdtContractAddress
 } from "../../../helpers/contracts";
 import CustomSelect from "../../../shared/ui/customSelect/customSelect";
-import {FROM_OPTIONS, TO_OPTIONS, TOKEN_LIST} from "../../../shared/const/index.const";
+import {FROM_OPTIONS, LIST_DONATION, TO_OPTIONS, TOKEN_LIST} from "../../../shared/const/index.const";
 import {SelectsIndicators} from "../../../entities/uiInterfaces/uiInterfaces";
 import {Button} from "react-bootstrap";
+import {SwapOptionsFrom} from "../../../entities/others";
+import {authActions} from "../../../shared/redux/slices/authSlice/authSlice";
 
 const Donation = () => {
 
@@ -29,7 +30,7 @@ const Donation = () => {
     const [balance, setBalance] = useState<any>('0');
     const {provider, account} = useAppSelector(state => state.authSlice)
 
-    const [targetToken, setTargetToken] = useState('stt')
+    // const [targetToken, setTargetToken] = useState('stt')
     const [value, setValue] = useState(0.000)
     const [inputWidth, setInputWidth] = useState(3)
     const [minValue, setMinValue] = useState(0)
@@ -39,9 +40,11 @@ const Donation = () => {
     const [toastErrorShow, setToastErrorShow] = useState(false)
     const [toastCompleteShow, setToastCompleteShow] = useState(false)
     const [showWwModal, setWwModal] = useState(false)
+    const {donationToken} = useAppSelector(state => state.authSlice)
 
     /** ACTIONS*/
     const {closeModal, openModal} = modalAddProfileActions
+    const {addDonationToken} = authActions;
 
     /** FUNCTIONS*/
     /** для закрытия модального окна*/
@@ -52,33 +55,58 @@ const Donation = () => {
 
     /** для ввода токенов для отправки*/
     const setTokensForTransfer = (e:React.ChangeEvent<HTMLInputElement>) => {
-        if(+e.target.value > +balance) {
-            console.log('>>>')
-            setTransferTokens(balance)
+
+        const inputValue = e.target.value;
+        // Проверка на допустимые символы (цифры и точка)
+        const isValidInput = /^\d*\.?\d{0,3}$/.test(inputValue);
+
+        if (!isValidInput) {
+            return; // Если введены недопустимые символы, просто игнорируем
+        }
+
+        const number = parseFloat(inputValue)
+
+
+        if(number > +maxValue) {
+            setTransferTokens(String(maxValue))
+        } else if (inputValue.length === 0) {
+            setTransferTokens('0')
         } else {
-            setTransferTokens(e.target.value)
+            setTransferTokens(inputValue)
         }
     }
 
-    function changeTargetToken(dir) {
-        setTargetToken(dir.value)
-        setValue(0)
-        if (window.ethereum) {
-            const provider = new ethers.BrowserProvider(window.ethereum)
-            const contract = new ethers.Contract(TOKEN_LIST[dir.value].contract, TOKEN_LIST[dir.value].abi, provider)
-            contract.balanceOf(account).then((res) => {
-                const balance:any = parseInt(String(Number(res) / Math.pow(10, TOKEN_LIST[dir.value].decimals)))
-                setMaxValue(balance)
-            })
-        } else {
+    async function changeTargetToken(value:string):Promise<void> {
+        try {
+            // setValue(0)
+            const contract = new ethers.Contract(TOKEN_LIST[value].contract, TOKEN_LIST[value].abi, provider)
+            const res = await contract.balanceOf(account);
+            const balance:any = parseInt(String(Number(res) / Math.pow(10, TOKEN_LIST[value].decimals)))
+            console.log('max balace')
+            console.log(res)
+            console.log(balance)
+            setMaxValue(balance)
+        } catch (err ){
             setMaxValue(0)
+
         }
+
+        // if (window.ethereum) {
+        //     const provider = new ethers.BrowserProvider(window.ethereum)
+        //     const contract = new ethers.Contract(TOKEN_LIST[dir.value].contract, TOKEN_LIST[dir.value].abi, provider)
+        //     contract.balanceOf(account).then((res) => {
+        //         const balance:any = parseInt(String(Number(res) / Math.pow(10, TOKEN_LIST[dir.value].decimals)))
+        //         setMaxValue(balance)
+        //     })
+        // } else {
+        //     setMaxValue(0)
+        // }
 
     }
 
     async function makeDonation() {
-        const token = TOKEN_LIST[targetToken]
-        console.log(token)
+        const token = TOKEN_LIST[donationToken]
+
         if (window.ethereum) {
             const provider = new ethers.BrowserProvider(window.ethereum)
             const signer = await provider.getSigner()
@@ -105,9 +133,9 @@ const Donation = () => {
 
     }
 
-    useEffect(() => {
-        changeTargetToken({value: 'stt'})
-    }, []);
+    // useEffect(() => {
+    //     changeTargetToken('stt')
+    // }, []);
 
 
     /** Функция проверки баланса*/
@@ -135,6 +163,25 @@ const Donation = () => {
         })
     }
     checkBalance()
+
+
+    /** выбор токенов при swap*/
+    const handleChooseDonationToken = (value: string) => {
+        dispatch(addDonationToken(value))
+        changeTargetToken(value)
+    };
+
+    /** для показа выпадающего меню swap блока*/
+    const [isOpenDonationMenu, setIsOpenDonationMenu] = React.useState<boolean>(false);
+
+    /** изменение состояния для показа выпадающего меню и его скрытия*/
+    const openMenuDonation = () => {
+        setIsOpenDonationMenu((prev) => !prev);
+    };
+
+    React.useEffect(() => {
+        changeTargetToken('stt')
+    },[donationToken])
 
     return (
         <div className={cls.wrapper}>
@@ -175,15 +222,24 @@ const Donation = () => {
                                 </CustomInput>
                             </div>
                         </div>
-                        <div className={cls.range}>15 - {balance}</div>
+                        {maxValue === 0 && <div className={cls.range}>you have 0</div>}
+                        {maxValue >= 15 && <div className={cls.range}>15 - {maxValue}</div>}
                     </div>
                     <div className={cls.sttSign}>
                         <div className={cls.textStt}>
-                            <CustomSelect options={TO_OPTIONS['stt']}
-                                          onSelect={changeTargetToken}
-                                          indicator={SelectsIndicators.swapTo}
+                            <CustomSelect options={LIST_DONATION}
+                                          onSelect={handleChooseDonationToken}
+                                          isOpenMenu={isOpenDonationMenu}
+                                          handleOpenMenu={openMenuDonation}
+                                          chosenValue={donationToken}
                                           arrowIndicator={false}
-
+                                          classNameWrapper={cls.wrapper_select}
+                                          classNameChosenValue={cls.custom_select}
+                                          classNameIcon={cls.icon_select}
+                                          classNameTextWithImage={cls.token_select}
+                                          classNameBodyList={cls.body_select}
+                                          classNameShowed={cls.show}
+                                          classNameActiveItem={cls.active}
                             />
                         </div>
                     </div>

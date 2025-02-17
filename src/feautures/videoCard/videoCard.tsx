@@ -19,6 +19,7 @@ interface IVideoCard {
     autoPlay: boolean;
     userId?: number;
     profile?:any
+    // key?:number
 }
 
 const VideoCard = ({
@@ -32,6 +33,7 @@ const VideoCard = ({
                        autoPlay,
                        userId,
                         profile,
+
                    }: IVideoCard) => {
 
     const dispatch = useDispatch();

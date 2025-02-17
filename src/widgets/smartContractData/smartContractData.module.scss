@@ -4,7 +4,7 @@
 @use './../../shared/styles/variable/common';
 
 .wrapper {
-  padding-top: mixins.rem(120);
+  padding-top: mixins.rem(150);
   @include mixins.adaptiveValue('padding-top', 350, 350, 3, 1100, 901);
   @include mixins.adaptiveValue('padding-top', 350, 300, 3, 900, 769);
   @include mixins.adaptiveValue('padding-top', 250, 250, 3, 768, 651);
@@ -135,7 +135,7 @@
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    opacity: 0.8;
+    opacity: 1;
   }
 }
 

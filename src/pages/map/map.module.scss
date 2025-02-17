@@ -21,3 +21,13 @@
     height: mixins.rem(440);
   }
 }
+
+
+.black_circle_marker {
+  background-color: black; // Черный цвет
+  border-radius: 50%; // Делаем круглым
+  width: 16px; // Ширина
+  height: 16px; // Высота
+  border: 2px solid white; // Белая обводка (опционально)
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); // Тень (опционально)
+}

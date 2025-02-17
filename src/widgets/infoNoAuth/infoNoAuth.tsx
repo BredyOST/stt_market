@@ -1,7 +1,7 @@
 import React from 'react';
 import cls from './infoNoAuth.module.scss'
 import {useTranslation} from "react-i18next";
-import CartBlock from "../cartBlock/cartBlock";
+import CartBlock, {arrayCart} from "../cartBlock/cartBlock";
 
 const UnauthorizedUser = () => {
 
@@ -14,9 +14,6 @@ const UnauthorizedUser = () => {
                     <div className={`${cls.title} ${i18n.language === 'en' ? cls.en : cls.ru}`}>{t('agents')}</div>
                     <div className={cls.cart_wrapper}>
                         <CartBlock/>
-                        <div className={cls.mlm_text}>
-                            {t('createOwnMLM')}
-                        </div>
                     </div>
                 </div>
             </div>
@@ -28,9 +25,6 @@ const UnauthorizedUser = () => {
             </div>
                 <div className={cls.cart_wrapper_down}>
                     <CartBlock/>
-                    <div className={cls.mlm_text_down}>
-                        {t('createOwnMLM')}
-                    </div>
                 </div>
         </div>
     );

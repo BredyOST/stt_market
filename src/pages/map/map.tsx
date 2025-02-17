@@ -3,13 +3,22 @@ import {MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap} from 'reac
 import L, {LatLngBounds, LatLngTuple} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import cls from './map.module.scss';
+import CompanyPopup from "../../widgets/CompanyPopup/CompanyPopup";
 
 // Настраиваем пути к иконкам по умолчанию
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-    iconUrl: require('leaflet/dist/images/marker-icon.png'),
-    shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-});
+// L.Icon.Default.mergeOptions({
+//     iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+//     iconUrl: require('leaflet/dist/images/marker-icon.png'),
+//     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+// });
+
+const createBlackCircleMarker = () => {
+    return L.divIcon({
+        className: cls.black_circle_marker, // Класс для стилизации
+        iconSize: [16, 16], // Размер маркера
+        iconAnchor: [8, 8], // Точка привязки маркера
+    });
+};
 
 
 function LocationMarker() {
@@ -24,10 +33,19 @@ function LocationMarker() {
         return [parseFloat(latitude), parseFloat(longitude)] as LatLngTuple;
     };
 
+    // const companies = Array.from({ length: 2000 }, (_, index) => ({
+    //     name: `Компания ${String.fromCharCode(1040 + (index % 32))}${index + 1}`,
+    //     position: generateRandomCoordinate(),
+    // }));
+
     const companies = Array.from({ length: 2000 }, (_, index) => ({
         name: `Компания ${String.fromCharCode(1040 + (index % 32))}${index + 1}`,
         position: generateRandomCoordinate(),
+        description: `Описание компании ${index + 1}`,
+        address: `Адрес компании ${index + 1}`,
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // URL иконки маркера
     }));
+
 
     // Фильтрация точек в пределах видимой области карты
     const filterCompaniesInBounds = (companies: any[], bounds: LatLngBounds) => {
@@ -72,17 +90,45 @@ function LocationMarker() {
         };
     }, [map]);
 
-    return (
-        <>
-            {position && <Marker position={position}><Popup>You are here</Popup></Marker>}
-            {visibleCompanies.map((company, index) => (
-                <Marker key={index} position={company.position}>
-                    <Popup>{company.name}</Popup>
-                </Marker>
-            ))}
-        </>
-    );
+//     return (
+//         <>
+//             {position && <Marker position={position}><Popup>You are here</Popup></Marker>}
+//             {visibleCompanies.map((company, index) => (
+//                 <Marker key={index} position={company.position}>
+//
+//                     <Popup>{company.name}</Popup>
+//                 </Marker>
+//             ))}
+//         </>
+//     );
+// }
+
+return (
+    <>
+        {position && (
+            <Marker position={position}>
+                <Popup>Вы здесь</Popup>
+            </Marker>
+        )}
+        {visibleCompanies.map((company, index) => (
+            <Marker
+                key={index}
+                position={company.position}
+                icon={createBlackCircleMarker()} // Кастомный маркер
+            >
+                <Popup>
+                    <CompanyPopup
+                        name={company.name}
+                        description={company.description}
+                        address={company.address}
+                    />
+                </Popup>
+            </Marker>
+        ))}
+    </>
+);
 }
+
 
 const Map = () => {
     const centerPosition: LatLngTuple = [51.505, -0.09]; // Центральная позиция карты

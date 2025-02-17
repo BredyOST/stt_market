@@ -4,11 +4,54 @@
 @use './../../shared/styles/variable/common';
 
 
+.services {
+  display: flex;
+  background: #2F164B;
+  width: mixins.rem(250);
+  align-items: center;
+  justify-content: center;
+  border-radius: mixins.rem(15);
+  column-gap: mixins.rem(20);
+  cursor: pointer;
+}
+
+.wrapper_main {
+  display: flex;
+  flex-direction: column;
+  row-gap: mixins.rem(45);
+  padding-bottom: mixins.rem(60);
+}
+
+.title_iq_pump {
+  font-family: "Luckiest Guy";
+  font-weight: 700;
+  color: #91FCA5;
+  font-size: mixins.rem(24);
+}
+
+.cover_sub_title {
+  display: flex;
+  justify-content: center;
+  min-width: 100%;
+  text-align: center;
+}
+
+.title_main {
+  @extend .titleBlock;
+  max-width: mixins.rem(537);
+  @include mixins.adaptiveValue('font-size', 24, 16, 3, 800, 440);
+}
+
+.svg_brain_block{
+    width: mixins.rem(65);
+    height: mixins.rem(100);
+    border-radius: 50%;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
   background: #2F164B;
-  max-width: mixins.rem(354);
   border-radius: mixins.rem(15);
   align-items: center;
   padding-top: mixins.rem(40);
@@ -16,6 +59,24 @@
   padding-left: mixins.rem(30);
   padding-right: mixins.rem(30);
   row-gap: mixins.rem(30);
+  box-sizing: border-box;
+
+
+  @media (min-width: mixins.em(global.$mobile)) {
+    height: 98%;
+    max-width: 100%;
+    position: relative;
+    width: auto;
+    aspect-ratio: 9 / 16;
+
+  }
+
+  @media (max-width: mixins.em(global.$mobile)) {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
 }
 
 .title_cover {
@@ -39,13 +100,6 @@
 .svg_brain {
   width: mixins.rem(85);
   height: mixins.rem(100);
-  //background: linear-gradient(
-  //                130deg,
-  //                #BC188D 0%,
-  //                #BC188D 38%,
-  //                #600F5F 75%,
-  //                #2F164B 100%
-  //);
   border-radius: 50%;
   box-shadow: mixins.rem(0) mixins.rem(0) mixins.rem(10) mixins.rem(10) #2F164B;
 }
@@ -180,8 +234,8 @@
   font-family: 'Lato';
   min-width: mixins.rem(294);
   @media (min-width: mixins.em(380)) {
-    padding-left: mixins.rem(30);
-    padding-right: mixins.rem(64);
+    padding-left: mixins.rem(15);
+    padding-right: mixins.rem(15);
   }
 
   @media (max-width: mixins.em(380)) {

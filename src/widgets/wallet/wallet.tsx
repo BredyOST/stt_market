@@ -12,8 +12,6 @@ import {ReactComponent as SvgArrowRight} from "./../../assets/svg/arrow-rigth.sv
 import {ReactComponent as SvgSwap} from "./../../assets/svg/swap.svg";
 import {ReactComponent as SvgDonation} from "./../../assets/svg/donation.svg";
 import {ReactComponent as SvgGift} from "./../../assets/svg/gift.svg";
-import {ReactComponent as SvgGiftSecond} from "./../../assets/svg/giveTokens.svg";
-
 import CustomButton from "../../shared/ui/сustomButton/CustomButton";
 import {modalAddProfileActions} from "../../shared/redux/slices/modalWindowStatesSlice/modalWindowStateSlice";
 import SendTokens from "../../feautures/modalWindows/sendTokens/sendTokens";

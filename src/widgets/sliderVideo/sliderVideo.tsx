@@ -2,8 +2,8 @@ import React from 'react';
 import cls from './sliderVideo.module.scss';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Navigation, Mousewheel, Pagination} from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import {Navigation, Mousewheel } from 'swiper/modules';
+import {Swiper, SwiperSlide} from 'swiper/react';
 import {ReactComponent as SvgClose} from '../../assets/svg/close.svg';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -18,6 +18,7 @@ import {ReactComponent as SvgGenerationLink} from "../../assets/svg/share.svg";
 import {ReactComponent as SvgReceivePayment} from "./../../assets/svg/receivePayment.svg";
 import {ReactComponent as SvgFavourite} from "../../assets/svg/favorites.svg";
 import {ReactComponent as SvgChain} from "./../../assets/svg/chainLink.svg";
+import IqPumpService from "../iqPumpService/iqPumpService";
 
 interface ISliderVideoProps {
     show: boolean;
@@ -32,14 +33,16 @@ const SliderVideo = ({show}: ISliderVideoProps) => {
     const [progress, setProgress] = React.useState<number>(0);
     const [isHovered, setIsHovered] = React.useState<boolean>(false);
     const [soundOn, setSoundOn] = React.useState<boolean>(true)
-    const { chosenFavouritesIdReals } = useAppSelector(state => state.authSlice)
+    const {chosenFavouritesIdReals} = useAppSelector(state => state.authSlice)
     const [hideMenu, setHideMenu] = React.useState<boolean>(false);
+    const {profilesWithServices} = useAppSelector(state => state.authSlice)
+
     /** actions*/
     const {closeModal, openModal} = modalAddProfileActions
 
     /** для закрытия попапа*/
     const closeRealsList = () => {
-        const modalRealsList:string = 'modalReals'
+        const modalRealsList: string = 'modalReals'
         dispatch(closeModal({modalName: modalRealsList as keyof IModalWindowStatesSchema}))
     }
 
@@ -62,21 +65,22 @@ const SliderVideo = ({show}: ISliderVideoProps) => {
         setHideMenu(prevState => !prevState);
     }
 
-    if(!show) return null;
+    if (!show) return null;
 
     return (
         <div className={`${cls.overlay} ${show && cls.open}`}>
-            <CustomButton onClick={closeRealsList} classnameWrapper={cls.wrapper_btn} classNameBtn={cls.cover_btn} type='button'>
-                <SvgClose className={cls.close_svg} />
+            <CustomButton onClick={closeRealsList} classnameWrapper={cls.wrapper_btn} classNameBtn={cls.cover_btn}
+                          type='button'>
+                <SvgClose className={cls.close_svg}/>
             </CustomButton>
             <Swiper
                 modules={[Navigation, Mousewheel]} // Подключаем модули
                 direction={'vertical'}
                 slidesPerView={1}
                 spaceBetween={5}
-                mousewheel={{ forceToAxis: true, sensitivity: 0.5 }}
-                pagination={{ clickable: true }}
-                style={{ height: '100vh' }}
+                mousewheel={{forceToAxis: true, sensitivity: 0.5}}
+                pagination={{clickable: true}}
+                style={{height: '100vh'}}
                 className={cls.swiper}
                 initialSlide={initialSlideIndex}
                 onSwiper={setSwiperInstance}
@@ -84,9 +88,10 @@ const SliderVideo = ({show}: ISliderVideoProps) => {
                 simulateTouch={true}
                 threshold={20}
             >
-                    {profiles.map((video) => (
-                        <SwiperSlide key={video.profile_data.id}>
-                            <div className={cls.body}>
+                {profilesWithServices.map((video) => (
+                    <SwiperSlide key={video.profile_data.id}>
+                        <div className={cls.body}>
+                            {video.type !== 'service' &&
                                 <div className={cls.item_video_cover}>
                                     <VideoCard
                                         classNameWrap={cls.item_video}
@@ -97,7 +102,7 @@ const SliderVideo = ({show}: ISliderVideoProps) => {
                                         controls={false}
                                         startPointerEnter={false}
                                         autoPlay={true}
-                                        profile = {video}
+                                        profile={video}
                                     />
                                     <div className={cls.btn_cover_block}>
                                         <div className={`${cls.basic} ${hideMenu ? cls.show : cls.hide}`}>
@@ -125,18 +130,28 @@ const SliderVideo = ({show}: ISliderVideoProps) => {
                                                 <div className={cls.followers}>1000</div>
                                             </div>
                                         </div>
-                                        <CustomButton onClick={hideOrShowMenuReals} type='button' classnameWrapper={cls.wrapperSvg}
+                                        <CustomButton onClick={hideOrShowMenuReals} type='button'
+                                                      classnameWrapper={cls.wrapperSvg}
                                                       classNameBtn={`${cls.svg}`}>
-                                            <div className={hideMenu ? cls.expand_icon_show : cls.expand_icon_hide}></div>
+                                            <div
+                                                className={hideMenu ? cls.expand_icon_show : cls.expand_icon_hide}></div>
                                         </CustomButton>
                                     </div>
                                 </div>
-                            </div>
-                        </SwiperSlide>
-                    ))}
+                            }
+
+
+                            {video.type == 'service' && <div className={cls.item_video_cover}>
+                                <IqPumpService/>
+                                </div>}
+
+                        </div>
+                    </SwiperSlide>
+                ))}
             </Swiper>
         </div>
     );
 };
 
 export default SliderVideo;
+
