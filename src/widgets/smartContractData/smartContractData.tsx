@@ -33,6 +33,8 @@ const SmartContractData = () => {
     const [totalSupply, setTotalSupply] = React.useState(0.0);
     const [multiBalance, setMultiBalance] = React.useState(0.0)
     const [contractBalance, setContractBalance] = React.useState(0.0)
+    const [holders, setHolders] = React.useState<number>(0)
+    const [transactions, setTransactions] = React.useState<number>(0)
 
     const {loggedIn, account, provider} = useAppSelector(state => state.authSlice)
 
@@ -52,7 +54,7 @@ const SmartContractData = () => {
 
             const holders = response.data.result;
             const holdersCount = holders.length;
-            console.log(`Количество держателей токена: ${holdersCount}`);
+            // console.log(`Количество держателей токена: ${holdersCount}`);
             return holdersCount;
         } catch (error) {
             console.error('Ошибка при получении количества держателей:', error);
@@ -88,7 +90,7 @@ const SmartContractData = () => {
                 }
             }
 
-            console.log(`Общее количество транзакций: ${totalTransactions}`);
+            // console.log(`Общее количество транзакций: ${totalTransactions}`);
             return totalTransactions;
         } catch (error) {
             console.error('Ошибка при получении количества транзакций:', error);
@@ -157,12 +159,12 @@ const SmartContractData = () => {
 
             // Получаем количество держателей токена
             const holdersCount = await getTokenHoldersCount();
-            console.log(`Количество держателей токена: ${holdersCount}`);
-
+            // console.log(`Количество держателей токена: ${holdersCount}`);
+            setHolders(holdersCount)
             // Получаем общее количество транзакций
             const totalTransactions = await getTotalTransactions();
-            console.log(`Общее количество транзакций: ${totalTransactions}`);
-
+            // console.log(`Общее количество транзакций: ${totalTransactions}`);
+            setTransactions(totalTransactions);
 
 
         } catch (error) {
@@ -209,7 +211,12 @@ const SmartContractData = () => {
                     <img className={cls.image} src="/_.gif" alt="Example GIF"/>
                     {COUNTERS?.length >= 1 && COUNTERS.map((item) => (
                         <div key={item.id} className={`${cls.cover_text_into} ${cls[item.label]}`}>
-                            <div className={cls.text}>{item.counters}</div>
+                            <div className={cls.text}>
+                                {item.label === 'holders' && holders}
+                                {item.label === 'transaction' && transactions}
+                                {item.label !== 'holders' && item.label !== 'transaction' && item.counters}
+                            </div>
+
                             <h3 className={cls.title}>{t(item.label)}</h3>
                         </div>
                     ))}

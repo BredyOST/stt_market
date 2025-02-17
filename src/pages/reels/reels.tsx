@@ -13,6 +13,9 @@ import Tabs from "../../shared/ui/tabs/tabs";
 import {tabOption} from "../../shared/const/index.const";
 import { authActions } from '../../shared/redux/slices/authSlice/authSlice';
 import IqPumpService from "../../widgets/iqPumpService/iqPumpService";
+import IqPumpMainWindow from "../../widgets/iqPumpService/iqPumpMainWindow";
+import {web3ProvidersMapUpdated} from "web3";
+import {useDispatch} from "react-redux";
 
 export const profiles = [
     {
@@ -92,7 +95,7 @@ export const profiles = [
     },
     {
         profile_data: {
-            id: 5,
+            id: 6,
             activity_hobbies: "Speedrunning games, road tripping across the USA",
             adress: "123 Example Street, Example City",
             coordinates: [37.7749, -122.4194],
@@ -180,11 +183,38 @@ export const profiles = [
         image_data: '/test.jpg',
         video_data: '33.mp4',
     },
+    {
+        profile_data: {
+            id: 12,
+            activity_hobbies: "Exploring culinary games, traveling for food tours",
+            adress: "123 Example Street, Example City",
+            coordinates: [37.7749, -122.4194],
+            hashtags: "#gaming #traveling #еда #foodie",
+            is_incognito: false,
+            name: "John Doe",
+            url: "https://example.com",
+            wallet_number: "0x123456789ABCDEF"
+        },
+        image_data: '/test.jpg',
+        video_data: '33.mp4',
+    },
+]
+
+const services = [
+    {
+        profile_data: {
+            id: 13,
+            userId: 1,
+            title: 'iq Pump'
+        },
+        link: 'https://example.com',
+        type: 'service'
+    }
 ]
 
 const Reels = () => {
 
-    const dispatch = useAppDispatch();
+    const dispatch = useDispatch();
 
     /** states */
     const [currentIndex, setCurrentIndex] = React.useState<number>(1);
@@ -194,11 +224,10 @@ const Reels = () => {
     const [searchLine, setSearchLine] = React.useState('');
     const [windowWidth, setWindowWidth] = React.useState<null | number>(null);
     const [counterSlides, setCounterSlides] = React.useState<number>(7);
-    const {tabRealsOrServices} = useAppSelector(state => state.authSlice)
-
+    const {profilesWithServices} = useAppSelector(state => state.authSlice)
 
     /** actions*/
-    const {changeTabRealsOrServices} = authActions;
+    const {addProfilesWithServices} = authActions;
 
     /** Функция для получения рандомных Reels */
     const getRandomReels = (count: number, excludeIndexes: number[] = []) => {
@@ -206,9 +235,9 @@ const Reels = () => {
         const usedIndexes = new Set(excludeIndexes);
 
         while (randomReels.length < count) {
-            const randomIndex = Math.floor(Math.random() * profiles.length);
+            const randomIndex = Math.floor(Math.random() * profilesWithServices.length);
             if (!usedIndexes.has(randomIndex)) {
-                randomReels.push(profiles[randomIndex]);
+                randomReels.push(profilesWithServices[randomIndex]);
                 usedIndexes.add(randomIndex);
             }
         }
@@ -227,40 +256,36 @@ const Reels = () => {
         setIsAnimating(true);
 
         let nextIndex = currentIndex + counterSlides;
-        if (nextIndex >= profiles.length) {
+        if (nextIndex >= profilesWithServices.length) {
             // Если все рилсы уже показаны, начинаем заново
             nextIndex = 0;
         }
         setCurrentIndex(nextIndex);
     };
 
-
-    /** для смены активного таба*/
-    const changeActiveTab =(id: number) => {
-        console.log('Dispatching changeTabRealsOrServices with id:', id);
-        dispatch(changeTabRealsOrServices(id));
-    };
-
     /** Обновляем отображаемые Reels при изменении currentIndex */
     React.useEffect(() => {
-        let nextIndex = currentIndex + counterSlides;
-        if (nextIndex < profiles.length) {
-            // Достаточно рилсов — берём 5 подряд
-            setRealsForShow(profiles.slice(currentIndex, nextIndex));
-        } else {
-            // Осталось меньше 5 рилсов — добираем рандомно
-            const remaining = profiles.slice(currentIndex); // Берём оставшиеся
-            const neededCount = counterSlides - remaining.length;
-            const randomReels = getRandomReels(neededCount, [...remaining.map(r => r.profile_data?.id)]); // Добираем случайные
-            setRealsForShow([...remaining, ...randomReels]);
+
+        if(profilesWithServices?.length >= 1) {
+            let nextIndex = currentIndex + counterSlides;
+            if (nextIndex < profilesWithServices.length) {
+                // Достаточно рилсов — берём 5 подряд
+                setRealsForShow(profilesWithServices?.slice(currentIndex, nextIndex));
+            } else {
+                // Осталось меньше 5 рилсов — добираем рандомно
+                const remaining = profilesWithServices?.slice(currentIndex); // Берём оставшиеся
+                const neededCount = counterSlides - remaining.length;
+                const randomReels = getRandomReels(neededCount, [...remaining.map(r => r.profile_data?.id)]); // Добираем случайные
+                setRealsForShow([...remaining, ...randomReels]);
+            }
+            setTimeout(() => {
+                setIsLoading(false)
+                setIsAnimating(false);
+            }, 1000)
         }
-        setTimeout(() => {
-            setIsLoading(false)
-            setIsAnimating(false); // Завершаем анимацию
-        }, 1000)
-    }, [currentIndex, counterSlides]);
 
 
+    }, [currentIndex, counterSlides, profilesWithServices]);
 
     React.useEffect(() => {
         const getCurrentWidth = () => {
@@ -287,12 +312,12 @@ const Reels = () => {
         }
     },[])
 
-
-
+    /** искуственная задержка запроса*/
     React.useEffect(() => {
-        console.log("Redux activeTabId изменился:", tabRealsOrServices);
-    }, [tabRealsOrServices]);
-
+        setTimeout(() => {
+            dispatch(addProfilesWithServices([...profiles, ...services]))
+        },1000)
+    },[])
 
     return (
         <div className={cls.wrapper}>
@@ -301,10 +326,6 @@ const Reels = () => {
                              classNameInput={cls.input_search} type="text" placeholder="search"/>
                 <SvgQr className={cls.svg_qr}/>
             </div>
-            <div className={cls.wrapper_tabs}>
-                <Tabs options={tabOption} activeClass={cls.active_tab} classNameWrapper={cls.cover_tabs} classNameBtn={cls.tab_item} onClickHandler={changeActiveTab} activeTabId={tabRealsOrServices} notActive={cls.not_active}/>
-            </div>
-            <IqPumpService/>
             <div className={cls.cover_list_slides}>
                 <Swiper
                     slidesPerView={"auto"}
@@ -316,71 +337,81 @@ const Reels = () => {
                     className="mySwiper"
                     loop={true}
                 >
-                    {profiles?.length >= 1 && (
-                        profiles.map((item: any, index) => (
-                            <SwiperSlide key={item.id} style={{width: "fit-content"}}>
-                                <VideoCard
-                                    classNameWrap={cls.video_card_tablet}
-                                    classNameCover={cls.videomain_tablet}
-                                    key={item.id}
-                                    videoUrl={item.video_data}
-                                    posterUrl={'./../../assets/video.mp4'}
-                                    muted={true}
-                                    controls={false}
-                                    startPointerEnter={true}
-                                    autoPlay={false}
-                                    userId={item?.profile_data?.id}
-                                />
+                    {realsForShow?.length >= 1 &&
+                        realsForShow?.map((item: any) => (
+                            <SwiperSlide key={item?.profile_data.id} style={{ width: "fit-content" }}>
+                                {item?.type === 'service' ? (
+                                    <div>
+                                       <IqPumpMainWindow key={item?.profile_data?.id + profilesWithServices?.length}/>
+                                    </div>
+                                ) : (
+                                    <VideoCard
+                                        classNameWrap={cls.video_card_tablet}
+                                        classNameCover={cls.videomain_tablet}
+                                        videoUrl={item?.video_data}
+                                        posterUrl={'./../../assets/default-poster.jpg'} // Постер для остальных профилей
+                                        muted={true}
+                                        controls={false}
+                                        startPointerEnter={true}
+                                        autoPlay={false}
+                                        userId={item?.profile_data?.id}
+                                    />
+                                )}
                             </SwiperSlide>
                         ))
-                    )}
+                    }
                 </Swiper>
             </div>
-            <div className={cls.cover_reals_block}>
-                <div className={cls.creator_video}>
-                    <VideoCard
-                        classNameWrap={cls.video_card_main}
-                        classNameCover={cls.video}
-                        videoUrl={profiles[0]?.video_data}
-                        posterUrl={''}
-                        muted={true}
-                        controls={false}
-                        startPointerEnter={true}
-                        autoPlay={false}
-                        userId={0}
-                    />
-                </div>
-                <div className={cls.reals_block}>
-                    <div className={`${windowWidth >= 1079 ? cls.video_container_big : cls.video_container}`}>
-                        {realsForShow?.length >= 1 &&
-                            realsForShow.map((item: any, index) => (
-                                <VideoCard
-                                    classNameWrap={cls.video_card}
-                                    classNameCover={cls.videomain}
-                                    key={item.id}
-                                    videoUrl={item.video_data}
-                                    posterUrl={'./../../assets/video.mp4'}
-                                    muted={true}
-                                    controls={false}
-                                    startPointerEnter={true}
-                                    autoPlay={false}
-                                    userId={item?.profile_data?.id}
-                                />
-                            ))
-                        }
-                        {profiles.length > 5 &&
-                            <CustomButton
-                                classnameWrapper={cls.btn_load_wrap}
-                                classNameBtn={cls.btn_load_more}
-                                type="button"
-                                onClick={showMoreReals}
-                            >
-                                <SvgLoadMore className={`${cls.svg_load_more} ${isLoading && cls.load}`}/>
-                            </CustomButton>
-                        }
+            {realsForShow.length >= 1 && <div className={cls.cover_reals_block}>
+                    <div className={cls.creator_video}>
+                        <VideoCard
+                            classNameWrap={cls.video_card_main}
+                            classNameCover={cls.video}
+                            videoUrl={profilesWithServices[0]?.video_data}
+                            posterUrl={''}
+                            muted={true}
+                            controls={false}
+                            startPointerEnter={true}
+                            autoPlay={false}
+                            userId={0}
+                        />
                     </div>
-                </div>
-            </div>
+                    <div className={cls.reals_block}>
+                        <div className={`${windowWidth >= 1079 ? cls.video_container_big : cls.video_container}`}>
+                            {realsForShow?.length >= 1 &&
+                                realsForShow.map((item: any, index) => (
+                                    item?.type !== 'service' ? (
+                                        <VideoCard
+                                            classNameWrap={cls.video_card}
+                                            classNameCover={cls.videomain}
+                                            key={item?.profile_data?.id}
+                                            videoUrl={item?.video_data}
+                                            posterUrl={'./../../assets/video.mp4'}
+                                            muted={true}
+                                            controls={false}
+                                            startPointerEnter={true}
+                                            autoPlay={false}
+                                            userId={item?.profile_data?.id}
+                                        />
+                                    ) : (
+                                            <IqPumpMainWindow key={item?.profile_data?.id + profilesWithServices + index}/>
+                                    )
+                                ))
+                            }
+                            {profiles.length > 5 &&
+                                <CustomButton
+                                    classnameWrapper={cls.btn_load_wrap}
+                                    classNameBtn={cls.btn_load_more}
+                                    type="button"
+                                    onClick={showMoreReals}
+                                >
+                                    <SvgLoadMore className={`${cls.svg_load_more} ${isLoading && cls.load}`}/>
+                                </CustomButton>
+                            }
+                        </div>
+                    </div>
+                </div>}
+
         </div>
     );
 };

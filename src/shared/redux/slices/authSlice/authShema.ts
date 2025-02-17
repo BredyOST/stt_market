@@ -23,4 +23,7 @@ export interface AuthSchemaState {
     chosenFavouritesIdReals: number | null,
     hasUpliner: boolean,
     tabRealsOrServices: number
+    donationToken: string
+    profilesWithServices: any
+    activeSlideCards: number;
 }

@@ -29,9 +29,9 @@ const SendTokens = () => {
     /** STATES */
     /** Для хранения адреса с инпута, куда осуществлеяется перевод*/
     const [recipientAddress, setRecipientAddress] = useState<string>('')
-    const [transferTokens, setTransferTokens] = useState<number>(0);
+    const [transferTokens, setTransferTokens] = useState<string>('0');
     const {provider} = useAppSelector(state => state.authSlice)
-    const [sendTokensValue, setSendTokensValue] = useState<number>(0);
+    const [sendTokensValue, setSendTokensValue] = useState<string>('0');
     const [mlm, setMlm] = React.useState<number>(0);
     const [validateAddress, setValidateAddress] = useState<boolean>(false)
 
@@ -40,20 +40,35 @@ const SendTokens = () => {
     const {successTransferTokens, sttBalance} = useAppSelector(state => state.walletSlice)
 
     /** ACTIONS*/
-    const {closeModal, openModal} = modalAddProfileActions
+    const {closeModal } = modalAddProfileActions
     const {addLoader} = authActions;
-    const {addSuccessTransferToken, addBalanceStt, addUdtStt, addEtcStt, addHelpUsdt} = walletActions;
+    const {addSuccessTransferToken } = walletActions;
 
     /** FUNCTIONS*/
 
     /** для ввода токенов для отправки*/
     const setTokensForTransfer = (e:React.ChangeEvent<HTMLInputElement>) => {
-        if(+e?.target?.value > +sttBalance) {
-            setTransferTokens(+sttBalance)
+
+        const inputValue = e.target.value;
+
+        // Проверка на допустимые символы (цифры и точка)
+        const isValidInput = /^\d*\.?\d{0,3}$/.test(inputValue);
+
+        if (!isValidInput) {
+            return; // Если введены недопустимые символы, просто игнорируем
+        }
+
+        const number = parseFloat(inputValue)
+
+        if(number > +sttBalance) {
+            setTransferTokens(sttBalance.toString())
             calculateReceivedAmount(sttBalance)
+        } else if(inputValue.length === 0) {
+            setTransferTokens('0')
+            setSendTokensValue('0')
         } else {
-            setTransferTokens(+e.target.value)
-            calculateReceivedAmount(e.target.value)
+            setTransferTokens(inputValue)
+            calculateReceivedAmount(inputValue)
         }
     }
 
@@ -66,6 +81,7 @@ const SendTokens = () => {
 
     /**Функция отправки токенов*/
     async function sendTokens(receiver, amount) {
+
         if (!validateAddress) {
             showAttention(`Please check the entered ERC20 account.`, 'error')
             return
@@ -115,8 +131,8 @@ const SendTokens = () => {
                 const receipt = await tx.wait();
                 console.log("Transaction confirmed:", receipt);
                 showAttention(`Transaction confirmed:, ${receipt}`, 'success')
-                setTransferTokens(0)
-                setSendTokensValue(0)
+                setTransferTokens('0')
+                setSendTokensValue('0')
                 closeModalSendMoney()
                 // checkBalance()
             } catch (error) {
@@ -141,8 +157,9 @@ const SendTokens = () => {
 
     /** Функция расчета итоговой суммы с учетом комиссии */
     async function calculateReceivedAmount(amount) {
+
         if(!amount) {
-            setSendTokensValue(0)
+            setSendTokensValue('0')
             setMlm(30)
             return
         }
@@ -166,7 +183,9 @@ const SendTokens = () => {
             const receiverAmount = paymentBase * (100n - BigInt(rate)) / 100n;
 
             const result =  ethers.formatUnits(receiverAmount, parseInt(decimals));
-            setSendTokensValue(+Number(result)?.toFixed(2));
+            // setSendTokensValue(+Number(result)?.toFixed(2));
+            setSendTokensValue(String(+Number(result)?.toFixed(2)));
+
 
         } catch (error) {
             console.error("Error calculating received amount:", error);
@@ -209,13 +228,13 @@ const SendTokens = () => {
                         <div className={cls.coverTokensInput}>
                             <CustomInput
                                 placeholder='0.00'
-                                value={transferTokens === 0 ? '' : transferTokens}
+                                value={transferTokens == '0' ? '' : transferTokens}
                                 onChange={(e:React.ChangeEvent<HTMLInputElement>) => setTokensForTransfer(e)}
                                 type='text'
                                 classNameWrapper={cls.wrap_input_tokens}
                                 classNameInput={cls.input_cover_tokens}
                                 style={{
-                                    width: `${transferTokens?.toString?.length === 0 ? '4ch' : transferTokens?.toString()?.length}ch`,
+                                    width: `${transferTokens?.length === 0 ? '4ch' : transferTokens?.length}ch`,
                                     minWidth: '4ch',
                                     maxWidth: '8ch'
                                 }}
@@ -228,7 +247,7 @@ const SendTokens = () => {
                     <div className={cls.range}>15 - {sttBalance}</div>
                 </div>
                 <div className={cls.wallet}>
-                    <div>{sendTokensValue == 0 ? `0.00` : sendTokensValue} STT</div>
+                    <div>{sendTokensValue == '0' ? `0.00` : sendTokensValue} STT</div>
                 </div>
                 {mlm > 0 &&
                     <div className={cls.textInfo}>

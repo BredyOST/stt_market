@@ -11,6 +11,7 @@ import {IModalWindowStatesSchema} from "../../shared/redux/slices/modalWindowSta
 import {modalAddProfileActions} from "../../shared/redux/slices/modalWindowStatesSlice/modalWindowStateSlice";
 import {ForFunc} from "../../entities/others";
 import {authActions} from "../../shared/redux/slices/authSlice/authSlice";
+import { Autoplay, Mousewheel, Navigation} from 'swiper/modules';
 
 export const profilesFavourite = [
     {
@@ -235,6 +236,9 @@ const Favorites = () => {
 
     const {t} = useTranslation()
 
+
+    const swiperRef = React.useRef<any | null>(null);
+
     return (
         <div className={`${cls.wrapper} ${loggedIn ? cls.loggedIn : cls.without_logged_in}`}>
             <div className={cls.cover_sub_title}>
@@ -246,7 +250,7 @@ const Favorites = () => {
                 </h3>
             </div>
             <div className={cls.cover}>
-                {profilesFavourite?.length > 0 && profilesFavourite?.length <= 3
+                {profilesFavourite?.length > 0 && profilesFavourite?.length <= 5
                     ? profilesFavourite?.map((item: any) => (
                             <CustomButton key={item?.id} classNameBtn={cls.profile_logo} type='button' onClick={() => openVideo(item?.profile_data?.id)}>
                                 <img src={item?.image_data} alt="логотип"/>
@@ -255,17 +259,41 @@ const Favorites = () => {
 
                     : <Swiper
                     slidesPerView= {'auto'}
-                    spaceBetween={23}
+                    spaceBetween={20}
                     loop={true}
-                    centeredSlides={false}
+                    centeredSlides={true}
                     freeMode={false}
+                    mousewheel={{ forceToAxis: true, sensitivity: 0.5 }}
+                    touchRatio={1}
+                    simulateTouch={true}
+                    threshold={20}
                     className={cls.wrapper_slider}
-
+                    // autoplay={{delay: 3000, disableOnInteraction: false}}
+                    watchSlidesProgress={true} // Следим за прогрессом
+                    modules={[Autoplay, Navigation, Mousewheel]}
+                    initialSlide={Math.floor((profilesFavourite?.length || 1) / 2)} // Устанавливаем активный слайд в центр
+                    // loopAdditionalSlides={profilesFavourite?.length || 5} // Создаём доп. копии слайдов
+                    onSlideChange={(swiper) => {
+                        // Логика для изменения масштаба слайдов
+                        swiper.slides.forEach((slide, index) => {
+                            const distance = Math.abs(index - swiper.activeIndex);
+                            const scale = 1 - (distance * 0.2); // Уменьшение масштаба на 20% для каждого следующего слайда
+                            (slide as HTMLElement).style.transform = `scale(${scale})`;
+                        });
+                    }}
+                    onSwiper={(swiper) => {
+                        // Инициализация масштаба слайдов при загрузке
+                        swiper.slides.forEach((slide, index) => {
+                            const distance = Math.abs(index - swiper.activeIndex);
+                            const scale = 1 - (distance * 0.2);
+                            (slide as HTMLElement).style.transform = `scale(${scale})`;
+                        });
+                    }}
                 >
                     <div className={cls.cover}>
                         {profilesFavourite?.length > 0 &&
                             profilesFavourite?.map((item: any) => (
-                                <SwiperSlide style={{ width: "fit-content" }} key={item?.id}>
+                                <SwiperSlide className={cls.slide} key={item.profile_data.id}>
                                     <CustomButton  classNameBtn={cls.profile_logo} type='button' onClick={() => openVideo(item?.profile_data?.id)}>
                                         <img src={item?.image_data} alt="логотип"/>
                                     </CustomButton>

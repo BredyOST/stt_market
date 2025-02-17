@@ -31,6 +31,7 @@ import SliderVideo from "./widgets/sliderVideo/sliderVideo";
 import Loader from "./widgets/loader/loader";
 import Portal from "./shared/ui/portal/portal";
 import '@reown/appkit-wallet-button/react'
+import IqPumpService from "./widgets/iqPumpService/iqPumpService";
 const projectId = 'd63219dbf5faf0a8dba4e3a892b1e2d1'
 
 // 2. Set the networks

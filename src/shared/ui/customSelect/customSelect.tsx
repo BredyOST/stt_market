@@ -16,14 +16,41 @@ import {authActions} from "../../redux/slices/authSlice/authSlice";
 import {ICONS_TOKENS, TO_OPTIONS} from "../../const/index.const";
 
 interface ICustomSelectProps {
-    options: ILanguageOption[] | SwapOptionsFrom[];
-    onSelect?: (value: string | number) => void;
+    options?: ILanguageOption[] | SwapOptionsFrom[] | {id:number, value:string}[];
+    // optionsSecond?: {id:number, label:string}[];
+    isOpenMenu?: boolean;
+    handleOpenMenu?: () => void;
+    onSelect?: (value: string | number) => void
     placeholder?: string;
     arrowIndicator?: boolean;
-    indicator:SelectsIndicators
+    indicator?:SelectsIndicators
+    classNameWrapper?:string
+    classNameChosenValue?:string
+    classNameIcon?:string
+    classNameTextWithImage?:string
+    classNameBodyList?:string
+    classNameActiveItem?:string
+    classNameShowed?:string
+    chosenValue?:any
 }
 
-const CustomSelect = ({ options, onSelect, placeholder, arrowIndicator, indicator }: ICustomSelectProps) => {
+const CustomSelect = ({
+                          options,
+                          chosenValue,
+                          onSelect,
+                          placeholder,
+                          arrowIndicator,
+                          indicator ,
+                          classNameWrapper,
+                          classNameChosenValue,
+                          classNameIcon,
+                          classNameTextWithImage,
+                          classNameBodyList,
+                          classNameActiveItem,
+                          classNameShowed,
+                          handleOpenMenu,
+                          isOpenMenu
+}: ICustomSelectProps) => {
     const dispatch = useAppDispatch();
     const { t, i18n } = useTranslation()
 
@@ -69,24 +96,60 @@ const CustomSelect = ({ options, onSelect, placeholder, arrowIndicator, indicato
     };
 
     /** выбор токенов при swap*/
-    /** выбор токенов при swap*/
     const handleChooseSwapToken = (value: SwapOptionsFrom) => {
         if (indicator === SelectsIndicators.swapFrom) {
-            dispatch(addSourceToken(value.label)); // Обновляем sourceToken
+            /** обновляем свап токен*/
+            dispatch(addSourceToken(value.label));
+            if(value?.label?.toLowerCase() === 'stt') {
+                dispatch(addTargetToken(TO_OPTIONS.stt[0].label))
+            } else if(value?.label?.toLowerCase() === 'usdt') {
+                dispatch(addTargetToken(TO_OPTIONS.usdt[0].label))
+            }
         } else if (indicator === SelectsIndicators.swapTo) {
-            console.log(value);
-            dispatch(addTargetToken(value.label)); // Обновляем targetToken
+            /** обновляем таргет токен*/
+            dispatch(addTargetToken(value.label));
         }
     };
 
+    if (!indicator) {
+        return (
+            <div className={classNameWrapper} onClick={handleOpenMenu}>
+                <div className={classNameChosenValue}>
+                    <img
+                        src={ICONS_TOKENS[chosenValue]}
+                        alt={`${sourceToken} icon`}
+                        className={classNameIcon}
+                    />
+                    <div className={classNameTextWithImage}>
+                        {chosenValue.toUpperCase()}
+                    </div>
+                </div>
+                {isOpenMenu && (
+                    <ul className={`${classNameBodyList} ${isOpenMenu && classNameShowed}`}>
+                        {options &&
+                            options?.length > 0 &&
+                            options?.map((option) => (
+                                <li
+                                    className={option.value === i18n?.language ? classNameActiveItem : undefined}
+                                    key={option.value}
+                                    onClick={() => onSelect(option.value)}
+                                >
+                                    {option.value.toUpperCase()}
+                                </li>
+                            ))}
+                    </ul>
+                )}
+            </div>
+        )
+    }
 
-    if(indicator === SelectsIndicators.address) {
+    if (indicator === SelectsIndicators.address) {
         return (
             <div className={cls.wrapper_language}>
                 <div className={cls.CustomSelect} onClick={openMenu}>
                     {language ? ` Language ${language}` : placeholder}
                     {arrowIndicator &&
-                        <SvgArrow className={isOpen ? `${cls.svgArrow} ${cls.active}` : `${cls.svgArrow}`} />
+                        <SvgArrow className={isOpen ? `${cls.svgArrow} ${cls.active}` : `${cls.svgArrow}`}/>
                     }
                 </div>
                 {isOpen && (
@@ -94,7 +157,7 @@ const CustomSelect = ({ options, onSelect, placeholder, arrowIndicator, indicato
                         <div className={cls.coverTitle}>
                             <h3 className={cls.title}>{TITLES.language}</h3>
                             <CustomButton indicator={IndicatorsForUi.withoutStyle} type='button' onClick={openMenu}>
-                                <SvgClose className={cls.close} />
+                                <SvgClose className={cls.close}/>
                             </CustomButton>
                         </div>
                         <ul className={cls.bodySelect}>
@@ -150,7 +213,9 @@ const CustomSelect = ({ options, onSelect, placeholder, arrowIndicator, indicato
                         alt={`${sourceToken} icon`}
                         className={cls.icon}
                     />
-                    {indicator === SelectsIndicators.swapFrom ? sourceToken : targetToken}
+                    <div className={cls.token}>
+                        {indicator === SelectsIndicators.swapFrom ? sourceToken : targetToken}
+                    </div>
                 </div>
                 {isOpenSwapMenu && (
                     <ul className={`${cls.bodySelectSwap} ${isOpenSwapMenu && cls.show}`}>

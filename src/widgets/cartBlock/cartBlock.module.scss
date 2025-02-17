@@ -11,6 +11,7 @@
     width: mixins.rem(277);
     height: mixins.rem(364);
   }
+
   @media (max-width: mixins.em(global.$mobile)) {
     width: mixins.rem(265);
     height: mixins.rem(300);
@@ -18,6 +19,10 @@
   @media (max-width: mixins.em(650)) {
     width: mixins.rem(200);
     height: mixins.rem(226);
+  }
+
+  @media  (max-width: mixins.em(439)) {
+    transform: translateY(mixins.rem(-130));
   }
 
 }
@@ -85,4 +90,85 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+.mlm_text {
+  font-family: globalIndex.$font_family_main;
+  font-size: mixins.rem(16);
+  font-weight: 700;
+  text-align: center;
+  line-height: globalIndex.$line_height;
+
+  @media (min-width: mixins.em(440)) {
+    max-width: mixins.rem(253);
+  }
+
+  @media (max-width: mixins.em(440)) {
+    font-size: mixins.rem(14);
+    max-width: mixins.rem(270);
+    font-weight: 600;
+  }
+
+  @media (min-width:mixins.rem(440)) and (max-width: mixins.em(1100)) {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+}
+.mlm_text_mobile {
+  font-family: globalIndex.$font_family_main;
+  font-size: mixins.rem(16);
+  font-weight: 700;
+  max-width: mixins.rem(253);
+  text-align: center;
+  line-height: globalIndex.$line_height;
+
+  @media (min-width: mixins.em(1101)) {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+  @media (max-width: mixins.em(1101)) {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(mixins.rem(300), mixins.rem(20));
+  }
+
+  @media (max-width: mixins.em(650)) {
+    right: 0;
+    top: 50%;
+    transform: translate(mixins.rem(230), mixins.rem(0));
+  }
+
+  @media (max-width: mixins.em(490)) {
+  max-width: mixins.rem(159);
+    right: 0;
+    top: 50%;
+    transform: translate(mixins.rem(185), mixins.rem(-8));
+  }
+
+  @media (max-width: mixins.em(439)) {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.cover_block_slider {
+  display: flex;
+  row-gap: mixins.rem(20);
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cover_block_slider {
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  transform-origin: center;
+}
+
+.card {
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }

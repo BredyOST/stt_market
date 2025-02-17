@@ -19,7 +19,10 @@ const initialState: AuthSchemaState = {
     isLoader:false,
     chosenFavouritesIdReals: null,
     hasUpliner: false,
-    tabRealsOrServices: 1
+    tabRealsOrServices: 1,
+    donationToken: 'stt',
+    profilesWithServices:[],
+    activeSlideCards:0
 }
 
 const authSlice = createSlice({
@@ -76,6 +79,15 @@ const authSlice = createSlice({
         },
         changeTabRealsOrServices: (state, action: PayloadAction<number>) => {
             state.tabRealsOrServices = action.payload;
+        },
+        addDonationToken: (state, action: PayloadAction<string>) => {
+            state.donationToken = action.payload;
+        },
+        addProfilesWithServices: (state, action: PayloadAction<any[]>) => {
+            state.profilesWithServices = action.payload;
+        },
+        changeActiveSlideCards: (state, action: PayloadAction<number>) => {
+            state.activeSlideCards = action.payload;
         }
     }
 })
