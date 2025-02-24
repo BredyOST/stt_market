@@ -36,7 +36,7 @@ import Toggle from '../../shared/ui/checkbox/checkbox';
 import { checkProfile, uploadLogo, uploadVideo } from '../../shared/api/request/addProfileThunk/addprofileThunk';
 import {CheckUser} from '../../shared/redux/slices/profiles/profilesSchema';
 import Portal from "../../shared/ui/portal/portal";
-import PreviewBlock from "../../feautures/modalWindows/previewBlock/previewBlock";
+import PreviewBlock from "../modalWindows/previewBlock/previewBlock";
 
 const AddProfile = (props) => {
 

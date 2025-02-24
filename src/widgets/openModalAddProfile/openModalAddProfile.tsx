@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../shared/redux/hooks/hooks';
 import cls from './styled/openModalAddProfile.module.scss';
 import Portal from '../../shared/ui/portal/portal';
 import Modal from '../../shared/ui/modal/modal';
-import AddProfile from '../../pages/addProfile/addProfile';
+import AddProfile from '../../feautures/addProfile/addProfile';
 import { useTranslation } from 'react-i18next';
 import CustomButton from '../../shared/ui/сustomButton/CustomButton';
 

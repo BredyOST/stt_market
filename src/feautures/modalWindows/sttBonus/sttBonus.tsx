@@ -7,7 +7,7 @@ import { ReactComponent as SvgGift } from '../../../assets/svg/gift_.svg';
 import CustomInput from '../../../shared/ui/customInput/customInput';
 import { ForFunc, IInfoUserInHeader, labelProfileInfo } from '../../../entities/others';
 import { ethers } from 'ethers';
-import { sttAffiliateAddress, tokenContractAbiCb31 } from '../../../helpers/contracts';
+import { sttAffiliateAddress, tokenContractAbiCb31 } from '../../../shared/const/contracts';
 import { showAttention } from '../../../shared/helpers/attention';
 import { authActions } from '../../../shared/redux/slices/authSlice/authSlice';
 import { ReactComponent as SvgQr } from '../../../assets/svg/qr.svg';

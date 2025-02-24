@@ -18,14 +18,14 @@ const Services = () => {
     const { services } = useAppSelector((state) => state.userProfiles);
     const initialSlideIndex = Math.floor((services?.length || 1) / 2);
 
-    const {
-        data: dataServices,
-        error: errorServices,
-        isPending: isPendingServices,
-    } = useQuery({
-        queryKey: ['services'],
-        queryFn: ProfilesApi.getServices,
-    });
+    // const {
+    //     data: dataServices,
+    //     error: errorServices,
+    //     isPending: isPendingServices,
+    // } = useQuery({
+    //     queryKey: ['services'],
+    //     queryFn: ProfilesApi.getServices,
+    // });
 
     /** изменение состояний profileServiceSlice*/
     const updateProfileServiceState = useProfile();
@@ -49,11 +49,14 @@ const Services = () => {
         });
     };
 
-    React.useEffect(() => {
-        if (dataServices?.data.length >= 1) {
-            updateProfileServiceState('services', dataServices.data);
-        }
-    }, [dataServices]);
+
+    const isPendingServices = false
+
+    // React.useEffect(() => {
+        // if (dataServices?.data.length >= 1) {
+        //     updateProfileServiceState('services', dataServices.data);
+        // }
+    // }, [dataServices]);
 
     return (
         <div className={`${cls.wrapper} ${loggedIn ? cls.loggedIn : cls.without_logged_in}`}>

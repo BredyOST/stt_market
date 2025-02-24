@@ -6,23 +6,23 @@ import {
     tokenContractAddress,
     usdtContractAbi,
     usdtContractAddress,
-} from '../../helpers/contracts';
+} from '../../shared/const/contracts';
 import { useAppDispatch, useAppSelector } from '../../shared/redux/hooks/hooks';
 import cls from './wallet.module.scss';
-import { ReactComponent as SvgArrowRight } from './../../assets/svg/arrow-rigth.svg';
-import { ReactComponent as SvgSwap } from './../../assets/svg/swap.svg';
-import { ReactComponent as SvgDonation } from './../../assets/svg/donation.svg';
-import { ReactComponent as SvgGift } from './../../assets/svg/gift.svg';
+import { ReactComponent as SvgArrowRight } from '../../assets/svg/arrow-rigth.svg';
+import { ReactComponent as SvgSwap } from '../../assets/svg/swap.svg';
+import { ReactComponent as SvgDonation } from '../../assets/svg/donation.svg';
+import { ReactComponent as SvgGift } from '../../assets/svg/gift.svg';
 import CustomButton from '../../shared/ui/сustomButton/CustomButton';
-import SendTokens from '../../feautures/modalWindows/sendTokens/sendTokens';
+import SendTokens from '../modalWindows/sendTokens/sendTokens';
 import Modal from '../../shared/ui/modal/modal';
 import Portal from '../../shared/ui/portal/portal';
-import Swap from '../../feautures/modalWindows/swap/swap';
-import Donation from '../../feautures/modalWindows/donation/donation';
+import Swap from '../modalWindows/swap/swap';
+import Donation from '../modalWindows/donation/donation';
 import { ForFunc } from '../../entities/others';
 import { walletActions } from '../../shared/redux/slices/walletSlice/walletSlice';
 import { useAuthState, useModal, useWallet } from '../../shared/helpers/hooks';
-import SttBonus from '../../feautures/modalWindows/sttBonus/sttBonus';
+import SttBonus from '../modalWindows/sttBonus/sttBonus';
 
 interface IWalletProps {
     className: string;

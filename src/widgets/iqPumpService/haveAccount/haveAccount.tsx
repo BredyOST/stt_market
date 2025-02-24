@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { authActions } from '../../../shared/redux/slices/authSlice/authSlice';
 import { walletActions } from '../../../shared/redux/slices/walletSlice/walletSlice';
 import { ethers } from 'ethers';
-import { sttAffiliateAddress, tokenContractAbi, tokenContractAbiCb31, tokenContractAddress } from '../../../helpers/contracts';
+import { sttAffiliateAddress, tokenContractAbi, tokenContractAbiCb31, tokenContractAddress } from '../../../shared/const/contracts';
 import { showAttention } from '../../../shared/helpers/attention';
 import cls from './haveAccount.module.scss';
 import CustomButton from '../../../shared/ui/сustomButton/CustomButton';

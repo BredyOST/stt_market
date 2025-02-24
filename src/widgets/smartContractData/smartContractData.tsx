@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import cls from './smartContractData.module.scss';
 import { useTranslation } from 'react-i18next';
-import ChartBlock from '../chart/chart';
+import ChartBlock from '../../feautures/chart/chart';
 import { ethers } from 'ethers';
 import {
     exchangeContractAddress,
@@ -10,7 +10,7 @@ import {
     tokenContractAddress,
     usdtContractAbi,
     usdtContractAddress,
-} from '../../helpers/contracts';
+} from '../../shared/const/contracts';
 import axios from 'axios';
 import { useAppSelector } from '../../shared/redux/hooks/hooks';
 import { Link } from 'react-router-dom';

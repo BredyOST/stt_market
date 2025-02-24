@@ -19,7 +19,7 @@ import {
     tokenContractAddress,
     usdtContractAbi,
     usdtContractAddress,
-} from '../../../helpers/contracts';
+} from '../../../shared/const/contracts';
 import CustomSelect from '../../../shared/ui/customSelect/customSelect';
 import { FROM_OPTIONS, TO_OPTIONS } from '../../../shared/const/index.const';
 import { SelectsIndicators } from '../../../entities/uiInterfaces/uiInterfaces';

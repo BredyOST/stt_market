@@ -2,9 +2,9 @@ import React from 'react';
 import CustomInput from '../../shared/ui/customInput/customInput';
 import { ReactComponent as SvgQr } from '../../assets/svg/qr.svg';
 import cls from './reels.module.scss';
-import { ReactComponent as SvgLoadMore } from './../../assets/svg/loading.svg';
+import { ReactComponent as SvgLoadMore } from '../../assets/svg/loading.svg';
 import CustomButton from '../../shared/ui/сustomButton/CustomButton';
-import VideoCard from '../../feautures/videoCard/videoCard';
+import VideoCard from '../videoCard/videoCard';
 import { ForFunc } from '../../entities/others';
 import { useAppSelector } from '../../shared/redux/hooks/hooks';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -294,9 +294,13 @@ const Reels = () => {
     }, [filteredReals]);
 
     React.useEffect(() => {
-        if (dataProfiles?.data?.length >= 1) {
-            updateProfileServiceState('profilesForShowing', dataProfiles?.data);
-        }
+
+
+        updateProfileServiceState('profilesForShowing', profilesFavourite);
+
+        // if (dataProfiles?.data?.length >= 1) {
+        //     updateProfileServiceState('profilesForShowing', dataProfiles?.data);
+        // }
     }, [dataProfiles]);
 
     React.useEffect(() => {

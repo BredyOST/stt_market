@@ -1,16 +1,15 @@
 import './shared/styles/index.scss';
 import React from 'react';
 import OpenModalAddProfile from './widgets/openModalAddProfile/openModalAddProfile';
-import Reels from './pages/reels/reels';
-import Map from './pages/map/map';
+import Map from './feautures/map/map';
 import { useAppSelector } from './shared/redux/hooks/hooks';
 import SmartContractData from './widgets/smartContractData/smartContractData';
-import Header from './widgets/header/header';
+import Header from './feautures/header/header';
 import Help from './widgets/help/help';
 import { ARBITRUM } from './shared/const/index.const';
 import { showAttention } from './shared/helpers/attention';
 import UnauthorizedUser from './widgets/infoNoAuth/infoNoAuth';
-import AuthorizedUser from './widgets/infoBlock/infoBlock';
+import AuthorizedUser from './feautures/infoBlock/infoBlock';
 import { BrowserProvider, ethers, Contract } from 'ethers';
 import { createAppKit, useAppKitAccount, useAppKitNetwork, useAppKitProvider } from '@reown/appkit/react';
 import { EthersAdapter } from '@reown/appkit-adapter-ethers';
@@ -22,9 +21,8 @@ import Loader from './widgets/loader/loader';
 import Portal from './shared/ui/portal/portal';
 import '@reown/appkit-wallet-button/react';
 import { useAuthState, useGetLocalStateForForms } from './shared/helpers/hooks';
-import Services from './pages/services/services';
-import cls from "./pages/addProfile/addProfile.module.scss";
-import PreviewBlock from "./feautures/modalWindows/previewBlock/previewBlock";
+import Reels from "./feautures/reels/reels";
+import Services from "./feautures/services/services";
 
 const projectId = 'd63219dbf5faf0a8dba4e3a892b1e2d1';
 
@@ -118,8 +116,8 @@ function App() {
                     {!loggedIn ? <UnauthorizedUser/> : <AuthorizedUser/>}
                     <div className={`cover__container`}>
                         {!loggedIn && <SmartContractData/>}
-                        {/*<Services />*/}
-                        {/*<Reels />*/}
+                        <Services />
+                        <Reels />
                         <Map/>
                         {loggedIn && <OpenModalAddProfile account={account}/>}
                         <Help/>

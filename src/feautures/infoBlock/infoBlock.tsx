@@ -2,7 +2,7 @@ import React from 'react';
 import Wallet from '../wallet/wallet';
 import ChartBlock from '../chart/chart';
 import cls from './infoBlock.module.scss';
-import ProfileInfo from '../profileInfo/profileInfo';
+import ProfileInfo from '../../widgets/profileInfo/profileInfo';
 
 const AuthorizedUser = () => {
     return (

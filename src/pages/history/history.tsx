@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { tokenContractAbi, tokenContractAddress } from '../../helpers/contracts';
+import { tokenContractAbi, tokenContractAddress } from '../../shared/const/contracts';
 import { ethers } from 'ethers';
 import cls from './hystory.module.scss';
 import { useTranslation } from 'react-i18next';

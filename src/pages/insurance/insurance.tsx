@@ -10,7 +10,7 @@ import {
     tokenContractAddress,
     usdtContractAbi,
     usdtContractAddress,
-} from '../../helpers/contracts';
+} from '../../shared/const/contracts';
 import { useStateWithCallbackLazy } from 'use-state-with-callback';
 import { Col } from 'react-bootstrap';
 import axios from 'axios';

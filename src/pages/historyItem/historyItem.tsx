@@ -6,7 +6,7 @@ import { ethers } from 'ethers';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Toast from 'react-bootstrap/Toast';
 import parse from 'html-react-parser';
-import { arbitrumCurrent, tokenContractAddress, tokenContractAbi } from '../../helpers/contracts';
+import { arbitrumCurrent, tokenContractAddress, tokenContractAbi } from '../../shared/const/contracts';
 import axios from 'axios';
 import { Grid } from 'react-loader-spinner';
 

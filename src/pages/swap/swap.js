@@ -14,7 +14,7 @@ import {
     tokenContractAddress,
     usdtContractAbi,
     usdtContractAddress,
-} from '../../helpers/contracts';
+} from '../../shared/const/contracts';
 import { ethers } from 'ethers';
 import Form from 'react-bootstrap/Form';
 import { Button, Modal, Toast } from 'react-bootstrap';

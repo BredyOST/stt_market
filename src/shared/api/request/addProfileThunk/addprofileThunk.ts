@@ -6,7 +6,7 @@ import { CheckUser, FormDataUser, FormDataUserWithoutVideo } from '../../../redu
 import { showAttention } from '../../../helpers/attention';
 import { ethers } from 'ethers';
 
-import { sttAffiliateAddress, tokenContractAbi, tokenContractAbiCb31, tokenContractAddress } from '../../../../helpers/contracts';
+import { sttAffiliateAddress, tokenContractAbi, tokenContractAbiCb31, tokenContractAddress } from '../../../const/contracts';
 
 import { IReduxStore } from '../../../redux/config/storeType';
 import authSlice, { authActions } from '../../../redux/slices/authSlice/authSlice';

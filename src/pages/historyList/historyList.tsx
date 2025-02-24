@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import { Grid } from 'react-loader-spinner';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import HistoryItem from '../historyItem/historyItem';
-import { exchangeContractAddress } from '../../helpers/contracts';
+import { exchangeContractAddress } from '../../shared/const/contracts';
 import { ReactComponent as SvgCheck } from './../../assets/svg/check.svg';
 
 const HistoryList = forwardRef(function (props: any, ref) {

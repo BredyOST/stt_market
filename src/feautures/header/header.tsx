@@ -7,17 +7,17 @@ import cls from './header.module.scss';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../shared/redux/hooks/hooks';
 import CustomButton from '../../shared/ui/сustomButton/CustomButton';
-import SafetyConnection from '../../feautures/modalWindows/safetyConnection/safetyConnection';
 import Portal from '../../shared/ui/portal/portal';
 import Modal from '../../shared/ui/modal/modal';
-import { ReactComponent as SvgSafety } from './../../assets/svg/safety.svg';
-import { ReactComponent as SvgNotifications } from './../../assets/svg/notifications.svg';
-import Logo from '../logo/logo';
+import { ReactComponent as SvgSafety } from '../../assets/svg/safety.svg';
+import { ReactComponent as SvgNotifications } from '../../assets/svg/notifications.svg';
+import Logo from '../../widgets/logo/logo';
 import { useAppKit } from '@reown/appkit/react';
 import { ForFunc } from '../../entities/others';
 import { useAuthState, useModal } from '../../shared/helpers/hooks';
-import NotificationTg from '../../feautures/modalWindows/notificationTg/notificationTg';
-import { loginThunk, useLoginLoading } from '../../shared/api/request/loginThunk/loginThunk';
+import { loginThunk } from '../../shared/api/request/loginThunk/loginThunk';
+import NotificationTg from "../modalWindows/notificationTg/notificationTg";
+import SafetyConnection from "../modalWindows/safetyConnection/safetyConnection";
 
 function Header() {
     const dispatch = useAppDispatch();

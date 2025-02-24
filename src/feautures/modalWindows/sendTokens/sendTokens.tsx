@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../shared/redux/hooks/hook
 import { ReactComponent as SvgQr } from '../../../assets/svg/qr.svg';
 import { ReactComponent as SvgClose } from '../../../assets/svg/close.svg';
 import { ethers } from 'ethers';
-import { sttAffiliateAddress, tokenContractAbi, tokenContractAbiCb31, tokenContractAddress } from '../../../helpers/contracts';
+import { sttAffiliateAddress, tokenContractAbi, tokenContractAbiCb31, tokenContractAddress } from '../../../shared/const/contracts';
 import cls from './sendTokens.module.scss';
 import CustomButton from '../../../shared/ui/сustomButton/CustomButton';
 import { useTranslation } from 'react-i18next';

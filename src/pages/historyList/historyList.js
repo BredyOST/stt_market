@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import { Grid } from 'react-loader-spinner';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import HistoryItem from '../historyItem/historyItem';
-import { exchangeContractAddress } from '../../helpers/contracts';
+import { exchangeContractAddress } from '../../shared/const/contracts';
 
 const HistoryList = forwardRef(function (props, ref) {
     const [s_history, setHistory] = useState(props.history);

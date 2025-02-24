@@ -12,7 +12,7 @@ import {
     tokenContractAddress,
     usdtContractAbi,
     usdtContractAddress,
-} from '../../helpers/contracts';
+} from '../../shared/const/contracts';
 import axios from 'axios';
 
 function Info(props) {

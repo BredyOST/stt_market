@@ -1,5 +1,5 @@
 import React from 'react';
-import cls from './styled/sttBonusModule.module.scss';
+import cls from './sttBonusModule.module.scss';
 import CustomInput from '../../shared/ui/customInput/customInput';
 import CustomButton from '../../shared/ui/сustomButton/CustomButton';
 import { useSearchParams } from 'react-router-dom';

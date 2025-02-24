@@ -2,10 +2,26 @@ import { IProfilesSchema, ProfileInfoType, ServicesType } from './profilesSchema
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthSchema } from '../authSlice/authShema';
 
+
+
+const services = [
+    {
+        profile_data: {
+            id: 1,
+            userId: 1,
+            title: 'iq Pump',
+            wallet_number: null,
+        },
+        link: 'http///',
+        type: 'service',
+    }
+]
+
+
 const initialState: IProfilesSchema = {
     profilesForShowing: null,
     favouritesProfiles: null,
-    services: null,
+    services: services,
     chosenFavouritesIdReals: null,
     chosenServiceId: null,
     isOpen: 'reals',

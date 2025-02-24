@@ -6,20 +6,20 @@ import { useAppDispatch, useAppSelector } from '../../../shared/redux/hooks/hook
 import { ReactComponent as SvgDonation } from '../../../assets/svg/donation.svg';
 import CustomInput from '../../../shared/ui/customInput/customInput';
 import { ethers } from 'ethers';
-import {
-    exchangeContractAddress,
-    sttAffiliateAddress,
-    tokenContractAbi,
-    tokenContractAddress,
-    usdtContractAbi,
-    usdtContractAddress,
-} from '../../../helpers/contracts';
+
 import CustomSelect from '../../../shared/ui/customSelect/customSelect';
 import { LIST_DONATION, TOKEN_LIST } from '../../../shared/const/index.const';
 import { authActions } from '../../../shared/redux/slices/authSlice/authSlice';
 import { useAuthState, useModal } from '../../../shared/helpers/hooks';
 import { walletActions } from '../../../shared/redux/slices/walletSlice/walletSlice';
 import { DONAT_ADDRESS } from '../../../App';
+import {
+    exchangeContractAddress,
+    sttAffiliateAddress,
+    tokenContractAbi,
+    tokenContractAddress,
+    usdtContractAbi, usdtContractAddress
+} from "../../../shared/const/contracts";
 
 const Donation = () => {
     const dispatch = useAppDispatch();
