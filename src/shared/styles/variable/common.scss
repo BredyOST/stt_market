@@ -11,30 +11,38 @@
     border: none;
     cursor: pointer;
     box-shadow: mixins.rem(0) mixins.rem(0) mixins.rem(10) rgba(0, 0, 0, 0.2);
-    transition: background-color ease 0.3s, box-shadow ease 0.3s;
+    transition:
+        background-color ease 0.3s,
+        box-shadow ease 0.3s;
 
-    @media(any-hover: hover) {
+    @media (any-hover: hover) {
         &:hover {
             background-color: darken(globalIndex.$btn_background_hover, 10%);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color ease 0.3s, box-shadow ease 0.3s;
+            transition:
+                background-color ease 0.3s,
+                box-shadow ease 0.3s;
         }
     }
 }
 
 .btn_swap {
-    background-color: #DDFC91;
+    background-color: #ddfc91;
     color: globalIndex.$btn_color;
     border: none;
     cursor: pointer;
     box-shadow: mixins.rem(0) mixins.rem(0) mixins.rem(10) rgba(0, 0, 0, 0.2);
-    transition: background-color ease 0.3s, box-shadow ease 0.3s;
+    transition:
+        background-color ease 0.3s,
+        box-shadow ease 0.3s;
 
-    @media(any-hover: hover) {
+    @media (any-hover: hover) {
         &:hover {
             background-color: darken(#c0df72, 10%);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color ease 0.3s, box-shadow ease 0.3s;
+            transition:
+                background-color ease 0.3s,
+                box-shadow ease 0.3s;
         }
     }
 }
@@ -52,11 +60,11 @@
     font-size: mixins.rem(16);
     font-family: globalIndex.$font_family_main;
     line-height: globalIndex.$line_height;
-    color: #7C7C7C;
+    color: #7c7c7c;
     height: 100%;
     width: 100%;
     &::placeholder {
-        color: #7C7C7C;
+        color: #7c7c7c;
         font-size: mixins.rem(16);
         font-family: globalIndex.$font_family_main;
     }
@@ -81,15 +89,12 @@
     //font-size: mixins.rem(48);
     //max-width: mixins.rem(377);
     //margin-top: mixins.rem(40);
-
-
 }
-
 
 //для попапов
 .titlePopup {
     font-family: globalIndex.$font_family_main;
-    background-color: #8FFBA3;
+    background-color: #8ffba3;
     width: mixins.rem(207);
     height: mixins.rem(56);
     color: #409798;
@@ -100,15 +105,6 @@
     align-items: center;
     justify-content: center;
 }
-
-
-
-
-
-
-
-
-
 
 // отспупы для страниц
 .paddingPages {
@@ -154,7 +150,7 @@
 .svgIconArrow {
     width: mixins.rem(22);
     height: mixins.rem(22);
-    fill: #58C89C;
+    fill: #58c89c;
     position: absolute;
     right: 0;
     top: 0;
@@ -190,8 +186,7 @@
     will-change: transform;
 }
 
-
-.btnGreen{
+.btnGreen {
     color: #008279 !important;
     font-size: mixins.rem(13);
     text-decoration: none;
@@ -206,13 +201,12 @@
     border: mixins.rem(2) transparent;
     transition: background-color ease 0.3s 0s;
 
-    @media(any-hover: hover) {
+    @media (any-hover: hover) {
         &:hover {
             transition: background-color ease 0.3s 0s;
             background-color: #518f6f;
         }
     }
-
 }
 
 // -------------------------
@@ -220,17 +214,16 @@
 .close_svg {
     width: mixins.rem(30);
     height: mixins.rem(30);
-    fill: #CECECE;
+    fill: #cecece;
     transition: fill ease 0.3s 0s;
 
-    @media(any-hover: hover) {
+    @media (any-hover: hover) {
         &:hover {
             transition: fill ease 0.3s 0s;
             fill: #aeaaaa;
         }
     }
 }
-
 
 .eth-card {
     box-shadow: mixins.rem(4) mixins.rem(2) mixins.rem(6) mixins.rem(2) rgba(41, 41, 41, 0.13);

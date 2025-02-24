@@ -1,4 +1,3 @@
-
 interface RequestState {
     data: any;
     isPending: boolean;

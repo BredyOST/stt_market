@@ -1,50 +1,27 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import cls from './styled/customButtonStyled.module.scss';
-import {IndicatorsForUi} from "../../../entities/uiInterfaces/uiInterfaces";
+import { IndicatorsForUi } from '../../../entities/uiInterfaces/uiInterfaces';
+import ReactDOM from 'react-dom/client';
 
 interface ICustomButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     type: 'button' | 'submit' | 'reset';
     indicator?: IndicatorsForUi;
     uploadIcon?: ReactElement;
     onClick?: (args: any) => void;
-    children?: ReactElement | string | number;
+    children?: ReactNode | string | number;
     active?: boolean;
-    classnameWrapper?:string,
-    classNameBtn?: string,
+    classnameWrapper?: string;
+    classNameBtn?: string;
 }
 
-const CustomButton = ({
-                          type,
-                          indicator,
-                          onClick,
-                          children,
-                          active,
-                          classnameWrapper,
-                          classNameBtn,
-}: ICustomButtonProps) => {
-
-
-    if(indicator === IndicatorsForUi.wallet || !indicator) {
-        return (
-            <div className={classnameWrapper}>
-                <button className={classNameBtn} type={type} onClick={onClick}>
-                    {children}
-                </button>
-            </div>
-        );
-    }
-
-
-    if (indicator === IndicatorsForUi.loginIn) {
-        return (
-            <div className={cls.wrapper}>
-                <button className={cls.btn} type={type} onClick={onClick}>
-                    {children}
-                </button>
-            </div>
-        );
-    }
-
+const CustomButton = ({ type, indicator, onClick, children, active, classnameWrapper, classNameBtn }: ICustomButtonProps) => {
+    return (
+        <label className={classnameWrapper}>
+            <button className={classNameBtn} type={type} onClick={onClick}>
+                {children}
+            </button>
+        </label>
+    );
 
     if (indicator === IndicatorsForUi.addGeoToProfile) {
         return (
@@ -55,22 +32,7 @@ const CustomButton = ({
             </label>
         );
     }
-    if (indicator === IndicatorsForUi.trashAddProfile) {
-        return (
-            <label className={cls.coverBtnTrash}>
-                <button className={cls.trash} type={type} onClick={onClick}>
-                    {children}
-                </button>
-            </label>
-        );
-    }
-    if (indicator === IndicatorsForUi.addCurrentGeoToProfile) {
-        return (
-            <button className={cls.okey} type={type} onClick={onClick}>
-                {children}
-            </button>
-        );
-    }
+
     if (indicator === IndicatorsForUi.tabsProfile) {
         return (
             <button className={active ? `${cls.tabs} ${cls.active}` : cls.tabs} type={type} onClick={onClick}>
@@ -79,18 +41,23 @@ const CustomButton = ({
         );
     }
 
-    if (indicator === IndicatorsForUi.simpleButton) {
+    if (indicator === IndicatorsForUi.wallet || !indicator) {
         return (
-            <button className={cls.simple} type={type} onClick={onClick}>
-                {children}
-            </button>
+            <div className={classnameWrapper}>
+                <button className={classNameBtn} type={type} onClick={onClick}>
+                    {children}
+                </button>
+            </div>
         );
     }
-    if (indicator === IndicatorsForUi.withoutStyle) {
+
+    if (indicator === IndicatorsForUi.loginIn) {
         return (
-            <button className={cls.withoutStyle} type={type} onClick={onClick}>
-                {children}
-            </button>
+            <div className={cls.wrapper}>
+                <button className={cls.btn} type={type} onClick={onClick}>
+                    {children}
+                </button>
+            </div>
         );
     }
 

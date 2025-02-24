@@ -1,105 +1,75 @@
 import React from 'react';
-import cls from './profile.module.scss'
-import {ReactComponent as SvgCash} from "./../../assets/svg/cash.svg";
-import {ReactComponent as SvgFavorites} from "../../assets/svg/share.svg";
-import {ReactComponent as SvgSubscribers} from "./../../assets/svg/subscribes.svg";
-import Logo from "../logo/logo";
-import CustomButton from "../../shared/ui/сustomButton/CustomButton";
-import {ReactComponent as SvgProfile} from './../../assets/svg/profileLogo.svg';
-import {useTranslation} from "react-i18next";
-import {useAppDispatch, useAppSelector} from "../../shared/redux/hooks/hooks";
-import {modalAddProfileActions} from "../../shared/redux/slices/modalWindowStatesSlice/modalWindowStateSlice";
-import { useAppKit } from '@reown/appkit/react'
-
-
-/** заглушка  - профиль отсутствует*/
-export const activeProfile = true
+import cls from './profile.module.scss';
+import CustomButton from '../../shared/ui/сustomButton/CustomButton';
+import { useTranslation } from 'react-i18next';
+import { useAppKit } from '@reown/appkit/react';
+import { useModal } from '../../shared/helpers/hooks';
+import { INFO_USER_HEADER } from '../../shared/const/index.const';
+import { IInfoUserInHeader, labelProfileInfo } from '../../entities/others';
+import { useAppSelector } from '../../shared/redux/hooks/hooks';
+import { UserSlice } from '../../shared/redux/slices/authorizedInfo/authorizedInfo';
 
 interface IProfileInfoProps {
     showInTheHeader: boolean;
+    className: string;
 }
 
+const ProfileInfo = ({ className }: IProfileInfoProps) => {
+    /** STATES */
+    const { userInfo } = useAppSelector((state) => state.usersInfo);
 
-const ProfileInfo = ({showInTheHeader}:IProfileInfoProps) => {
-
-
-    const dispatch = useAppDispatch();
-
-    const {t} = useTranslation();
-
-    /** states */
-    const {loggedIn } = useAppSelector(state => state.authSlice)
-
+    /** HOOKS*/
+    const { t } = useTranslation();
+    /** управление модальными окнами*/
+    const { openModal } = useModal();
     /** appkit*/
-    const { open  } = useAppKit()
+    const { open } = useAppKit();
 
-    const { modalAddProfileState } = useAppSelector((state) => state.modalWindow);
-    const { changeModalAddProfileState } = modalAddProfileActions;
-
-    const changeStateModalWindow = () => {
-        dispatch(changeModalAddProfileState(!modalAddProfileState));
+    /** FUNCTIONS*/
+    /** открыть попап добавления профиля*/
+    const openModalAddProfile = () => {
+        openModal('modalAddProfileState');
     };
 
-    /** для авторизации пользователя через кошелек*/
-    async function handleLogin(): Promise<void> {
-        try {
-            await open()
-        } catch (error) {
-            console.log("Error handle login", error);
-        }
-    }
-
-    if(!showInTheHeader && !activeProfile){
-        return null
-    }
-
-
-    if(!activeProfile) {
-        return (
-            <div className={cls.header_left_block}>
-                <Logo/>
-                <CustomButton
-                    classNameBtn={cls.btn_add_profile}
-                    type='button'
-                    onClick={changeStateModalWindow}
-                >
-                    <div className={cls.btn_add_profile_text}>
-                        <SvgProfile className={cls.svgLogoProfile}/>
-                        {t('addProfile')}
-                    </div>
-                </CustomButton>
-                <CustomButton classNameBtn={`${cls.btn_connect} ${cls.max}`} type='button'
-                              onClick={handleLogin}>{loggedIn ? t('logout') : t('connect')}
-                </CustomButton>
-            </div>
-        )
-
-    }
-
     return (
-        <div className={`${showInTheHeader ? cls.wrapper_header : cls.wrapper_body}`}>
+        <div className={`${cls.wrapper} ${className}`}>
             <div className={cls.logo}>
-                <img className={cls.svgLogo} src="/test.jpg" alt="pictures"/>
+                <img className={cls.svgLogo} src={userInfo?.profile?.user_logo_url} alt='pictures' />
             </div>
             <div className={cls.info_user}>
-                <div className={cls.name_user}>
-                    <div className={cls.name}>Your Name</div>
-                    <div className={cls.status}>creator</div>
-                </div>
-                <div className={cls.interaction_block}>
-                    <div className={cls.info_block}>
-                        <SvgCash className={`${cls.svgInfo} ${cls.cash}`}/>
-                        <div>18</div>
+                {!userInfo?.profile?.id && (
+                    <div className={cls.name_user}>
+                        <div className={cls.name}>No name</div>
                     </div>
-                    <div className={cls.info_block}>
-                        <SvgFavorites className={`${cls.svgInfo} ${cls.star}`}/>
-                        <div>1.8M</div>
+                )}
+                {userInfo?.profile?.id && (
+                    <div className={cls.name_user}>
+                        <div className={cls.name}>{userInfo?.profile?.name}</div>
+                        <div className={cls.status}>creator</div>
                     </div>
-                    <div className={cls.info_block}>
-                        <SvgSubscribers className={`${cls.svgInfo} ${cls.subsribers}`}/>
-                        <div>1.8K</div>
+                )}
+                {!userInfo?.profile?.id && (
+                    <CustomButton classNameBtn={cls.btn_add_profile} type='button' onClick={openModalAddProfile}>
+                        <div className={cls.btn_add_profile_text}>{t('addProfile')}</div>
+                    </CustomButton>
+                )}
+                {userInfo?.profile?.id && (
+                    <div className={cls.interaction_block}>
+                        {INFO_USER_HEADER?.length > 0 &&
+                            INFO_USER_HEADER.map((item: IInfoUserInHeader) => (
+                                <div key={item.id} className={cls.info_block}>
+                                    {item.svg}
+                                    <div>
+                                        {item.label === labelProfileInfo.donations && <div>18</div>}
+                                        {item.label === labelProfileInfo.favourites && <div>1.8M</div>}
+                                        {item.label === labelProfileInfo.subscribers && (
+                                            <div>{userInfo?.profile?.followers_count >= 1 ? userInfo?.profile?.followers_count : '0'}</div>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );

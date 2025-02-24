@@ -1,13 +1,14 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {AuthSchemaState} from "./authShema";
-import {FROM_OPTIONS, TO_OPTIONS} from "../../../const/index.const";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AuthSchema } from './authShema';
+import { FROM_OPTIONS, TO_OPTIONS } from '../../../const/index.const';
 
-const initialState: AuthSchemaState = {
+const initialState: AuthSchema = {
     loggedIn: false,
+    signer: null,
     account: null,
     provider: null,
     wallet: null,
-    sttRates:null,
+    sttRates: null,
     telegramValid: null,
     telegramCode: null,
     telegramUsername: null,
@@ -15,35 +16,30 @@ const initialState: AuthSchemaState = {
     allowLogin: false,
     sourceToken: FROM_OPTIONS[0].label,
     targetToken: TO_OPTIONS[FROM_OPTIONS[0].value][0].label,
-    walletKit:null,
-    isLoader:false,
+    walletKit: null,
+    isLoader: false,
     chosenFavouritesIdReals: null,
     hasUpliner: false,
     tabRealsOrServices: 1,
     donationToken: 'stt',
-    profilesWithServices:[],
-    activeSlideCards:0
-}
+    profilesWithServices: [],
+    activeSlideCards: 0,
+    erc20FromReals: null,
+    transferToTheShop: null,
+    donateWalletFromReals: null,
+    walletFromSendTokensForm: null,
+    textInfo: null,
+};
 
 const authSlice = createSlice({
     initialState,
     name: 'auth',
     reducers: {
-        changeStateLoggedIn: (state, action: PayloadAction<boolean>) => {
-            state.loggedIn = action.payload;
+        changeAuthState: <K extends keyof AuthSchema>(state: AuthSchema, action: PayloadAction<{ key: K; value: AuthSchema[K] }>) => {
+            const { key, value } = action.payload;
+            state[key] = value;
         },
-        addAccount: (state, action: PayloadAction<any>) => {
-            state.account = action.payload;
-        },
-        addProvider: (state, action: PayloadAction<any>) => {
-            state.provider = action.payload;
-        },
-        addWallet: (state, action: PayloadAction<string>) => {
-            state.wallet = action.payload;
-        },
-        addSttRates: (state, action: PayloadAction<any>) => {
-            state.sttRates = action.payload;
-        },
+
         addTelegramCode: (state, action: PayloadAction<any>) => {
             state.telegramCode = action.payload;
         },
@@ -53,45 +49,27 @@ const authSlice = createSlice({
         addTelegramUsername: (state, action: PayloadAction<string>) => {
             state.telegramUsername = action.payload;
         },
-        addWithoutWallet: (state, action: PayloadAction<boolean>) => {
-            state.withoutWallet = action.payload;
-        },
-        addAllowLogin: (state, action: PayloadAction<boolean>) => {
-            state.allowLogin = action.payload;
-        },
+
         addSourceToken: (state, action: PayloadAction<string>) => {
             state.sourceToken = action.payload;
         },
         addTargetToken: (state, action: PayloadAction<string>) => {
             state.targetToken = action.payload;
         },
-        addWalletKit: (state, action: PayloadAction<any>) => {
-            state.walletKit = action.payload;
-        },
+
         addLoader: (state, action: PayloadAction<boolean>) => {
             state.isLoader = action.payload;
         },
-        addChosenFavouritesIdReals: (state, action: PayloadAction<number>) => {
-            state.chosenFavouritesIdReals = action.payload;
-        },
+
         addHasUpliner: (state, action: PayloadAction<boolean>) => {
             state.hasUpliner = action.payload;
         },
-        changeTabRealsOrServices: (state, action: PayloadAction<number>) => {
-            state.tabRealsOrServices = action.payload;
-        },
+
         addDonationToken: (state, action: PayloadAction<string>) => {
             state.donationToken = action.payload;
         },
-        addProfilesWithServices: (state, action: PayloadAction<any[]>) => {
-            state.profilesWithServices = action.payload;
-        },
-        changeActiveSlideCards: (state, action: PayloadAction<number>) => {
-            state.activeSlideCards = action.payload;
-        }
-    }
-})
-
+    },
+});
 
 export default authSlice.reducer;
-export const {actions: authActions } = authSlice;
+export const { actions: authActions } = authSlice;

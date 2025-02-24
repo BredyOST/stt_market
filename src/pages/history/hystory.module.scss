@@ -3,130 +3,127 @@
 @use '../../shared/styles/mixins';
 @use '../../shared/styles/variable/common';
 
-
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  padding-top: mixins.rem(40);
-  padding-bottom: mixins.rem(100);
-  row-gap: mixins.rem(20);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding-top: mixins.rem(40);
+    padding-bottom: mixins.rem(100);
+    row-gap: mixins.rem(20);
 }
 
 .coverSubTitle {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .title {
-  @extend .titleBlock;
-  max-width: mixins.rem(537);
-  @include mixins.adaptiveValue('font-size', 24, 16, 3, 800, 440);
+    @extend .titleBlock;
+    max-width: mixins.rem(537);
+    @include mixins.adaptiveValue('font-size', 24, 16, 3, 800, 440);
 }
 
 .svgCheck {
-  width: mixins.rem(104);
-  height: mixins.rem(104);
+    width: mixins.rem(104);
+    height: mixins.rem(104);
 }
 
 .cover_check {
-  display: flex;
-  min-width: 100%;
-  justify-content: center;
+    display: flex;
+    min-width: 100%;
+    justify-content: center;
 }
 
 .cover_transaction {
-
 }
 
 .cover_list_slides {
-  overflow: hidden;
-  z-index: 0;
+    overflow: hidden;
+    z-index: 0;
 }
 
 .arrow_background {
-  display: flex;
-  max-width: mixins.rem(64);
-  max-height: mixins.rem(64);
-  width: mixins.rem(64);
-  height: mixins.rem(64);
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
+    display: flex;
+    max-width: mixins.rem(64);
+    max-height: mixins.rem(64);
+    width: mixins.rem(64);
+    height: mixins.rem(64);
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 
-  &.in {
-    background-color: #8FFBA3;
-  }
+    &.in {
+        background-color: #8ffba3;
+    }
 
-  &.out {
-    background-color: #cf4e4e;
-  }
+    &.out {
+        background-color: #cf4e4e;
+    }
 
-  &.swap {
-    background-color: #dfa95a;
-  }
+    &.swap {
+        background-color: #dfa95a;
+    }
 }
 
 .cover {
-  display: flex;
-  min-width: 100%;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    min-width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .arrow {
-  width: mixins.rem(24);
-  height: mixins.rem(30);
+    width: mixins.rem(24);
+    height: mixins.rem(30);
 }
 
 .type {
-  font-family: globalIndex.$font_family_main;
-  font-weight: 700;
-  font-size: mixins.rem(12);
-  line-height: globalIndex.$line_height;
-  color: #292929;
-  flex: 1 1 auto;
+    font-family: globalIndex.$font_family_main;
+    font-weight: 700;
+    font-size: mixins.rem(12);
+    line-height: globalIndex.$line_height;
+    color: #292929;
+    flex: 1 1 auto;
 }
 
 .salary {
-  font-family: globalIndex.$font_family_third;
-  font-weight: 700;
-  font-size: mixins.rem(20);
-  line-height: globalIndex.$line_height;
-  &.in {
-    color: #409798;
-  }
+    font-family: globalIndex.$font_family_third;
+    font-weight: 700;
+    font-size: mixins.rem(20);
+    line-height: globalIndex.$line_height;
+    &.in {
+        color: #409798;
+    }
 
-  &.out {
-    color: #F08383;
-  }
+    &.out {
+        color: #f08383;
+    }
 
-  &.swap {
-    color: #b38138;
-  }
+    &.swap {
+        color: #b38138;
+    }
 }
 
 .cover_in_btn {
-  display: flex;
-  flex-direction: column;
-  row-gap: mixins.rem(10);
-  min-height: 100%;
-  flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(10);
+    min-height: 100%;
+    flex: 1 1 auto;
 }
 
 .btn {
-
-  width: mixins.rem(100);
-  height: mixins.rem(163);
-  max-width: mixins.rem(100);
-  max-height: mixins.rem(163);
-  background-color: #FFFFFF;
-  border-radius: mixins.rem(15);
-  display: flex;
-  flex-direction: column;
-  padding: mixins.rem(24);
-  row-gap: mixins.rem(20);
-  min-height: 100%;
+    width: mixins.rem(100);
+    height: mixins.rem(163);
+    max-width: mixins.rem(100);
+    max-height: mixins.rem(163);
+    background-color: #ffffff;
+    border-radius: mixins.rem(15);
+    display: flex;
+    flex-direction: column;
+    padding: mixins.rem(24);
+    row-gap: mixins.rem(20);
+    min-height: 100%;
 }

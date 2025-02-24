@@ -1,0 +1,122 @@
+@use '../../shared/styles/variable/globalIndex';
+@use '../../shared/styles/variable/global';
+@use '../../shared/styles/mixins';
+@use '../../shared/styles/variable/common';
+
+.wrapper {
+    row-gap: mixins.rem(42);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &.loggedIn {
+        padding-top: mixins.rem(30);
+    }
+
+    &.without_logged_in {
+        padding-top: mixins.rem(86);
+    }
+}
+
+.wrapper_slider {
+    max-width: mixins.rem(420);
+    justify-content: center;
+    align-items: center;
+    padding-top: mixins.rem(5);
+    //min-height: mixins.rem(300);
+    display: flex;
+
+    @media (max-width: mixins.em(420)) {
+        max-width: mixins.rem(320);
+    }
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: mixins.rem(18);
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide-prev {
+    transform: scale(0.4);
+}
+
+.cover_sub_title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.title {
+    @extend .titleBlock;
+    max-width: mixins.rem(537);
+    @include mixins.adaptiveValue('font-size', 24, 16, 3, 800, 440);
+}
+
+.cover {
+    display: flex;
+    column-gap: mixins.rem(20);
+    justify-content: center;
+    height: mixins.rem(115);
+    z-index: 0;
+}
+
+.block_services {
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(5);
+    transition: transform ease 0.3s 0s;
+    img {
+        max-height: mixins.rem(80);
+        max-width: mixins.rem(80);
+        width: mixins.rem(80);
+        height: mixins.rem(80);
+        border-radius: 50%;
+    }
+    h3 {
+        font-family: globalIndex.$font_family_main;
+        font-size: mixins.rem(14);
+        font-weight: 600;
+    }
+
+    @media (any-hover: hover) {
+        &:hover {
+            transform: scale(1.1);
+            transition: transform ease 0.3s 0s;
+        }
+    }
+}
+
+@keyframes loading {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.skeleton {
+    width: mixins.rem(80);
+    height: mixins.rem(80);
+    min-height: mixins.rem(80);
+    min-width: mixins.rem(80);
+    opacity: 0.6;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite linear;
+}
+
+.slide {
+    width: fit-content;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+    justify-content: center;
+    display: flex;
+    margin-right: mixins.rem(0);
+}

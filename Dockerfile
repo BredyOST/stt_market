@@ -1,44 +1,53 @@
-
-# Базовый образ для сборки
+# Используем образ Ubuntu
 FROM ubuntu:22.04 AS build
-
-# Устанавливаем рабочую директорию
-WORKDIR /app
 
 # Устанавливаем необходимые зависимости
 RUN apt-get update && apt-get install -y \
     curl \
     gnupg \
+    git \
+    build-essential \
     && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g yarn \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Устанавливаем рабочую директорию
+WORKDIR /app
 
 # Копируем package.json и yarn.lock
 COPY package.json yarn.lock ./
 
 # Устанавливаем зависимости
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
-# Копируем остальные файлы
+# Копируем все файлы приложения
 COPY . .
 
-# Запуск приложения в dev-режиме (если у тебя есть соответствующий скрипт)
-CMD ["yarn", "start"]
+# Собираем приложение
+RUN yarn build
 
+# Используем Nginx для раздачи статических файлов
+FROM nginx:alpine
 
+# Копируем собранные файлы в директорию Nginx
+COPY --from=build /app/build /usr/share/nginx/html
 
+# Открываем порт 80
+EXPOSE 80
 
-
-
+# Запускаем Nginx
+CMD ["nginx", "-g", "daemon off;"]
 
 
 ## Базовый образ для сборки
-#FROM ubuntu:24.04 AS build
+#FROM ubuntu:22.04 AS build
 #
 ## Устанавливаем рабочую директорию
 #WORKDIR /app
+#
+## Копируем package.json и yarn.lock
+#COPY package.json yarn.lock ./
 #
 ## Устанавливаем необходимые зависимости
 #RUN apt-get update && apt-get install -y \
@@ -50,8 +59,7 @@ CMD ["yarn", "start"]
 #    && apt-get clean \
 #    && rm -rf /var/lib/apt/lists/*
 #
-## Копируем package.json и yarn.lock
-#COPY package.json yarn.lock ./
+#
 #
 ## Устанавливаем зависимости
 #RUN yarn install --frozen-lockfile

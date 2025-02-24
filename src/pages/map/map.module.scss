@@ -4,30 +4,45 @@
 @use '../../shared/styles/variable/common';
 
 .leaflet-container {
-  z-index: 0; /* Установите z-index, чтобы карта не перекрывала другие элементы */
-  position: relative;
+    z-index: 0; /* Установите z-index, чтобы карта не перекрывала другие элементы */
+    position: relative;
 }
 
 .cover_map {
+    width: 100%;
+    z-index: 0;
+    border-radius: mixins.rem(30);
 
-  width: 100%;
-  z-index: 0;
-  border-radius: mixins.rem(30);
-
-  @media (min-width: mixins.em(global.$mobile)) {
-    height: mixins.rem(421);
-  }
-  @media (max-width: mixins.em(global.$mobile)) {
-    height: mixins.rem(440);
-  }
+    @media (min-width: mixins.em(global.$mobile)) {
+        height: mixins.rem(421);
+    }
+    @media (max-width: mixins.em(global.$mobile)) {
+        height: mixins.rem(440);
+    }
+}
+.markercluster_count {
+    color: #ffffff;
+    display: block;
 }
 
-
 .black_circle_marker {
-  background-color: black; // Черный цвет
-  border-radius: 50%; // Делаем круглым
-  width: 16px; // Ширина
-  height: 16px; // Высота
-  border: 2px solid white; // Белая обводка (опционально)
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); // Тень (опционально)
+    background-color: black;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border: 2px solid white;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.markercluster {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    color: #ffffff;
+    border: 2px solid white;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }

@@ -1,28 +1,28 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "outDir": "./build", // Папка для компиляции
-    "rootDir": "./src",   // Исходная папка с кодом
-    "allowJs": true,
-    "checkJs": false,
-    "skipLibCheck": true,
-    "strict": false,  // Убедитесь, что это false
-    "noImplicitAny": false,  // Отключить ошибку о неявном "any"
-    "strictNullChecks": false,  // Отключить проверку на null и undefined
-    "noImplicitThis": false,  // Отключить ошибку для `this` типа
-    "alwaysStrict": false,  // Отключить строгий режим JS
-    "noUnusedLocals": false,  // Отключить ошибку о неиспользуемых переменных
-    "noUnusedParameters": false,  // Отключить ошибку о неиспользуемых параметрах
-    "noImplicitReturns": false,  // Отключить ошибку для функций без return
-    "noFallthroughCasesInSwitch": false,  // Отключить ошибку для fallthrough в switch
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": false,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx"
-  },
-  "include": ["src"]
+    "compilerOptions": {
+        "target": "ES2020",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "outDir": "./build", // Папка для компиляции
+        "rootDir": "./src", // Исходная папка с кодом
+        "allowJs": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "strict": false, // Убедитесь, что это false
+        "noImplicitAny": false, // Отключить ошибку о неявном "any"
+        "strictNullChecks": false, // Отключить проверку на null и undefined
+        "noImplicitThis": false, // Отключить ошибку для `this` типа
+        "alwaysStrict": false, // Отключить строгий режим JS
+        "noUnusedLocals": false, // Отключить ошибку о неиспользуемых переменных
+        "noUnusedParameters": false, // Отключить ошибку о неиспользуемых параметрах
+        "noImplicitReturns": false, // Отключить ошибку для функций без return
+        "noFallthroughCasesInSwitch": false, // Отключить ошибку для fallthrough в switch
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": false,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "react-jsx"
+    },
+    "include": ["src"]
 }

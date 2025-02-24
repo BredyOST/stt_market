@@ -4,237 +4,229 @@
 @use './../../shared/styles/variable/common';
 
 .wrapper {
-  padding-top: mixins.rem(150);
-  @include mixins.adaptiveValue('padding-top', 350, 350, 3, 1100, 901);
-  @include mixins.adaptiveValue('padding-top', 350, 300, 3, 900, 769);
-  @include mixins.adaptiveValue('padding-top', 250, 250, 3, 768, 651);
-  @include mixins.adaptiveValue('padding-top', 150, 150, 3, 650, 441);
-  @include mixins.adaptiveValue('padding-top', 250, 250, 3, 439, 320);
-
+    padding-top: mixins.rem(150);
+    @include mixins.adaptiveValue('padding-top', 350, 350, 3, 1100, 901);
+    @include mixins.adaptiveValue('padding-top', 350, 300, 3, 900, 769);
+    @include mixins.adaptiveValue('padding-top', 250, 250, 3, 768, 651);
+    @include mixins.adaptiveValue('padding-top', 150, 150, 3, 650, 441);
+    @include mixins.adaptiveValue('padding-top', 250, 250, 3, 439, 320);
 }
 
 .cover_subtitle {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .body_block {
-  display: flex;
-  justify-content: center;
-  column-gap: mixins.rem(150);
-  padding-top: mixins.rem(85);
+    display: flex;
+    justify-content: center;
+    column-gap: mixins.rem(150);
+    padding-top: mixins.rem(85);
 
-  @include mixins.adaptiveValue('column-gap', 150, 110, 3, 1050, 991.98);
-  @include mixins.adaptiveValue('padding-top', 81, 57, 3, 677, 440);
+    @include mixins.adaptiveValue('column-gap', 150, 110, 3, 1050, 991.98);
+    @include mixins.adaptiveValue('padding-top', 81, 57, 3, 677, 440);
 
-
-  @media (max-width: mixins.em(global.$tablet)) {
-    flex-direction: column;
-    align-items: center;
-    row-gap: mixins.rem(80);
-  }
+    @media (max-width: mixins.em(global.$tablet)) {
+        flex-direction: column;
+        align-items: center;
+        row-gap: mixins.rem(80);
+    }
 }
 
 .chart_block {
-  display: flex;
-  row-gap: mixins.rem(60);
+    display: flex;
+    row-gap: mixins.rem(60);
 
-  @media (min-width: mixins.em(global.$tablet)) {
-    flex-direction: column;
-    flex: 0 1 mixins.rem(341);
-    max-width: mixins.rem(341);
-  }
+    @media (min-width: mixins.em(global.$tablet)) {
+        flex-direction: column;
+        flex: 0 1 mixins.rem(341);
+        max-width: mixins.rem(341);
+    }
 
-  @media (max-width: mixins.em(global.$tablet)) {
-    flex-direction: column;
-    flex: 1 1 auto;
-    min-width: 100%;
-    align-items: center;
-  }
-
+    @media (max-width: mixins.em(global.$tablet)) {
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-width: 100%;
+        align-items: center;
+    }
 }
 
 .subTitle {
-  @extend .titleBlock;
-  max-width: mixins.rem(420);
-  @include mixins.adaptiveValue('font-size', 24, 16, 3, 800, 440);
+    @extend .titleBlock;
+    max-width: mixins.rem(420);
+    @include mixins.adaptiveValue('font-size', 24, 16, 3, 800, 440);
 }
-
 
 .cover_text_into {
-  background-color: #FFFFFF;
-  opacity: 80%;
-  border-radius: mixins.rem(50);
-  min-width: mixins.rem(206);
-  height: mixins.rem(81);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: absolute;
+    background-color: #ffffff;
+    opacity: 80%;
+    border-radius: mixins.rem(50);
+    min-width: mixins.rem(206);
+    height: mixins.rem(81);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: absolute;
 
-  @include mixins.adaptiveValue('min-width', 206, 143, 3, 677, 440);
-  @include mixins.adaptiveValue('height', 81, 57, 3, 677, 440);
+    @include mixins.adaptiveValue('min-width', 206, 143, 3, 677, 440);
+    @include mixins.adaptiveValue('height', 81, 57, 3, 677, 440);
 
-  @include mixins.adaptiveValue('min-width', 143, 113, 3, 440, 320);
-  @include mixins.adaptiveValue('height', 57, 50, 3, 440, 320);
+    @include mixins.adaptiveValue('min-width', 143, 113, 3, 440, 320);
+    @include mixins.adaptiveValue('height', 57, 50, 3, 440, 320);
 
-  &.transaction {
-    top: 10%;
-    left: 0;
-    transform: translate(mixins.rem(-50), 0%);
-    @include mixins.adaptiveValueTransformSeparate('transform', -50, 0, 0, 0, 3, 550, 320);
-  }
+    &.transaction {
+        top: 10%;
+        left: 0;
+        transform: translate(mixins.rem(-50), 0%);
+        @include mixins.adaptiveValueTransformSeparate('transform', -50, 0, 0, 0, 3, 550, 320);
+    }
 
-  &.holders {
-    top: 0;
-    right: 0;
-    transform: translate(mixins.rem(-20), mixins.rem(-10));
-    @include mixins.adaptiveValueTransformSeparate('transform', -20, -20, -10, -10, 3, 550, 320);
-}
+    &.holders {
+        top: 0;
+        right: 0;
+        transform: translate(mixins.rem(-20), mixins.rem(-10));
+        @include mixins.adaptiveValueTransformSeparate('transform', -20, -20, -10, -10, 3, 550, 320);
+    }
 
-  &.multiplicatons {
-    bottom: 20%;
-    left: 0;
-    transform: translate(mixins.rem(-30),mixins.rem(-30));
-    @include mixins.adaptiveValueTransformSeparate('transform', -30, 0, -30, 0, 3, 550, 320);
-  }
+    &.multiplicatons {
+        bottom: 20%;
+        left: 0;
+        transform: translate(mixins.rem(-30), mixins.rem(-30));
+        @include mixins.adaptiveValueTransformSeparate('transform', -30, 0, -30, 0, 3, 550, 320);
+    }
 
-  &.userProfiles {
-    bottom: 0%;
-    left: 50%;
-    transform: translate(mixins.rem(-80), mixins.rem(20));
-    @include mixins.adaptiveValueTransformSeparate('transform', -80, -40, 20, 20, 3, 550, 320);
-  }
+    &.userProfiles {
+        bottom: 0%;
+        left: 50%;
+        transform: translate(mixins.rem(-80), mixins.rem(20));
+        @include mixins.adaptiveValueTransformSeparate('transform', -80, -40, 20, 20, 3, 550, 320);
+    }
 
-  &.insurance {
-    bottom: 20%;
-    right: 0;
-    transform: translate(mixins.rem(70),mixins.rem(-10));
-    @include mixins.adaptiveValueTransformSeparate('transform', 70, 0, -10, -10, 3, 550, 320);
-
-  }
+    &.insurance {
+        bottom: 20%;
+        right: 0;
+        transform: translate(mixins.rem(70), mixins.rem(-10));
+        @include mixins.adaptiveValueTransformSeparate('transform', 70, 0, -10, -10, 3, 550, 320);
+    }
 }
 
 .image {
-
 }
 
 .cycle_info {
-  display: flex;
-  width: mixins.rem(418);
-  height: mixins.rem(410);
-  position: relative;
-  //@include mixins.adaptiveValue('margin-left', 0, 70, 3, 1370, 1250);
-  //@include mixins.adaptiveValue('margin-left', 0, 0, 3, global.$tablet, 320);
+    display: flex;
+    width: mixins.rem(418);
+    height: mixins.rem(410);
+    position: relative;
+    //@include mixins.adaptiveValue('margin-left', 0, 70, 3, 1370, 1250);
+    //@include mixins.adaptiveValue('margin-left', 0, 0, 3, global.$tablet, 320);
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    opacity: 1;
-  }
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        opacity: 1;
+    }
 }
 
 .cycle_info,
 .image {
-  @include mixins.adaptiveValue('width', 418, 300, 3, 677, 440);
-  @include mixins.adaptiveValue('height', 410, 276, 3, 677, 440);
+    @include mixins.adaptiveValue('width', 418, 300, 3, 677, 440);
+    @include mixins.adaptiveValue('height', 410, 276, 3, 677, 440);
 }
 
 .image {
-
 }
 
 .text {
-  font-family: globalIndex.$font_family_third;
-  font-weight: 700;
-  font-size: mixins.rem(24);
-  color:#292929;
+    font-family: globalIndex.$font_family_third;
+    font-weight: 700;
+    font-size: mixins.rem(24);
+    color: #292929;
 
-  @include mixins.adaptiveValue('font-size', 24, 20, 3, 677, 440);
-
+    @include mixins.adaptiveValue('font-size', 24, 20, 3, 677, 440);
 }
 
-
 .title {
-  font-family: globalIndex.$font_family_main;
-  font-weight: 700;
-  font-size: mixins.rem(14);
+    font-family: globalIndex.$font_family_main;
+    font-weight: 700;
+    font-size: mixins.rem(14);
 
-  @include mixins.adaptiveValue('font-size', 14, 12, 3, 677, 440);
+    @include mixins.adaptiveValue('font-size', 14, 12, 3, 677, 440);
 }
 
 .info_block {
-  border-radius: 50%;
+    border-radius: 50%;
 
-  display: flex;
-  flex-direction: column;
-  row-gap: mixins.rem(5);
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  transition: box-shadow ease 0.3s 0s, color ease 0.3s 0s;
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(5);
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition:
+        box-shadow ease 0.3s 0s,
+        color ease 0.3s 0s;
 
-  &.first {
-    background-color: #8FFBA3;
-    transform: translateX(mixins.rem(23));
-  }
-  &.second {
-    background-color: #58C89C;
-    transform: translateX(mixins.rem(-23));
-
-  }
-
-  @media(any-hover: hover) {
-    &:hover {
-      color: rgba(90, 82, 82, 0.68);
-      transition: box-shadow ease 0.3s 0s, color ease 0.3s 0s;
-      box-shadow: 0 mixins.rem(0) mixins.rem(15) mixins.rem(2) rgba(26, 30, 33, 0.27);
+    &.first {
+        background-color: #8ffba3;
+        transform: translateX(mixins.rem(23));
     }
-  }
+    &.second {
+        background-color: #58c89c;
+        transform: translateX(mixins.rem(-23));
+    }
 
-  @media (min-width: mixins.em(360)) {
-    width: mixins.rem(192);
-    height: mixins.rem(192);
-    flex: 0 0 mixins.rem(192);
-  }
-  @media (max-width: mixins.em(360)) {
-    width: mixins.rem(172);
-    height: mixins.rem(172);
-    flex: 0 0 mixins.rem(172);
-  }
+    @media (any-hover: hover) {
+        &:hover {
+            color: rgba(90, 82, 82, 0.68);
+            transition:
+                box-shadow ease 0.3s 0s,
+                color ease 0.3s 0s;
+            box-shadow: 0 mixins.rem(0) mixins.rem(15) mixins.rem(2) rgba(26, 30, 33, 0.27);
+        }
+    }
 
+    @media (min-width: mixins.em(360)) {
+        width: mixins.rem(192);
+        height: mixins.rem(192);
+        flex: 0 0 mixins.rem(192);
+    }
+    @media (max-width: mixins.em(360)) {
+        width: mixins.rem(172);
+        height: mixins.rem(172);
+        flex: 0 0 mixins.rem(172);
+    }
 }
 
 .cover_info_block {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .info_block_title {
-  font-family: globalIndex.$font_family_main;
-  line-height: globalIndex.$line_height;
-  font-weight: 400;
-  font-size: mixins.rem(16);
-  max-width: mixins.rem(130);
-  text-align: center;
+    font-family: globalIndex.$font_family_main;
+    line-height: globalIndex.$line_height;
+    font-weight: 400;
+    font-size: mixins.rem(16);
+    max-width: mixins.rem(130);
+    text-align: center;
 }
 
 .info_block_count {
-  line-height: globalIndex.$line_height;
-  font-family: globalIndex.$font_family_third;
-  font-weight: 700;
-  font-size: mixins.rem(32);
+    line-height: globalIndex.$line_height;
+    font-family: globalIndex.$font_family_third;
+    font-weight: 700;
+    font-size: mixins.rem(32);
 }
 
-
 .info_block_label {
-  line-height: globalIndex.$line_height;
-  font-family: globalIndex.$font_family_main;
-  font-weight: 400;
-  font-size: mixins.rem(16);
+    line-height: globalIndex.$line_height;
+    font-family: globalIndex.$font_family_main;
+    font-weight: 400;
+    font-size: mixins.rem(16);
 }

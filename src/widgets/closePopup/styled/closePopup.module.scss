@@ -10,6 +10,7 @@
     transform: translate(-50%, 50%);
     fill: globalIndex.$color_main_second;
     transition: fill ease 0.3s 0s;
+    background-color: transparent;
 
     @media (any-hover: hover) {
         &:hover {
@@ -22,5 +23,5 @@
 .closeIcon {
     width: mixins.rem(20);
     height: mixins.rem(20);
-    fill:#FFFFFF
+    fill: #ffffff;
 }

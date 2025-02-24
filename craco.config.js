@@ -1,10 +1,10 @@
 module.exports = {
     webpack: {
         configure: (webpackConfig) => {
+            webpackConfig.resolve.extensions = ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json'];
+
             // Найти правило для SVG
-            const svgRule = webpackConfig.module.rules.find(
-                (rule) => rule.test && rule.test.toString().includes('svg')
-            );
+            const svgRule = webpackConfig.module.rules.find((rule) => rule.test && rule.test.toString().includes('svg'));
 
             if (svgRule) {
                 svgRule.exclude = /\.inline\.svg$/; // Исключаем файлы inline.svg

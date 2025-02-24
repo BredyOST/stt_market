@@ -3,197 +3,173 @@
 @use '../../shared/styles/mixins';
 @use '../../shared/styles/variable/common';
 
-
 .wrapper_transparent {
-  background-color: transparent;
+    background-color: transparent;
 
-  @media (min-width: mixins.em(global.$tablet)) {
-    max-width: mixins.rem(341);
-    height: mixins.rem(184);
-  }
+    @media (min-width: mixins.em(global.$tablet)) {
+        max-width: mixins.rem(341);
+        height: mixins.rem(184);
+    }
 
-  @media (max-width: mixins.em(global.$tablet)) {
-    max-width: mixins.rem(411);
-    height: mixins.rem(254);
-  }
+    @media (max-width: mixins.em(global.$tablet)) {
+        max-width: mixins.rem(411);
+        height: mixins.rem(254);
+    }
 
-  @media (max-width: mixins.em(600)) {
-    width: 100%;
-    max-width: mixins.rem(320);
-    height: mixins.rem(184);
-    max-height: mixins.rem(184);
-  }
+    @media (max-width: mixins.em(600)) {
+        width: 100%;
+        max-width: mixins.rem(320);
+        height: mixins.rem(184);
+        max-height: mixins.rem(184);
+    }
 
-  @media (max-width: mixins.em(400)) {
-    width: 100%;
-    height: mixins.rem(184);
-    max-width: mixins.rem(300);
-  }
+    @media (max-width: mixins.em(400)) {
+        width: 100%;
+        height: mixins.rem(184);
+        max-width: mixins.rem(300);
+    }
 }
 
 .wrapper {
-  background-color: rgba(255, 255, 255, 0.5);
-  @extend .eth-card;
-  padding-top: mixins.rem(25);
-  padding-bottom: mixins.rem(27);
-  padding-left: mixins.rem(42);
-  padding-right: mixins.rem(42);
-  border-radius: mixins.rem(25);
-  height: mixins.rem(250);
+    background-color: rgba(255, 255, 255, 0.5);
+    @extend .eth-card;
+
+    border-radius: mixins.rem(25);
+    height: mixins.rem(250);
+
+    @media (min-width: mixins.em(403)) {
+        padding-top: mixins.rem(25);
+        padding-bottom: mixins.rem(27);
+        padding-left: mixins.rem(42);
+        padding-right: mixins.rem(42);
+    }
+
+    @media (max-width: mixins.em(402)) {
+        padding-top: mixins.rem(25);
+        padding-bottom: mixins.rem(25);
+        padding-left: mixins.rem(20);
+        padding-right: mixins.rem(20);
+    }
 }
 
 .wrapper_big {
-  @media( max-width: mixins.em(790)) {
-      display: none;
-      opacity: 0;
-      visibility: hidden;
-  }
-}
-
-.wrapper_compact {
-  max-height: mixins.rem(136);
-  padding: mixins.rem(15);
-
-  @media(min-width: mixins.em(791)) {
-    display: none;
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  @media (min-width: mixins.em(403)) {
-    max-width: mixins.rem(148);
-  }
-
-  @media (max-width: mixins.em(402)) {
-    min-width: 100%;
-    width: 100%;
-    flex: 1 1 auto;
-  }
 }
 
 .showed {
-  width: 100%;
+    width: 100%;
 }
 
 .wrapper_transparent,
 .wrapper {
-  width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
-
 
 .cover_btn_time {
-  display: flex;
-  column-gap: mixins.rem(10);
+    display: flex;
+    column-gap: mixins.rem(10);
 }
 .chart_data {
-  font-family: globalIndex.$font_family_third;
-  font-size: mixins.rem(12);
-  display: flex;
-  justify-content: space-between;
+    font-family: globalIndex.$font_family_third;
+    font-size: mixins.rem(12);
+    display: flex;
+    justify-content: space-between;
 }
 
 .period_button {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: mixins.rem(10) 0;
-  text-align: center;
-  text-decoration: none;
-  color: #a1a1a1;
-  font-weight: 500;
-  cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: mixins.rem(10) 0;
+    text-align: center;
+    text-decoration: none;
+    color: #a1a1a1;
+    font-weight: 500;
+    cursor: pointer;
 
-  &.active {
-    color: #58C89C;
-  }
+    &.active {
+        color: #58c89c;
+    }
 }
 
 .chart_data_delta {
-  font-family: globalIndex.$font_family_third;
-  font-size: mixins.rem(16);
-  font-weight: 600;
-  color: #58C89C;
-  position: absolute;
-  top: mixins.rem(50);
-  left: mixins.rem(44);
+    font-family: globalIndex.$font_family_third;
+    font-size: mixins.rem(16);
+    font-weight: 600;
+    color: #58c89c;
+    position: absolute;
+    top: mixins.rem(50);
+    left: mixins.rem(44);
 }
 
 .chart_data_delta_main {
-  font-family: globalIndex.$font_family_third;
-  font-size: mixins.rem(16);
-  font-weight: 600;
-  //color: #71FAA2;
-  color: #58C89C;
-  position: absolute;
-  top: mixins.rem(30);
-  left: mixins.rem(4);
+    font-family: globalIndex.$font_family_third;
+    font-size: mixins.rem(16);
+    font-weight: 600;
+    //color: #71FAA2;
+    color: #58c89c;
+    position: absolute;
+    top: mixins.rem(30);
+    left: mixins.rem(4);
 }
 
 .main_block__header_number_show {
-  font-family: globalIndex.$font_family_third;
-  color: #292929;
-  font-weight: 700;
-  font-size: mixins.rem(20);
-
+    font-family: globalIndex.$font_family_third;
+    color: #292929;
+    font-weight: 700;
+    font-size: mixins.rem(20);
 }
 
 .chart_data_delta_compact {
-  font-family: globalIndex.$font_family_third;
-  font-size: mixins.rem(16);
-  font-weight: 600;
-  color: #58C89C;
-  position: absolute;
-  top: mixins.rem(35);
-  left: mixins.rem(14);
+    font-family: globalIndex.$font_family_third;
+    font-size: mixins.rem(16);
+    font-weight: 600;
+    color: #58c89c;
+    position: absolute;
+    top: mixins.rem(35);
+    left: mixins.rem(14);
 }
 
 .main_block__header_number,
 .main_block__header_number_compact {
-  font-family: globalIndex.$font_family_third;
-  color: #292929;
-  font-weight: 700;
+    font-family: globalIndex.$font_family_third;
+    color: #292929;
+    font-weight: 700;
 }
 
 .main_block__header_number {
-  font-size: mixins.rem(20);
+    font-size: mixins.rem(20);
 }
 
 .main_block__header_number_compact {
-  font-size: mixins.rem(20);
+    font-size: mixins.rem(20);
 }
 
 .block_chart_label {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
-
-.block_chart_label_compact {
-  display: flex;
-  justify-content: space-between;
-}
-
 
 .cover_btn_time_compact {
-  display: none;
-  opacity: 0;
-  visibility: hidden;
-}
-
-.hidden {
-  @media(max-width: mixins.em(790)) {
     display: none;
     opacity: 0;
     visibility: hidden;
-  }
+}
+
+.hidden {
+    @media (max-width: mixins.em(790)) {
+        display: none;
+        opacity: 0;
+        visibility: hidden;
+    }
 }
 
 .showAllTime {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }

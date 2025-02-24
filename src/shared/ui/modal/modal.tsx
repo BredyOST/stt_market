@@ -11,7 +11,6 @@ interface IModalProps {
 }
 
 const Modal = ({ children, show, closing }: IModalProps) => {
-
     return (
         <div className={`${cls.wrapper} ${show && cls.active} ${closing && cls.isClosing}`}>
             <div className={cls.content}>{children}</div>

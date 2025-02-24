@@ -36,18 +36,25 @@
     color: #000000;
 }
 
-
 .coverInput {
     position: relative;
     height: mixins.rem(50);
 
     input {
-
     }
 }
 
 .inputSearch,
-.inputStt{
+.inputStt {
     padding-right: mixins.rem(60);
 }
 
+.indicator_length {
+    color: #7cb896;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(mixins.rem(-8), mixins.rem(12));
+    font-size: mixins.rem(10);
+    font-family: globalIndex.$font_family_main;
+}

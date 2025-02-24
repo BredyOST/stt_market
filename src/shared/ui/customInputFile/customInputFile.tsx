@@ -1,6 +1,6 @@
 import React, { HTMLAttributes } from 'react';
 import cls from '../сustomButton/styled/customButtonStyled.module.scss';
-import {IndicatorsForUi} from "../../../entities/uiInterfaces/uiInterfaces";
+import { IndicatorsForUi } from '../../../entities/uiInterfaces/uiInterfaces';
 
 interface ICustomInputProps extends HTMLAttributes<HTMLInputElement> {
     type: 'file';
@@ -11,7 +11,7 @@ interface ICustomInputProps extends HTMLAttributes<HTMLInputElement> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     children?: React.ReactNode;
     errorLoaded: boolean;
-    classNameWrapper?:string
+    classNameWrapper?: string;
 }
 
 const CustomInputFile = ({
@@ -22,9 +22,8 @@ const CustomInputFile = ({
     type = 'file',
     isLoadingFile,
     errorLoaded,
-    classNameWrapper
+    classNameWrapper,
 }: ICustomInputProps) => {
-
     /** для добавления логотипа и видео*/
     if (indicator === IndicatorsForUi.addBannerToProfile || indicator === IndicatorsForUi.addLogoToProfile || !indicator) {
         return (
@@ -40,10 +39,9 @@ const CustomInputFile = ({
                     <div>
                         {children}
 
-                        {isLoadingFile && <div>загрузка...</div> }
+                        {isLoadingFile && <div>загрузка...</div>}
                         {/*     <div className={cls.text_info}>{indicator === IndicatorsForUi.addLogoToProfile ? 'logo' : 'Image or video'}</div>}*/}
                         {/*{indicator === IndicatorsForUi.addBannerToProfile && <span className={cls.minSize}>9:16</span>}*/}
-
                     </div>
                 </label>
             </div>

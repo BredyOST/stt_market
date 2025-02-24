@@ -3,111 +3,109 @@
 @use '../../../shared/styles/mixins';
 @use '../../../shared/styles/variable/common';
 
-
 .wrapper {
-  padding-left: mixins.rem(30);
-  padding-right: mixins.rem(30);
-  padding-bottom: mixins.rem(30);
-  display: flex;
-  flex-direction: column;
-  width: mixins.rem(371);
-  row-gap: mixins.rem(30);
+    padding-left: mixins.rem(30);
+    padding-right: mixins.rem(30);
+    padding-bottom: mixins.rem(30);
+    display: flex;
+    flex-direction: column;
+    width: mixins.rem(371);
+    row-gap: mixins.rem(30);
 }
 
 .stt_modal_header {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  position: relative;
-  row-gap: mixins.rem(34);
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    row-gap: mixins.rem(34);
+    align-items: center;
 }
 
 .notification_header {
-  @extend .titlePopup;
+    @extend .titlePopup;
 }
 
 .cover {
-  display: flex;
-  flex-direction: column;
-  row-gap: mixins.rem(34);
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(34);
+    align-items: center;
 }
 
 .cover_text_block {
-  display: flex;
-  flex-direction: column;
-  row-gap: mixins.rem(30);
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: mixins.rem(30);
+    text-align: center;
 }
 
 .cover_head {
-  font-family: globalIndex.$font_family_main;
-  font-size: mixins.rem(20);
-  font-weight: 800;
-  text-align: center;
+    font-family: globalIndex.$font_family_main;
+    font-size: mixins.rem(20);
+    font-weight: 800;
+    text-align: center;
 }
 
 .cover_body {
-  font-family: globalIndex.$font_family_main;
-  font-size: mixins.rem(14);
-  font-weight: 400;
-  line-height: globalIndex.$line_height;
-  text-align: center;
+    font-family: globalIndex.$font_family_main;
+    font-size: mixins.rem(14);
+    font-weight: 400;
+    line-height: globalIndex.$line_height;
+    text-align: center;
 }
 
 .cover_footer {
-  font-family: globalIndex.$font_family_main;
-  padding-top: mixins.rem(20);
-  font-size: mixins.rem(24);
-  font-weight: 700;
-  color: #008279;
+    font-family: globalIndex.$font_family_main;
+    padding-top: mixins.rem(20);
+    font-size: mixins.rem(24);
+    font-weight: 700;
+    color: #008279;
 }
 
 .cover_body,
 .cover_head,
-.cover_footer{
-  display: flex;
-  flex-direction: column;
+.cover_footer {
+    display: flex;
+    flex-direction: column;
 }
 
 .userName {
-  padding-top: mixins.rem(20);
-  padding-bottom: mixins.rem(20);
-  font-size: mixins.rem(21);
-  font-weight: 700;
-  color: #008279;
+    padding-top: mixins.rem(20);
+    padding-bottom: mixins.rem(20);
+    font-size: mixins.rem(21);
+    font-weight: 700;
+    color: #008279;
 }
 
 .btn {
-  @extend .btn_main;
-  padding-left: mixins.rem(28);
-  padding-right: mixins.rem(28);
-  padding-top: mixins.rem(14);
-  padding-bottom: mixins.rem(14);
-  font-size: mixins.rem(16);
-  font-weight: 700;
-  font-family: globalIndex.$font_family_btn_first;
-  border-radius: mixins.rem(30);
-  min-width: mixins.rem(137);
-  min-height: mixins.rem(54);
+    @extend .btn_main;
+    padding-left: mixins.rem(28);
+    padding-right: mixins.rem(28);
+    padding-top: mixins.rem(14);
+    padding-bottom: mixins.rem(14);
+    font-size: mixins.rem(16);
+    font-weight: 700;
+    font-family: globalIndex.$font_family_btn_first;
+    border-radius: mixins.rem(30);
+    min-width: mixins.rem(137);
+    min-height: mixins.rem(54);
 }
 
 .wrapper_btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(mixins.rem(20), mixins.rem(12));
-  @include mixins.adaptiveValueTransformSeparate('transform', 20, -10, 12, 12, 3, 380, 320);
-
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(mixins.rem(20), mixins.rem(12));
+    @include mixins.adaptiveValueTransformSeparate('transform', 20, -10, 12, 12, 3, 380, 320);
 }
 
 .svgSafety {
-  width: mixins.rem(30);
-  height: mixins.rem(30);
-  flex: 0 0 mixins.rem(30);
+    width: mixins.rem(30);
+    height: mixins.rem(30);
+    flex: 0 0 mixins.rem(30);
 }
 
 .close_svg {
-  @extend .close_svg;
+    @extend .close_svg;
 }

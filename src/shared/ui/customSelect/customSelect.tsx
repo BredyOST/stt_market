@@ -1,58 +1,59 @@
 import React from 'react';
-import {ForFunc, SwapOptionsFrom, SwapOptionsTo} from '../../../entities/others';
+import { ForFunc, SwapOptionsFrom, SwapOptionsTo } from '../../../entities/others';
 import cls from './styled/custom.module.scss';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { formsAddProfileActions } from '../../redux/slices/formsAddProfileSlice/formsAddProfileSlice';
 import { TITLES } from '../../../entities/pageTitiles';
 import CustomButton from '../сustomButton/CustomButton';
-import { ReactComponent as SvgClose} from '../../../assets/svg/close.svg';
-import { ReactComponent as SvgArrow} from '../../../assets/svg/arrow.svg';
-import {languageActions} from "../../redux/slices/Language/languageSlice";
-import {Language} from "../../redux/slices/Language/languageShema";
-import { useTranslation } from "react-i18next";
-import {ILanguageOption} from "../../../entities/languages/languages";
-import {IndicatorsForUi, SelectsIndicators} from "../../../entities/uiInterfaces/uiInterfaces";
-import {authActions} from "../../redux/slices/authSlice/authSlice";
-import {ICONS_TOKENS, TO_OPTIONS} from "../../const/index.const";
+import { ReactComponent as SvgClose } from '../../../assets/svg/close.svg';
+import { ReactComponent as SvgArrow } from '../../../assets/svg/arrow.svg';
+import { languageActions } from '../../redux/slices/Language/languageSlice';
+import { Language } from '../../redux/slices/Language/languageShema';
+import { useTranslation } from 'react-i18next';
+import { ILanguageOption } from '../../../entities/languages/languages';
+import { IndicatorsForUi, SelectsIndicators } from '../../../entities/uiInterfaces/uiInterfaces';
+import { authActions } from '../../redux/slices/authSlice/authSlice';
+import { ICONS_TOKENS, TO_OPTIONS } from '../../const/index.const';
+import { useAddValuesToLocalStorage } from '../../helpers/hooks';
 
 interface ICustomSelectProps {
-    options?: ILanguageOption[] | SwapOptionsFrom[] | {id:number, value:string}[];
+    options?: ILanguageOption[] | SwapOptionsFrom[] | { id: number; value: string }[];
     // optionsSecond?: {id:number, label:string}[];
     isOpenMenu?: boolean;
     handleOpenMenu?: () => void;
-    onSelect?: (value: string | number) => void
+    onSelect?: (value: string | number) => void;
     placeholder?: string;
     arrowIndicator?: boolean;
-    indicator?:SelectsIndicators
-    classNameWrapper?:string
-    classNameChosenValue?:string
-    classNameIcon?:string
-    classNameTextWithImage?:string
-    classNameBodyList?:string
-    classNameActiveItem?:string
-    classNameShowed?:string
-    chosenValue?:any
+    indicator?: SelectsIndicators;
+    classNameWrapper?: string;
+    classNameChosenValue?: string;
+    classNameIcon?: string;
+    classNameTextWithImage?: string;
+    classNameBodyList?: string;
+    classNameActiveItem?: string;
+    classNameShowed?: string;
+    chosenValue?: any;
 }
 
 const CustomSelect = ({
-                          options,
-                          chosenValue,
-                          onSelect,
-                          placeholder,
-                          arrowIndicator,
-                          indicator ,
-                          classNameWrapper,
-                          classNameChosenValue,
-                          classNameIcon,
-                          classNameTextWithImage,
-                          classNameBodyList,
-                          classNameActiveItem,
-                          classNameShowed,
-                          handleOpenMenu,
-                          isOpenMenu
+    options,
+    chosenValue,
+    onSelect,
+    placeholder,
+    arrowIndicator,
+    indicator,
+    classNameWrapper,
+    classNameChosenValue,
+    classNameIcon,
+    classNameTextWithImage,
+    classNameBodyList,
+    classNameActiveItem,
+    classNameShowed,
+    handleOpenMenu,
+    isOpenMenu,
 }: ICustomSelectProps) => {
     const dispatch = useAppDispatch();
-    const { t, i18n } = useTranslation()
+    const { t, i18n } = useTranslation();
 
     /** STATES*/
     const { language } = useAppSelector((state) => state.formsAddProfile);
@@ -67,8 +68,11 @@ const CustomSelect = ({
 
     /** ACTIONS*/
     const { addLanguage } = formsAddProfileActions;
-    const { changeLanguage }  = languageActions;
-    const {addTargetToken, addSourceToken} = authActions;
+    const { changeLanguage } = languageActions;
+    const { addTargetToken, addSourceToken } = authActions;
+
+    /** сохранение данных с формы в локалсторедже*/
+    const { addValueToLocalStorage } = useAddValuesToLocalStorage();
 
     /** изменение состояния для показа выпадающего меню и его скрытия*/
     const openMenu = () => {
@@ -85,6 +89,7 @@ const CustomSelect = ({
 
     /** выбор языка из выпадающего меню*/
     const handleChooseOption: ForFunc<number | string, void> = (option: string) => {
+        addValueToLocalStorage('language', option);
         dispatch(addLanguage(option));
         setIsOpen(false);
     };
@@ -100,10 +105,10 @@ const CustomSelect = ({
         if (indicator === SelectsIndicators.swapFrom) {
             /** обновляем свап токен*/
             dispatch(addSourceToken(value.label));
-            if(value?.label?.toLowerCase() === 'stt') {
-                dispatch(addTargetToken(TO_OPTIONS.stt[0].label))
-            } else if(value?.label?.toLowerCase() === 'usdt') {
-                dispatch(addTargetToken(TO_OPTIONS.usdt[0].label))
+            if (value?.label?.toLowerCase() === 'stt') {
+                dispatch(addTargetToken(TO_OPTIONS.stt[0].label));
+            } else if (value?.label?.toLowerCase() === 'usdt') {
+                dispatch(addTargetToken(TO_OPTIONS.usdt[0].label));
             }
         } else if (indicator === SelectsIndicators.swapTo) {
             /** обновляем таргет токен*/
@@ -115,14 +120,8 @@ const CustomSelect = ({
         return (
             <div className={classNameWrapper} onClick={handleOpenMenu}>
                 <div className={classNameChosenValue}>
-                    <img
-                        src={ICONS_TOKENS[chosenValue]}
-                        alt={`${sourceToken} icon`}
-                        className={classNameIcon}
-                    />
-                    <div className={classNameTextWithImage}>
-                        {chosenValue.toUpperCase()}
-                    </div>
+                    <img src={ICONS_TOKENS[chosenValue]} alt={`${sourceToken} icon`} className={classNameIcon} />
+                    <div className={classNameTextWithImage}>{chosenValue.toUpperCase()}</div>
                 </div>
                 {isOpenMenu && (
                     <ul className={`${classNameBodyList} ${isOpenMenu && classNameShowed}`}>
@@ -134,13 +133,13 @@ const CustomSelect = ({
                                     key={option.value}
                                     onClick={() => onSelect(option.value)}
                                 >
-                                    {option.value.toUpperCase()}
+                                    {option?.value?.toUpperCase()}
                                 </li>
                             ))}
                     </ul>
                 )}
             </div>
-        )
+        );
     }
 
     if (indicator === SelectsIndicators.address) {
@@ -148,16 +147,14 @@ const CustomSelect = ({
             <div className={cls.wrapper_language}>
                 <div className={cls.CustomSelect} onClick={openMenu}>
                     {language ? ` Language ${language}` : placeholder}
-                    {arrowIndicator &&
-                        <SvgArrow className={isOpen ? `${cls.svgArrow} ${cls.active}` : `${cls.svgArrow}`}/>
-                    }
+                    {arrowIndicator && <SvgArrow className={isOpen ? `${cls.svgArrow} ${cls.active}` : `${cls.svgArrow}`} />}
                 </div>
                 {isOpen && (
                     <div className={cls.listCover}>
                         <div className={cls.coverTitle}>
                             <h3 className={cls.title}>{TITLES.language}</h3>
                             <CustomButton indicator={IndicatorsForUi.withoutStyle} type='button' onClick={openMenu}>
-                                <SvgClose className={cls.close}/>
+                                <SvgClose className={cls.close} />
                             </CustomButton>
                         </div>
                         <ul className={cls.bodySelect}>
@@ -179,14 +176,12 @@ const CustomSelect = ({
         );
     }
 
-    if(indicator === SelectsIndicators.language) {
+    if (indicator === SelectsIndicators.language) {
         return (
             <div className={cls.wrapper} onClick={openMenuLanguage}>
-                <div className={cls.CustomSelectLanguage} >
-                    {i18n.language}
-                </div>
+                <div className={cls.CustomSelectLanguage}>{i18n.language}</div>
                 {isOpenLanguage && (
-                    <ul className={`${cls.bodySelectLanguage} ${isOpenLanguage && cls.show}` }>
+                    <ul className={`${cls.bodySelectLanguage} ${isOpenLanguage && cls.show}`}>
                         {isOpenLanguage &&
                             options?.length > 0 &&
                             options?.map((option) => (
@@ -204,18 +199,20 @@ const CustomSelect = ({
         );
     }
 
-    if(indicator === SelectsIndicators.swapFrom || indicator === SelectsIndicators.swapTo) {
+    if (indicator === SelectsIndicators.swapFrom || indicator === SelectsIndicators.swapTo) {
         return (
             <div className={cls.wrapperSTT} onClick={openMenuSwap}>
                 <div className={cls.CustomSelectStt}>
                     <img
-                        src={indicator === SelectsIndicators.swapFrom ? ICONS_TOKENS[sourceToken.toLowerCase()] : ICONS_TOKENS[targetToken.toLowerCase()] }
+                        src={
+                            indicator === SelectsIndicators.swapFrom
+                                ? ICONS_TOKENS[sourceToken.toLowerCase()]
+                                : ICONS_TOKENS[targetToken.toLowerCase()]
+                        }
                         alt={`${sourceToken} icon`}
                         className={cls.icon}
                     />
-                    <div className={cls.token}>
-                        {indicator === SelectsIndicators.swapFrom ? sourceToken : targetToken}
-                    </div>
+                    <div className={cls.token}>{indicator === SelectsIndicators.swapFrom ? sourceToken : targetToken}</div>
                 </div>
                 {isOpenSwapMenu && (
                     <ul className={`${cls.bodySelectSwap} ${isOpenSwapMenu && cls.show}`}>
@@ -236,9 +233,7 @@ const CustomSelect = ({
         );
     }
 
-
     return null;
-
 };
 
 export default CustomSelect;

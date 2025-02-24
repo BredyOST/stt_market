@@ -1,10 +1,8 @@
-
-
-export interface WalletState {
+export interface WalletSchema {
     sttBalance: number;
     usdtBalance: number;
-    etcBalance:number;
-    helpUsdtBalance:number;
-    successTransferTokens: boolean,
-    successSwap: boolean,
+    etcBalance: number;
+    helpUsdtBalance: number;
+    successTransferTokens: boolean;
+    successSwap: boolean;
 }

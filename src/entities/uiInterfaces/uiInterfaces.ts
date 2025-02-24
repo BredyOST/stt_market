@@ -1,3 +1,10 @@
+import { ReactElement } from 'react';
+
+export interface TabsOptions {
+    id: number;
+    label: number;
+}
+
 /**
  * @addBannerToProfile - кнопка добавления банера в профиле
  * @addLogoToBanner - кнопка добавления баннера в профиле пользователя
@@ -7,12 +14,10 @@
  * @tabsProfile - кнопка табов в рофиле
  * @simpleButton простая кнопка
  * */
-import {ReactElement} from "react";
-
 
 export enum IndicatorsForUi {
-    'loginIn'='loginIn',
-    'wallet'='wallet',
+    'loginIn' = 'loginIn',
+    'wallet' = 'wallet',
     'addBannerToProfile' = 'addBannerToProfile',
     'addLogoToProfile' = 'addLogoToProfile',
     'addGeoToProfile' = 'addGeoToProfile',
@@ -39,8 +44,8 @@ export enum InputsIndicators {
     'addProfileHobbies' = 'addProfileHobbies',
     'addProfileHash' = 'addProfileHash',
     'addGeoLocation' = 'addGeoLocation',
-    'addSttBonus'='addSttBonus',
-    'addSearch'='addSearch',
+    'addSttBonus' = 'addSttBonus',
+    'addSearch' = 'addSearch',
 }
 
 /** для селектов*/
@@ -48,7 +53,7 @@ export enum SelectsIndicators {
     'address' = 'address',
     'language' = 'language',
     'swapFrom' = 'swapFrom',
-    'swapTo'='swapTo'
+    'swapTo' = 'swapTo',
 }
 
 /**
@@ -71,13 +76,6 @@ export interface IButtonsForFormAddProfile {
     alt: string;
     name: string;
 }
-
-
-export interface TabsOptions {
-    id: number;
-    label: number | string;
-}
-
 
 /**
  * для чекбокса инкогнито

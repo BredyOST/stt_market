@@ -1,0 +1,69 @@
+@use '../../shared/styles/variable/globalIndex';
+@use '../../shared/styles/variable/global';
+@use '../../shared/styles/mixins';
+@use '../../shared/styles/variable/common';
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: mixins.rem(371);
+    row-gap: mixins.rem(30);
+    padding-left: mixins.rem(30);
+    padding-right: mixins.rem(30);
+    padding-bottom: mixins.rem(30);
+}
+
+.stt_modal_header {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    row-gap: mixins.rem(34);
+    align-items: center;
+}
+
+.notification_header {
+    @extend .titlePopup;
+}
+
+.qr_scanner {
+    min-width: mixins.rem(321);
+    display: flex;
+    max-width: mixins.rem(40);
+    height: auto;
+    border-radius: mixins.rem(20);
+}
+
+.wrapper_btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(mixins.rem(20), mixins.rem(12));
+}
+
+.btn_send_tokens {
+    @extend .btn_main;
+    padding-left: mixins.rem(28);
+    padding-right: mixins.rem(28);
+    padding-top: mixins.rem(14);
+    padding-bottom: mixins.rem(14);
+    font-size: mixins.rem(16);
+    font-weight: 700;
+    font-family: globalIndex.$font_family_btn_first;
+    border-radius: mixins.rem(30);
+    min-width: mixins.rem(137);
+    min-height: mixins.rem(54);
+}
+
+.wrap_btn {
+    display: flex;
+    min-width: 100%;
+    justify-content: center;
+}
+
+.result {
+    font-family: globalIndex.$font_family_main;
+    font-size: mixins.rem(12);
+    line-height: globalIndex.$line_height;
+    font-weight: 600;
+}

@@ -1,17 +1,17 @@
 import React from 'react';
-import axios from "axios";
+import axios from 'axios';
 import {
-    arbitrumCurrent, exchangeContractAddress,
+    arbitrumCurrent,
+    exchangeContractAddress,
     tokenContractAbi,
     tokenContractAddress,
     usdtContractAbi,
-    usdtContractAddress
-} from "./helpers/contracts";
-import {ethers} from "ethers";
-import {Line, LineChart, ResponsiveContainer, YAxis} from "recharts";
+    usdtContractAddress,
+} from './helpers/contracts';
+import { ethers } from 'ethers';
+import { Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
 const NeedDeleted = () => {
-
     // async function prepareTelegram() {
     //     try {
     //         const data = {'account': account}
@@ -78,9 +78,8 @@ const NeedDeleted = () => {
     // }
 
     async function handleLogin() {
-
         try {
-            const result = await window.ethereum.request({ method: "eth_chainId" });
+            const result = await window.ethereum.request({ method: 'eth_chainId' });
             // if (result === arbitrumCurrent[0]['chainId'] || result === 42161) {
             //     try {
             //         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -110,7 +109,7 @@ const NeedDeleted = () => {
             //     handleLogout();
             // }
         } catch (error) {
-            console.log("Error fetching chain ID", error);
+            console.log('Error fetching chain ID', error);
         }
     }
 
@@ -122,8 +121,8 @@ const NeedDeleted = () => {
 
     function chainChange() {
         window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: arbitrumCurrent
+            method: 'wallet_addEthereumChain',
+            params: arbitrumCurrent,
         });
     }
 
@@ -189,7 +188,7 @@ const NeedDeleted = () => {
         //             dispatch(changeStateLoggedIn(true))
         //         }
         //     })
-    }, [])
+    }, []);
     /** */
 
     const switchToArbitrum = async () => {
@@ -221,7 +220,6 @@ const NeedDeleted = () => {
         //   }
         // }
     };
-
 
     return (
         <div>
@@ -354,10 +352,10 @@ const NeedDeleted = () => {
             {/*</div>*/}
             {/*</div>*/}
 
-
             <div>из app</div>
             {true ? (
                 <></>
+            ) : (
                 // <div className="App full-screen">
                 //   <div className="bubbles">
                 //     {BUBBLE_COUNT.length >=1 && BUBBLE_COUNT.map((item) =>
@@ -368,8 +366,8 @@ const NeedDeleted = () => {
                 //   <div style={{ display : 'flex', flexDirection:'column', justifyContent:'center' }}>
                 //     <div id="logo-container" style={{ paddingTop: 6 }} />
                 //     {allowLogin
-                //         ? <div className={"login-btn"} onClick={handleLogin}><img src={"/stt-logo.svg"} alt={''}/>LOGIN</div>
-                //         : <div className={"login-btn"} style={{fontSize: '1.5rem', padding: 0}}><i className="fa-duotone fa-spinner fa-spin icon-in-btn"></i></div>
+                //         ? <div className={"loginThunk-btn"} onClick={handleLogin}><img src={"/stt-logo.svg"} alt={''}/>LOGIN</div>
+                //         : <div className={"loginThunk-btn"} style={{fontSize: '1.5rem', padding: 0}}><i className="fa-duotone fa-spinner fa-spin icon-in-btn"></i></div>
                 //     }
                 //     {/*<Button className="meta-btn" variant="outline-secondary" size="lg" onClick={handleLogin}>Login with Wallet</Button><br/>*/}
                 //     {metamaskFound
@@ -378,7 +376,6 @@ const NeedDeleted = () => {
                 //     }
                 //   </div>
                 // </div>
-            ) : (
                 <React.Fragment>
                     {/*<Modal show={showLoading} fullscreen={true} onHide={() => setShowLoading(false)}*/}
                     {/*       className={"preloading-modal"}>*/}
@@ -431,13 +428,12 @@ const NeedDeleted = () => {
                     {/*        <Modal.Body>*/}
                     {/*          <div className={"stt_modal_header"}>*/}
 
-
                     {/*          </div>*/}
                     {/*          <div className={"help-wrapper telegram-wrapper"} style={{paddingLeft: 0, paddingRight: 0}}>*/}
                     {/*            <img src={"/img/lock.png"} alt={''} style={{width: 80, marginTop: 70}} />*/}
                     {/*            <p style={{fontSize: '1.1rem', marginBottom: 20, marginTop: 30, color: '#888888'}}>Authorization</p>*/}
-                    {/*            <p style={{fontSize: '.8rem', marginTop: 0, fontWeight: 400, marginBottom: 25}}>To use full functionality, login to the<br/>website with the browser of your crypto<br/>wallet</p>*/}
-                    {/*            <a href={"/login.pdf"} target={"_blank"} rel={"noreferrer"} style={{fontSize: '.8rem', marginTop: 0, fontWeight: 500, display: "block", marginBottom: 45, color: '#47c999'}}>Instructions</a>*/}
+                    {/*            <p style={{fontSize: '.8rem', marginTop: 0, fontWeight: 400, marginBottom: 25}}>To use full functionality, loginThunk to the<br/>website with the browser of your crypto<br/>wallet</p>*/}
+                    {/*            <a href={"/loginThunk.pdf"} target={"_blank"} rel={"noreferrer"} style={{fontSize: '.8rem', marginTop: 0, fontWeight: 500, display: "block", marginBottom: 45, color: '#47c999'}}>Instructions</a>*/}
 
                     {/*            <Button className="modal-button"  onClick={() => setWwModal(false)}>Ok</Button>*/}
                     {/*          </div>*/}
@@ -456,7 +452,6 @@ const NeedDeleted = () => {
                     {/*</div>*/}
                 </React.Fragment>
             )}
-
 
             <div>wallet</div>
             {/*<Modal size="sm" show={showWwModal} onHide={() => setWwModal(false)}*/}
@@ -480,10 +475,10 @@ const NeedDeleted = () => {
             {/*                fontWeight: 400,*/}
             {/*                marginBottom: 25*/}
             {/*            }}>To*/}
-            {/*                use full functionality, login to the<br/>website with the browser of your*/}
+            {/*                use full functionality, loginThunk to the<br/>website with the browser of your*/}
             {/*                crypto<br/>wallet*/}
             {/*            </p>*/}
-            {/*            <a href={"/login.pdf"} target={"_blank"} rel={"noreferrer"} style={{*/}
+            {/*            <a href={"/loginThunk.pdf"} target={"_blank"} rel={"noreferrer"} style={{*/}
             {/*                fontSize: '.8rem',*/}
             {/*                marginTop: 0,*/}
             {/*                fontWeight: 500,*/}
@@ -495,7 +490,6 @@ const NeedDeleted = () => {
             {/*        </div>*/}
             {/*    </Modal.Body>*/}
             {/*</Modal>*/}
-
 
             {/*<div className={"wallet_card eth-card"}>*/}
             {/*    <div className={"wallet_card-stripe"}>*/}
@@ -527,9 +521,9 @@ const NeedDeleted = () => {
             {/*                            color: '#888888'*/}
             {/*                        }}>Authorization</p>*/}
             {/*                        <p style={{fontSize: '.8rem', marginTop: 0, fontWeight: 400, marginBottom: 25}}>To*/}
-            {/*                            use full functionality, login to the<br/>website with the browser of your crypto<br/>wallet*/}
+            {/*                            use full functionality, loginThunk to the<br/>website with the browser of your crypto<br/>wallet*/}
             {/*                        </p>*/}
-            {/*                        <a href={"/login.pdf"} target={"_blank"} rel={"noreferrer"} style={{*/}
+            {/*                        <a href={"/loginThunk.pdf"} target={"_blank"} rel={"noreferrer"} style={{*/}
             {/*                            fontSize: '.8rem',*/}
             {/*                            marginTop: 0,*/}
             {/*                            fontWeight: 500,*/}
@@ -596,7 +590,6 @@ const NeedDeleted = () => {
             {/*        </div>*/}
             {/*    </Modal.Body>*/}
             {/*</Modal>*/}
-
 
             <div>chart</div>
 

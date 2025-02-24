@@ -4,210 +4,246 @@
 @use '../../shared/styles/variable/common';
 
 .wrapper {
-  display: flex;
-  justify-content: space-between;
-  z-index: 2;
-  position: relative;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+    position: relative;
 
-  @media (min-width: mixins.em(global.$tablet)) {
-    padding-top: mixins.rem(80);
-  }
+    @media (min-width: mixins.em(global.$tablet)) {
+        padding-top: mixins.rem(80);
+    }
 
-  @media (max-width: mixins.em(global.$tablet)) {
-    padding-top: mixins.rem(20);
-  }
+    @media (max-width: mixins.em(global.$tablet)) {
+        padding-top: mixins.rem(20);
+    }
 }
 
 .wrapper_ath {
-  display: flex;
-  justify-content: space-between;
-  z-index: 2;
-  position: relative;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+    position: relative;
 
-  @media (min-width: mixins.em(global.$tablet)) {
-    padding-top: mixins.rem(40);
-  }
+    @media (min-width: mixins.em(global.$tablet)) {
+        padding-top: mixins.rem(40);
+    }
 
-  @media (max-width: mixins.em(global.$tablet)) {
-    padding-top: mixins.rem(20);
-  }
+    @media (max-width: mixins.em(global.$tablet)) {
+        padding-top: mixins.rem(20);
+    }
+}
+.left_block {
+    display: flex;
+    column-gap: mixins.rem(10);
+    justify-content: center;
+    align-items: center;
 }
 
 .additional {
-  display: flex;
-  align-items: center;
-
+    display: flex;
+    align-items: center;
 }
 
 .active {
-  display: flex;
-  align-items: flex-start;
+    display: flex;
+    align-items: flex-start;
 
-  @media (max-width: mixins.em(global.$mobile)) {
-    //justify-content: flex-end;
-    align-items: center;
-  }
-
+    @media (max-width: mixins.em(global.$mobile)) {
+        align-items: center;
+    }
 }
-
 
 .svgLogo {
-  width: mixins.rem(39);
-  height: mixins.rem(39);
-  flex: 0 0 mixins.rem(39);
+    width: mixins.rem(39);
+    height: mixins.rem(39);
+    flex: 0 0 mixins.rem(39);
 }
 
-.svg_safety {
-  width: mixins.rem(22);
-  height: mixins.rem(27);
+.btn_stt {
+    width: mixins.rem(30);
+    height: mixins.rem(27);
+    display: flex;
+    justify-content: center;
+}
+
+.btn_svg {
+    width: mixins.rem(25);
+    height: mixins.rem(27);
+}
+
+.btn_svg_safety {
+}
+
+.btn_svg_notifications {
 }
 
 .svgLogoProfile {
-  width: mixins.rem(26);
-  height: mixins.rem(26);
-  flex: 0 0 mixins.rem(26);
+    width: mixins.rem(26);
+    height: mixins.rem(26);
+    flex: 0 0 mixins.rem(26);
 }
 
-// перепроверил
-
 .header_left_block {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  @media (min-width: mixins.em(700)) {
-    column-gap: mixins.rem(40);
-  }
+    @media (min-width: mixins.em(700)) {
+        column-gap: mixins.rem(40);
+    }
 
-  @media (max-width: mixins.em(700)) {
-    column-gap: mixins.rem(10);
-  }
-
+    @media (max-width: mixins.em(700)) {
+        column-gap: mixins.rem(10);
+    }
 }
 
 .header_right_block_no_auth {
-  display: flex;
-  align-items: center;
-  @media (min-width: mixins.em(701)) {
-    column-gap: mixins.rem(36);
-  }
+    display: flex;
+    align-items: center;
+    @media (min-width: mixins.em(701)) {
+        column-gap: mixins.rem(36);
+    }
 }
 
 .header_right_block {
-  display: flex;
-  align-items: center;
-  column-gap: mixins.rem(36);
-  min-height: 100%;
+    display: flex;
+    align-items: center;
+    min-height: 100%;
+    justify-content: flex-end;
 
+    @media (min-width: mixins.em(701)) {
+        column-gap: mixins.rem(36);
+    }
 }
 
 .language_safety {
-  display: flex;
-  column-gap: mixins.rem(10);
+    display: flex;
+    column-gap: mixins.rem(10);
+    flex: 1 1 auto;
+    justify-content: flex-end;
 }
 
 .btn_connect {
-  @extend .btn_main;
-  padding-left: mixins.rem(28);
-  padding-right: mixins.rem(28);
-  padding-top: mixins.rem(14);
-  padding-bottom: mixins.rem(14);
-  font-size: mixins.rem(16);
-  font-weight: 700;
-  font-family: globalIndex.$font_family_btn_first;
-  border-radius: mixins.rem(30);
-  min-height: mixins.rem(54);
-  min-width: mixins.rem(137);
+    @extend .btn_main;
+    padding-left: mixins.rem(28);
+    padding-right: mixins.rem(28);
+    padding-top: mixins.rem(14);
+    padding-bottom: mixins.rem(14);
+    font-size: mixins.rem(16);
+    font-weight: 700;
+    font-family: globalIndex.$font_family_btn_first;
+    border-radius: mixins.rem(30);
+    min-height: mixins.rem(54);
+    min-width: mixins.rem(137);
 
-  &.min {
-    @media (min-width: mixins.em(701)) {
-      display: none;
-      opacity: 0;
-      visibility: hidden;
+    &.min {
+        @media (min-width: mixins.em(701)) {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+        }
     }
-  }
 
     &.max {
-      @media (max-width: mixins.em(700)) {
-      display: none;
-      opacity: 0;
-      visibility: hidden;
+        @media (max-width: mixins.em(700)) {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+        }
     }
-  }
 }
 
 .btn_connect_loggin {
-  @extend .btn_main;
-  padding-left: mixins.rem(28);
-  padding-right: mixins.rem(28);
-  padding-top: mixins.rem(14);
-  padding-bottom: mixins.rem(14);
-  font-size: mixins.rem(16);
-  font-weight: 700;
-  font-family: globalIndex.$font_family_btn_first;
-  border-radius: mixins.rem(30);
-  min-height: mixins.rem(54);
-  min-width: mixins.rem(137);
-  @media (max-width: mixins.em(700)) {
-    display: none;
-    opacity: 0;
-    visibility: hidden;
-  }
+    @extend .btn_main;
+    @media (min-width: mixins.em(700)) {
+        padding-left: mixins.rem(28);
+        padding-right: mixins.rem(28);
+        padding-top: mixins.rem(14);
+        padding-bottom: mixins.rem(14);
+        font-size: mixins.rem(16);
+        font-weight: 700;
+        font-family: globalIndex.$font_family_btn_first;
+        border-radius: mixins.rem(30);
+        min-height: mixins.rem(54);
+        min-width: mixins.rem(137);
+    }
+
+    @media (max-width: mixins.em(700)) {
+        display: none;
+        opacity: 0;
+        visibility: hidden;
+        width: 0;
+        position: absolute;
+        height: 0;
+        padding: 0;
+    }
 }
 
-.btn_connect_loggin_mobile_auth_with_profile {
-  @extend .btn_main;
-  padding-left: mixins.rem(28);
-  padding-right: mixins.rem(28);
-  padding-top: mixins.rem(14);
-  padding-bottom: mixins.rem(14);
-  font-size: mixins.rem(16);
-  font-weight: 700;
-  font-family: globalIndex.$font_family_btn_first;
-  border-radius: mixins.rem(30);
-  min-height: mixins.rem(54);
-  min-width: mixins.rem(137);
+.btn_connect_loggin_mobile {
+    @extend .btn_main;
 
-  @media (min-width: mixins.em(701)) {
-    display: none;
-    opacity: 0;
-    visibility: hidden;
-  }
+    font-size: mixins.rem(16);
+    font-weight: 700;
+    font-family: globalIndex.$font_family_btn_first;
+    border-radius: mixins.rem(30);
+
+    @media (min-width: mixins.em(701)) {
+        display: none;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    @media (min-width: mixins.em(380)) {
+        min-height: mixins.rem(54);
+        min-width: mixins.rem(137);
+        padding-left: mixins.rem(28);
+        padding-right: mixins.rem(28);
+        padding-top: mixins.rem(14);
+        padding-bottom: mixins.rem(14);
+    }
+
+    @media (max-width: mixins.em(380)) {
+        min-height: mixins.rem(40);
+        min-width: mixins.rem(110);
+        padding-left: mixins.rem(20);
+        padding-right: mixins.rem(20);
+        padding-top: mixins.rem(14);
+        padding-bottom: mixins.rem(14);
+    }
 }
-
 
 .btn_add_profile {
-  @extend .btn_main;
-  padding-left: mixins.rem(28);
-  padding-right: mixins.rem(28);
-  padding-top: mixins.rem(14);
-  padding-bottom: mixins.rem(14);
-  font-size: mixins.rem(16);
-  font-weight: 700;
-  font-family: globalIndex.$font_family_btn_first;
-  border-radius: mixins.rem(30);
-  min-height: mixins.rem(54);
+    @extend .btn_main;
+    padding-left: mixins.rem(28);
+    padding-right: mixins.rem(28);
+    padding-top: mixins.rem(14);
+    padding-bottom: mixins.rem(14);
+    font-size: mixins.rem(16);
+    font-weight: 700;
+    font-family: globalIndex.$font_family_btn_first;
+    border-radius: mixins.rem(30);
+    min-height: mixins.rem(54);
 
-  @media(min-width: mixins.em(701)) {
-    min-width: mixins.rem(182);
-  }
+    @media (min-width: mixins.em(701)) {
+        min-width: mixins.rem(182);
+    }
 
-  @media (max-width: mixins.em(700)) {
-    visibility: hidden;
-    opacity: 0;
-    display: none;
-  }
+    @media (max-width: mixins.em(700)) {
+        visibility: hidden;
+        opacity: 0;
+        display: none;
+    }
 }
 
 .btn_add_profile_text {
-  display: flex;
-  align-items: center;
-  column-gap: mixins.rem(9);
+    display: flex;
+    align-items: center;
+    column-gap: mixins.rem(9);
 
-  @media(max-width: mixins.em(700)) {
-    span {
-      display: none;
-      visibility: hidden;
-      opacity: 0;
+    @media (max-width: mixins.em(700)) {
+        span {
+            display: none;
+            visibility: hidden;
+            opacity: 0;
+        }
     }
-  }
 }

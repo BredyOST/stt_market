@@ -1,41 +1,40 @@
 .insurance-item {
-  background-color: #ededed;
-  border-radius: 25px;
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 5px;
+    background-color: #ededed;
+    border-radius: 25px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px;
 
-  &_icon {
-    position: relative;
-    width: 36px;
-    margin-right: 5px;
-  }
-
-  &_data {
-
-    &-title {
-      font-size: .8rem;
-      color: #888888;
+    &_icon {
+        position: relative;
+        width: 36px;
+        margin-right: 5px;
     }
 
-    &-rate {
-      font-size: .55rem;
+    &_data {
+        &-title {
+            font-size: 0.8rem;
+            color: #888888;
+        }
+
+        &-rate {
+            font-size: 0.55rem;
+        }
     }
-  }
 }
 
 .insurance_rows {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .insurance_total {
-  font-weight: 500;
-  font-size: 1.1rem;
-  position: absolute;
-  bottom: 15px;
-  right: 30px;
-  color: #47c999;
+    font-weight: 500;
+    font-size: 1.1rem;
+    position: absolute;
+    bottom: 15px;
+    right: 30px;
+    color: #47c999;
 }

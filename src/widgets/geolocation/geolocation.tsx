@@ -10,39 +10,15 @@ import { ReactComponent as SvgArrow } from './../../assets/svg/arrow.svg';
 import { ReactComponent as SvgOkay } from './../../assets/svg/okay.svg';
 import { ReactComponent as SvgTrash } from './../../assets/svg/trash.svg';
 import { ReactComponent as SvgClose } from '../../assets/svg/close.svg';
-import {IndicatorsForUi, InputsIndicators} from "../../entities/uiInterfaces/uiInterfaces";
-
-export interface Feature {
-    geometry: {
-        coordinates: number[];
-        type: string;
-    };
-    type: string;
-    properties: {
-        osm_type: string;
-        extent:  number[];
-        osm_id: number;
-        country: string;
-        osm_key: string;
-        city: string;
-        street: string;
-        countrycode: string;
-        osm_value: string;
-        district: string;
-        postcode: string;
-        name: string;
-        state: string;
-        type: string;
-        housenumber: string;
-    };
-}
+import { IndicatorsForUi, InputsIndicators } from '../../entities/uiInterfaces/uiInterfaces';
+import { useAddProfile, useAddValuesToLocalStorage } from '../../shared/helpers/hooks';
+import { coordinates, Feature } from '../../shared/redux/slices/formsAddProfileSlice/formsAddProfileSchema';
+import { showAttention } from '../../shared/helpers/attention';
 
 interface ApiResponse {
     type: any;
     features: Feature[];
 }
-
-
 
 const Geolocation = React.memo(() => {
     const dispatch = useAppDispatch();
@@ -54,7 +30,7 @@ const Geolocation = React.memo(() => {
 
     /** для открытия выпадающего списка*/
     const [isOpenSelectMenu, setIsOpenSelectMenu] = React.useState<boolean>(false);
-
+    const updateAddProleState = useAddProfile();
     /**ACTIONS*/
     const { addGeo, addInputGeo } = formsAddProfileActions;
 
@@ -69,7 +45,7 @@ const Geolocation = React.memo(() => {
         if (e?.target?.value?.length >= 1) {
             const result = await fetch(`https://photon.komoot.io/api?q=${e.target.value}&limit=5`);
             const data: ApiResponse = await result.json();
-            console.log(listCity)
+
             // Типизация данных
             if (Array.isArray(data?.features)) {
                 setListCity(data.features);
@@ -81,42 +57,88 @@ const Geolocation = React.memo(() => {
         }
     };
 
+    const { addValueToLocalStorage } = useAddValuesToLocalStorage();
+
     /** добавить геолокацию*/
-    const handleAddOption: ForFunc<Feature, any> = (item:Feature) => {
-        // console.log(item.geometry.coordinates)
-        dispatch(addGeo(item));
-        dispatch(addInputGeo(''));
-        setListCity([])
-        // if (inputGeo.length === 0) {
-        //     showAttention(ERROR_ATTENTION_FOR_FORM.geolocation, 'error');
-        // }
-        // if (inputGeo.trim() && !coordinates.includes(inputGeo)) {
-        //     dispatch(addGeo( [...item?.geometry.coordinates]));
-        //     dispatch(addInputGeo(''));
-        //     showAttention('geolocation has added', 'success');
-        // }
+    const handleAddOption: ForFunc<Feature, any> = (item: Feature) => {
+        const street = item.properties.street ?? item.properties.name;
+
+        if (
+            !item.geometry.coordinates ||
+            !item.properties.country ||
+            !item.properties.city ||
+            !street ||
+            !item.properties.housenumber ||
+            !item?.properties?.postcode
+        ) {
+            console.log(111);
+            showAttention('Please enter the full address', 'warning');
+            return;
+        }
+
+        const obj: coordinates = {
+            id: coordinates?.length ? coordinates?.length + 1 : 1,
+            coordinates: item.geometry.coordinates,
+            country: item.properties.country,
+            city: item.properties.city,
+            street: street,
+            housenumber: item.properties.housenumber,
+            postcode: item?.properties?.postcode,
+        };
+
+        if (coordinates?.length == 0 || !coordinates) {
+            updateAddProleState('coordinates', [obj]);
+            addValueToLocalStorage('coordinates', [obj]);
+        } else if (coordinates?.length >= 1) {
+            let newlists = [];
+            newlists = coordinates?.filter((elem: coordinates) => {
+                if (elem?.coordinates[0] === obj.coordinates[0] && elem?.coordinates[1] === obj.coordinates[1]) {
+                    return elem;
+                }
+            });
+
+            if (!newlists || newlists?.length === 0) {
+                updateAddProleState('coordinates', [...coordinates, obj]);
+                addValueToLocalStorage('coordinates', [...coordinates, obj]);
+            } else {
+                showAttention('These coordinates have already been added', 'warning');
+            }
+        }
+
+        updateAddProleState('inputGeo', '');
+        setListCity([]);
     };
     /** удалить геолокацию*/
-    const handleRemoveOption: ForFunc<string, void> = (option) => {
-        dispatch(addGeo(null));
-        // dispatch(addGeo(coordinates.filter((item) => item !== option)));
+    const handleRemoveOption: ForFunc<number, void> = (option) => {
+        const newlists = coordinates
+            .filter((elem: coordinates) => elem.id !== option)
+            .map((elem: coordinates, index) => {
+                return { ...elem, id: index + 1 };
+            });
+
+        if (newlists?.length >= 1) {
+            updateAddProleState('coordinates', [...newlists]);
+            addValueToLocalStorage('coordinates', [...newlists]);
+        } else {
+            updateAddProleState('coordinates', null);
+            addValueToLocalStorage('coordinates', null);
+        }
     };
 
     /** добавить при клике адресс из выпадающего списка*/
-    const addCity = (item) => {
-
-    }
+    const addCity = (item) => {};
 
     return (
         <div className={cls.wrapper}>
             <CustomButton
                 type='button'
+                classnameWrapper={cls.coverBtnGeo}
+                classNameBtn={cls.geo}
                 onClick={changeIsOpenSelectMenu}
-                indicator={IndicatorsForUi.addGeoToProfile}
                 active={isOpenSelectMenu}
             >
                 <div className={cls.coverBtnFileText}>
-                    <span> {coordinates?.geometry ? 1 : 0}</span>
+                    <span> {!coordinates ? 0 : coordinates?.length}</span>
                     <div className={cls.geolocation_text}>Geolocation</div>
                     <SvgArrow className={`${cls.svgArrow} ${isOpenSelectMenu && cls.active}`} />
                 </div>
@@ -125,89 +147,58 @@ const Geolocation = React.memo(() => {
                 <div className={`${cls.dropdown} ${isOpenSelectMenu && cls.active}`}>
                     <div className={cls.coverTitle}>
                         <h3 className={cls.title}>{TITLES.geoLocation}</h3>
-                        <CustomButton indicator={IndicatorsForUi.withoutStyle} type='button' onClick={changeIsOpenSelectMenu}>
+                        <CustomButton classnameWrapper={cls.withoutStyle} type='button' onClick={changeIsOpenSelectMenu}>
                             <SvgClose className={cls.close} />
                         </CustomButton>
                     </div>
                     <div className={cls.coverOptions}>
-                        {coordinates &&
-                            <div className={cls.option}>
-                                <div className={cls.startBlockinfo}>
-                                    <span>{1}</span>
-                                    {coordinates?.properties?.country}, {coordinates?.properties?.city}, {coordinates?.properties?.street ?? coordinates?.properties.name}, {coordinates?.properties?.housenumber}
+                        {coordinates?.length >= 1 &&
+                            coordinates.map((item, index) => (
+                                <div key={item.id} className={cls.option}>
+                                    <div className={cls.startBlockinfo}>
+                                        <span>{index + 1}</span>
+                                        {item?.country}, {item?.city}, {item?.street}, {item?.housenumber}
+                                    </div>
+                                    <CustomButton
+                                        type='button'
+                                        onClick={() => handleRemoveOption(item.id)}
+                                        classnameWrapper={cls.wrapper_trash}
+                                        classNameBtn={cls.deleteButton}
+                                        active={modalAddProfileState}
+                                    >
+                                        <SvgTrash className={`${cls.svgTrash} ${isOpenSelectMenu && cls.active}`} />
+                                    </CustomButton>
                                 </div>
-                                <CustomButton
-                                    type='button'
-                                    onClick={handleRemoveOption}
-                                    className={cls.deleteButton}
-                                    indicator={IndicatorsForUi.trashAddProfile}
-                                    active={modalAddProfileState}
-                                >
-                                    <SvgTrash className={`${cls.svgTrash} ${isOpenSelectMenu && cls.active}`}/>
-                                </CustomButton>
-                            </div>
-                        }
-                        {/*{coordinates?.length >= 1 &&*/}
-                        {/*    coordinates?.map((option: string, index: number) => (*/}
-                        {/*        <div key={`${option}${index}`} className={cls.option}>*/}
-                        {/*            <div className={cls.startBlockinfo}>*/}
-                        {/*                <span>{index + 1}</span>*/}
-                        {/*                {option}*/}
-                        {/*            </div>*/}
-                        {/*            <CustomButton*/}
-                        {/*                type='button'*/}
-                        {/*                onClick={() => handleRemoveOption(option)}*/}
-                        {/*                className={cls.deleteButton}*/}
-                        {/*                indicator={IndicatorsForUi.trashAddProfile}*/}
-                        {/*                active={modalAddProfileState}*/}
-                        {/*            >*/}
-                        {/*                <SvgTrash className={`${cls.svgTrash} ${isOpenSelectMenu && cls.active}`} />*/}
-                        {/*            </CustomButton>*/}
-                        {/*        </div>*/}
-                        {/*    ))}*/}
+                            ))}
                     </div>
                     <div className={cls.coverBlockDown}>
                         <CustomInput
                             type='text'
                             value={inputGeo}
-                            indicators={InputsIndicators.addGeoLocation}
+                            classNameWrapper={cls.coverInputGeo}
+                            classNameInput={cls.input_geo}
                             onChange={(e) => changeValueInputGeo(e)}
                             placeholder='Введите геолокацию'
                         />
-                        <CustomButton
-                            type='button'
-                            indicator={IndicatorsForUi.addCurrentGeoToProfile}
-                            onClick={handleAddOption}
-                            className={cls.addButton}
-                        >
+                        <CustomButton type='button' classNameBtn={cls.okey} onClick={handleAddOption} className={cls.addButton}>
                             <SvgOkay className={cls.svgOkay} />
                         </CustomButton>
-                        {listCity.length >= 1 &&
+                        {listCity.length >= 1 && (
                             <div className={cls.listCity}>
-                                {listCity.length >= 1 && listCity.map((item: Feature) => {
-                                    const {
-                                        city,
-                                        district,
-                                        state,
-                                        country,
-                                        postcode,
-                                        name,
-                                        housenumber,
-                                        street
-                                    } = item.properties;
-                                    const address = `${country}, ${city}, ${street ?? name}, ${housenumber}`;
-                                    return <li onClick={() => handleAddOption(item)} key={item?.properties?.osm_id}
-                                               className={cls.list}>
-                                        {address}
-                                    </li>
+                                {listCity.slice(0, 4).map((item: Feature) => {
+                                    const { city, district, state, country, postcode, name, housenumber, street } = item.properties;
+                                    const address = `${country && country}, ${city ? city : ''}, ${street ?? name}, ${housenumber ? housenumber : ''}`;
+                                    return (
+                                        <li onClick={() => handleAddOption(item)} key={item?.properties?.osm_id} className={cls.list}>
+                                            {address}
+                                        </li>
+                                    );
                                 })}
                             </div>
-                        }
-
+                        )}
                     </div>
                     <div className={cls.coverBtnOk}>
-                        <CustomButton indicator={IndicatorsForUi.simpleButton} type='button'
-                                      onClick={changeIsOpenSelectMenu}>
+                        <CustomButton type='button' onClick={changeIsOpenSelectMenu} classNameBtn={cls.simple}>
                             ok
                         </CustomButton>
                     </div>

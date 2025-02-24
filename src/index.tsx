@@ -1,22 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './shared/styles/index.scss'
+import './shared/styles/index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import ReduxProvider from "./shared/redux/provider/reduxProvider";
-import {BrowserRouter} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
-import './i18n'
+import ReduxProvider from './shared/redux/provider/reduxProvider';
+import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import './i18n';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './shared/api/api/queryClient';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-    <ReduxProvider>
-      <BrowserRouter>
-        <App />
-     <ToastContainer />
-      </BrowserRouter>
-    </ReduxProvider>
+        <QueryClientProvider client={queryClient}>
+            {/*<ReactQueryDevtools initialIsOpen={false} />*/}
+
+            <ReduxProvider>
+                <BrowserRouter
+                    future={{
+                        v7_startTransition: true,
+                    }}
+                >
+                    <App />
+                </BrowserRouter>
+            </ReduxProvider>
+        </QueryClientProvider>
     </React.StrictMode>
 );
 

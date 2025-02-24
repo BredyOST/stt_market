@@ -4,7 +4,6 @@ import { useAppDispatch } from '../../shared/redux/hooks/hooks';
 import cls from './styled/closePopup.module.scss';
 import { ReactComponent as SvgClose } from '../../assets/svg/close.svg';
 
-
 const ClosePopup = React.memo(() => {
     const dispatch = useAppDispatch();
 
@@ -20,7 +19,7 @@ const ClosePopup = React.memo(() => {
 
     return (
         <button className={cls.coverClose} onClick={closeModal}>
-            <SvgClose className={cls.closeIcon} onClick={closeModal}/>
+            <SvgClose className={cls.closeIcon} onClick={closeModal} />
         </button>
     );
 });

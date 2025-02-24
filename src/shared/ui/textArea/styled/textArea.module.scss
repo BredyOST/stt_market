@@ -17,12 +17,14 @@
     flex-direction: column;
     row-gap: mixins.rem(10);
     height: mixins.rem(110);
-
 }
 
 .textArea {
     @extend .input_profile;
     resize: none;
+    @media (max-width: mixins.em(690)) {
+        min-width: 100%;
+    }
 }
 
 .textAreaHash {
@@ -36,4 +38,14 @@
 .textAreaText,
 .textAreaHash {
     max-width: mixins.rem(485);
+}
+
+.indicator_length {
+    color: #7cb896;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(mixins.rem(-8), mixins.rem(42));
+    font-size: mixins.rem(10);
+    font-family: globalIndex.$font_family_main;
 }

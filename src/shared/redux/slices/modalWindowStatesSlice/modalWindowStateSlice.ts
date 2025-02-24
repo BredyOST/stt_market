@@ -1,8 +1,8 @@
-import { IModalWindowStatesSchema } from './modalWindowStatesSchema';
+import { IModalWindowSchema } from './modalWindowStatesSchema';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {lockScroll, removeLockScroll} from "../../../helpers/functions";
+import { lockScroll, removeLockScroll } from '../../../helpers/functions';
 
-const initialState: IModalWindowStatesSchema = {
+const initialState: IModalWindowSchema = {
     modalAddProfileState: false,
     isClosingModalAddProfileState: false,
 
@@ -18,7 +18,7 @@ const initialState: IModalWindowStatesSchema = {
     modalNotifications: false,
     isClosingModalNotifications: false,
 
-    modalSafetyConnection:false,
+    modalSafetyConnection: false,
     isClosingModalSafetyConnection: false,
 
     modalTelegram: false,
@@ -27,25 +27,31 @@ const initialState: IModalWindowStatesSchema = {
     modalSttBonus: false,
     isClosingSttBonus: false,
 
-    modalReals:false,
+    modalReals: false,
     isClosingModalReals: false,
 
-    modalTransferForm:false,
-    isClosingModalTransferForm:false,
+    modalTransferForm: false,
+    isClosingModalTransferForm: false,
+
+    modalQrScan: false,
+    isClosingModalQrScan: false,
+
+    modalPreview:false,
+    isClosingModalPreview:false
 };
 
 const modalWindowStateSlice = createSlice({
     name: 'modalWindow',
     initialState,
     reducers: {
-        openModal: (state, action: PayloadAction<{modalName: keyof IModalWindowStatesSchema}>) => {
-            lockScroll()
-            const {modalName} = action.payload;
+        openModal: (state, action: PayloadAction<{ modalName: keyof IModalWindowSchema }>) => {
+            lockScroll();
+            const { modalName } = action.payload;
             state[modalName] = true;
         },
-        closeModal: (state, action: PayloadAction<{modalName: keyof IModalWindowStatesSchema}>) => {
-            removeLockScroll()
-            const {modalName} = action.payload;
+        closeModal: (state, action: PayloadAction<{ modalName: keyof IModalWindowSchema }>) => {
+            removeLockScroll();
+            const { modalName } = action.payload;
             state[modalName] = false;
             state[`isClosingModal${modalName.at(0).toUpperCase()}`] = true;
         },

@@ -3,14 +3,10 @@
 @use '../../../../shared/styles/mixins';
 @use '../../../../shared/styles/variable/common';
 
-
-
 .wrapper {
-
 }
 
 .btnSendToken {
-
 }
 
 .btn {
@@ -20,7 +16,6 @@
     padding-left: mixins.rem(25);
     padding-right: mixins.rem(25);
 }
-
 
 .hiddenBtn {
     position: absolute;
@@ -153,7 +148,7 @@
     color: globalIndex.$color_title;
 
     &.active {
-        background: #73E4BF;
+        background: #73e4bf;
         transition: background ease 0.3s 0s;
         color: #ffffff;
     }
@@ -202,16 +197,12 @@
     row-gap: mixins.rem(10);
 }
 
-
-
 .greenBtn {
     @extend .btnGreen;
     padding-left: mixins.rem(30);
     padding-right: mixins.rem(30);
     margin: 0;
 }
-
-
 
 .cover {
     align-items: center;
@@ -220,4 +211,3 @@
     min-width: 100%;
     min-height: 100%;
 }
-

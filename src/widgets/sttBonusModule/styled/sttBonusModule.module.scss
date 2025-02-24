@@ -4,56 +4,54 @@
 @use '../../../shared/styles/variable/common';
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  background-color: #ffffff;
-  min-height: 280px;
-  border-radius: 25px;
-  padding-top: mixins.rem(45);
-  padding-bottom: mixins.rem(35);
-  padding-left: mixins.rem(25);
-  padding-right: mixins.rem(25);
-  position: relative;
-  height: auto;
-  box-shadow: 10px 2px 12px 4px #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #ffffff;
+    min-height: 280px;
+    border-radius: 25px;
+    padding-top: mixins.rem(45);
+    padding-bottom: mixins.rem(35);
+    padding-left: mixins.rem(25);
+    padding-right: mixins.rem(25);
+    position: relative;
+    height: auto;
+    box-shadow: 10px 2px 12px 4px #e0e0e0;
 
-
-  @media (min-width: mixins.em(global.$tablet)) {
-    flex: 0 0 mixins.rem(416);
-    min-width: mixins.rem(416);
-  }
-  @media (max-width: mixins.em(global.$tablet)) {
-
-  }
+    @media (min-width: mixins.em(global.$tablet)) {
+        flex: 0 0 mixins.rem(416);
+        min-width: mixins.rem(416);
+    }
+    @media (max-width: mixins.em(global.$tablet)) {
+    }
 }
 
 .textAdditional {
-  color: rgba(0, 0, 0, 0.42);
-  font-size: mixins.rem(12);
-  padding-top: mixins.rem(10);
+    color: rgba(0, 0, 0, 0.42);
+    font-size: mixins.rem(12);
+    padding-top: mixins.rem(10);
 }
 
 .inputCover {
-  flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 
 .downBlock {
-  display: flex;
-  justify-content: space-between;
-  column-gap: mixins.rem(20);
+    display: flex;
+    justify-content: space-between;
+    column-gap: mixins.rem(20);
 }
 
 .text {
-  font-weight: 500;
+    font-weight: 500;
 }
 
 .svgQr {
-  fill: rgba(26, 30, 33, 0.48);
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(-23%, 15%);
-  width: mixins.rem(30);
-  height: mixins.rem(30);
+    fill: rgba(26, 30, 33, 0.48);
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-23%, 15%);
+    width: mixins.rem(30);
+    height: mixins.rem(30);
 }

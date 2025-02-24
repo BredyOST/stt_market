@@ -1,17 +1,14 @@
 import React from 'react';
-import {ReactComponent as SvgSafety} from './../../../assets/svg/notifications.svg';
-import {ReactComponent as SvgNotification} from './../../../assets/svg/safety.svg';
-import CustomSelect from "../../../shared/ui/customSelect/customSelect";
-import {useAppDispatch} from "../../../shared/redux/hooks/hooks";
-import {languageActions} from "../../../shared/redux/slices/Language/languageSlice";
-import cls from './personal.module.scss'
-
+import { ReactComponent as SvgSafety } from './../../../assets/svg/notifications.svg';
+import { ReactComponent as SvgNotification } from './../../../assets/svg/safety.svg';
+import CustomSelect from '../../../shared/ui/customSelect/customSelect';
+import { useAppDispatch } from '../../../shared/redux/hooks/hooks';
+import { languageActions } from '../../../shared/redux/slices/Language/languageSlice';
+import cls from './personal.module.scss';
 
 const PersonalBlock = () => {
-
     const dispatch = useAppDispatch();
-    const {changeLanguage} = languageActions
-
+    const { changeLanguage } = languageActions;
 
     return (
         <div className={cls.wrapper}>

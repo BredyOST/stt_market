@@ -1,119 +1,120 @@
 .swap-icon {
-  --fa-primary-color: #008279; --fa-secondary-color: #47c999;
+    --fa-primary-color: #008279;
+    --fa-secondary-color: #47c999;
 }
 
 .swap_block {
-  position: relative;
+    position: relative;
 
-  &-from {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-top: 20px;
-    margin-bottom: 0;
-  }
-
-  &-to {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-top: 0;
-    margin-bottom: 15px;
-  }
-
-  &-action {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-top: 0;
-    margin-bottom: 0;
-
-    .info-block {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-
-      span {
-        font-size: .7rem;
-        color: #aaaaaa;
-        font-family: Ubuntu, sans-serif;
-
-        &.green-span {
-          color: #47c999;
-        }
-      }
-      a {
-        font-size: .7rem;
-        color: #aaaaaa;
-        font-family: Ubuntu, sans-serif;
-        text-decoration: none;
-        &.green-span {
-          color: #47c999;
-        }
-      }
+    &-from {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-top: 20px;
+        margin-bottom: 0;
     }
-  }
+
+    &-to {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    &-action {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-top: 0;
+        margin-bottom: 0;
+
+        .info-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+
+            span {
+                font-size: 0.7rem;
+                color: #aaaaaa;
+                font-family: Ubuntu, sans-serif;
+
+                &.green-span {
+                    color: #47c999;
+                }
+            }
+            a {
+                font-size: 0.7rem;
+                color: #aaaaaa;
+                font-family: Ubuntu, sans-serif;
+                text-decoration: none;
+                &.green-span {
+                    color: #47c999;
+                }
+            }
+        }
+    }
 }
 
 .max-amount-set {
-  background-color: #96fac5;
-  color: #333333;
-  font-family: Ubuntu, sans-serif;
-  font-weight: 500;
-  padding: 3px 8px;
-  cursor: pointer;
-  border-radius: 10px;
+    background-color: #96fac5;
+    color: #333333;
+    font-family: Ubuntu, sans-serif;
+    font-weight: 500;
+    padding: 3px 8px;
+    cursor: pointer;
+    border-radius: 10px;
 }
 
 .swap__confirm {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin-top: 0;
-
-  &-button {
-    background-color: #49dea7;
-    color: #ffffff;
-    width: 100px;
-    height: 50px;
-    font-size: 24px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 25px;
-    cursor: pointer;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 0;
 
-    &._disabled {
-      background-color: #aaaaaa;
-    }
+    &-button {
+        background-color: #49dea7;
+        color: #ffffff;
+        width: 100px;
+        height: 50px;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 25px;
+        cursor: pointer;
 
-    &._link {
-      font-family: Ubuntu, sans-serif;
-      font-size: .9rem;
-      line-height: 1;
-      font-weight: 500;
-      text-decoration: none;
-      color: #ffffff;
+        &._disabled {
+            background-color: #aaaaaa;
+        }
+
+        &._link {
+            font-family: Ubuntu, sans-serif;
+            font-size: 0.9rem;
+            line-height: 1;
+            font-weight: 500;
+            text-decoration: none;
+            color: #ffffff;
+        }
     }
-  }
 }
 
 .arrow-with-max {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .maxValue {
-  display: block;
-  color: #aaaaaa;
-  font-size: .8rem;
-  &._err {
-    color: #ff968f;
-  }
+    display: block;
+    color: #aaaaaa;
+    font-size: 0.8rem;
+    &._err {
+        color: #ff968f;
+    }
 }

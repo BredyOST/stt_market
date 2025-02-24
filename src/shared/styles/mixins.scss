@@ -139,7 +139,15 @@
     }
 }
 
-@mixin adaptiveValueTransform($property, $startSize, $minSize, $keepSize: 0, $widthFrom: global.$containerWidth, $widthTo: global.$minWidth, $axis: 'x') {
+@mixin adaptiveValueTransform(
+    $property,
+    $startSize,
+    $minSize,
+    $keepSize: 0,
+    $widthFrom: global.$containerWidth,
+    $widthTo: global.$minWidth,
+    $axis: 'x'
+) {
     @if $startSize == 0 {
         $startSize: 0.000001;
     }
@@ -195,7 +203,16 @@
         }
 
         @supports not (#{$property}: $propertyValue) {
-            #{$property}: if($property == 'transform', translate(calc(#{rem($minSize)} + #{$addSize} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)}), calc(#{rem($minSize)} + #{$addSize} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)})), calc(#{rem($minSize)} + #{$addSize} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)}));
+            #{$property}: if(
+                $property == 'transform',
+                translate(
+                    calc(
+                        #{rem($minSize)} + #{$addSize} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)}
+                    ),
+                    calc(#{rem($minSize)} + #{$addSize} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)})
+                ),
+                calc(#{rem($minSize)} + #{$addSize} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)})
+            );
         }
     }
 
@@ -205,7 +222,16 @@
         }
     }
 }
-@mixin adaptiveValueTransformAll($property, $startSizeX, $minSizeX, $startSizeY, $minSizeY, $keepSize: 0, $widthFrom: global.$containerWidth, $widthTo: global.$minWidth) {
+@mixin adaptiveValueTransformAll(
+    $property,
+    $startSizeX,
+    $minSizeX,
+    $startSizeY,
+    $minSizeY,
+    $keepSize: 0,
+    $widthFrom: global.$containerWidth,
+    $widthTo: global.$minWidth
+) {
     @if $startSizeX == 0 {
         $startSizeX: 0.000001;
     }
@@ -275,8 +301,8 @@
 
         @supports not (#{$property}: $propertyValue) {
             #{$property}: translate(
-                            calc(#{rem($minSizeX)} + #{$addSizeX} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)}),
-                            calc(#{rem($minSizeY)} + #{$addSizeY} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)})
+                calc(#{rem($minSizeX)} + #{$addSizeX} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)}),
+                calc(#{rem($minSizeY)} + #{$addSizeY} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)})
             );
         }
     }
@@ -360,8 +386,8 @@
 
         @supports not (#{$property}: $propertyValue) {
             #{$property}: translate(
-                            calc(#{rem($minSizeX)} + #{$addSizeX} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)}),
-                            calc(#{rem($minSizeY)} + #{$addSizeY} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)})
+                calc(#{rem($minSizeX)} + #{$addSizeX} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)}),
+                calc(#{rem($minSizeY)} + #{$addSizeY} * (100vw - #{rem($widthTo)}) / #{math.div($widthFrom, 16) - math.div($widthTo, 16)})
             );
         }
     }

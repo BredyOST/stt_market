@@ -3,23 +3,22 @@
 @use '../../../shared/styles/mixins';
 @use '../../../shared/styles/variable/common';
 
-
 .wrapper {
-  display: flex;
-  align-items: center;
-  column-gap: mixins.rem(10);
+    display: flex;
+    align-items: center;
+    column-gap: mixins.rem(10);
 }
 
 .safety {
-  width: mixins.rem(30);
-  height: mixins.rem(30);
-  flex: 0 0 mixins.rem(30);
-  fill: #000000;
+    width: mixins.rem(30);
+    height: mixins.rem(30);
+    flex: 0 0 mixins.rem(30);
+    fill: #000000;
 }
 
 .notification {
-  width: mixins.rem(30);
-  height: mixins.rem(30);
-  flex: 0 0 mixins.rem(30);
-  fill: #000000;
+    width: mixins.rem(30);
+    height: mixins.rem(30);
+    flex: 0 0 mixins.rem(30);
+    fill: #000000;
 }

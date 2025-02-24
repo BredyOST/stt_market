@@ -1,101 +1,84 @@
 import React, { HTMLAttributes } from 'react';
 import cls from './styled/customInput.module.scss';
-import {useAppSelector} from "../../redux/hooks/hooks";
-import {InputsIndicators} from "../../../entities/uiInterfaces/uiInterfaces";
+import { useAppSelector } from '../../redux/hooks/hooks';
+import { InputsIndicators } from '../../../entities/uiInterfaces/uiInterfaces';
 
 interface ICustomInputProps extends HTMLAttributes<HTMLInputElement> {
     type: 'text' | 'password';
     placeholder: string;
     value?: string | number;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    classNameWrapper?: string
-    classNameInput?:string
+    classNameWrapper?: string;
+    classNameInput?: string;
     indicators?: InputsIndicators;
     inAppSelector?: boolean;
     disable?: boolean;
-    svg?:React.ReactElement;
+    svg?: React.ReactElement;
     codeHasWritten?: boolean;
-    onBlur?: (e:React.ChangeEvent<HTMLInputElement>) => void;
-    style?: any
+    onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    style?: any;
+    showLength?: true;
 }
 
 const CustomInput = ({
-                         type = 'text',
-                         indicators,
-                         placeholder,
-                         value,
-                         onChange,
-                         inAppSelector,
-                         disable,
-                         svg,
-                         codeHasWritten,
-                         onBlur,
-                         classNameWrapper,
-                         classNameInput,
-                         style
+    type = 'text',
+    indicators,
+    placeholder,
+    value,
+    onChange,
+    inAppSelector,
+    disable,
+    svg,
+    codeHasWritten,
+    onBlur,
+    classNameWrapper,
+    classNameInput,
+    style,
+    showLength,
 }: ICustomInputProps) => {
-
-    const { name, mlm, is_incognito, logoLink, bannerLink, tab, language, hashtags, url, activity_hobbies, coordinates } = useAppSelector(
-        (state) => state.formsAddProfile
-    );
+    const { name, is_in_mlm, is_incognito, logoLink, bannerLink, tab, language, hashtags, url, activity_hobbies, coordinates } =
+        useAppSelector((state) => state.formsAddProfile);
 
     let state: string | undefined = undefined;
-    if(inAppSelector) {
-        state = inAppSelector[value]
+    if (inAppSelector) {
+        state = inAppSelector[value];
     }
 
-    if (!indicators) {
-        return (
-            <div className={classNameWrapper}>
-                <input
-                    type={type}
-                    className={classNameInput}
-                    placeholder={placeholder}
-                    value={inAppSelector ? state : value}
-                    onChange={onChange}
-                    disabled={disable}
-                    onBlur={onBlur}
-                    style={style}
-                />
-                {svg && !codeHasWritten && svg}
-            </div>
-        );
-    }
+    return (
+        <div className={classNameWrapper}>
+            <input
+                className={classNameInput}
+                placeholder={placeholder}
+                type={type}
+                onBlur={onBlur}
+                value={inAppSelector ? state : value}
+                onChange={onChange && onChange}
+                style={style}
+                disabled={disable}
+            />
+            {svg && !codeHasWritten && svg}
+            {showLength && <div className={cls.indicator_length}>{inAppSelector ? state?.length : value?.toString().length}</div>}
+        </div>
+    );
 
-
-    /** инпут для ввода url*/
-    /** инпут для ввода имени*/
-    if (indicators === InputsIndicators.addProfileSiteUrl || indicators === InputsIndicators.addProfileName) {
-        return (
-            <div className={cls.coverInput}>
-                <input
-                    type={type}
-                    className={`${cls.input} ${codeHasWritten ? cls.codeWritten : ''}`}
-                    placeholder={placeholder}
-                    value={inAppSelector ? state : value}
-                    onChange={onChange}
-                    disabled={disable}
-                    onBlur={onBlur}
-                />
-                {svg && !codeHasWritten && svg}
-            </div>
-        );
-    }
-
-    /** инпут для ввода geolocation*/
-    if (indicators === InputsIndicators.addGeoLocation) {
-        return (
-            <div className={cls.coverInputGeo}>
-                <input
-                    className={`${cls.input} ${cls.inputGeo}`}
-                    placeholder={placeholder}
-                    type={type}
-                    value={inAppSelector ? state : value}
-                    onChange={onChange && onChange}
-                />
-            </div>
-        );
-    }
+    // if (!indicators) {
+    //     return (
+    //         <div className={classNameWrapper}>
+    //             <input
+    //                 type={type}
+    //                 className={classNameInput}
+    //                 placeholder={placeholder}
+    //                 value={inAppSelector ? state : value}
+    //                 onChange={onChange}
+    //                 disabled={disable}
+    //                 onBlur={onBlur}
+    //                 style={style}
+    //             />
+    //             {svg && !codeHasWritten && svg}
+    //             {showLength && <div className={cls.indicator_length}>{inAppSelector ? state?.length : value?.toString().length}</div>}
+    //         </div>
+    //     );
+    // }
 
     /** инпут для sttBonus модуля*/
     if (indicators === InputsIndicators.addSttBonus) {
@@ -109,7 +92,7 @@ const CustomInput = ({
                     value={inAppSelector ? state : value}
                     onChange={onChange && onChange}
                 />
-                {svg && !codeHasWritten  && svg}
+                {svg && !codeHasWritten && svg}
             </div>
         );
     }
@@ -130,7 +113,6 @@ const CustomInput = ({
             </div>
         );
     }
-
 
     return null;
 };

@@ -1,34 +1,36 @@
 import React from 'react';
-import CustomInput from "../../shared/ui/customInput/customInput";
-import {ReactComponent as SvgQr} from '../../assets/svg/qr.svg'
-import cls from './reels.module.scss'
-import {ReactComponent as SvgLoadMore} from "./../../assets/svg/loading.svg";
-import CustomButton from "../../shared/ui/сustomButton/CustomButton";
-import VideoCard from "../../feautures/videoCard/videoCard";
-import {ForFunc} from "../../entities/others";
-import {useAppDispatch, useAppSelector} from "../../shared/redux/hooks/hooks";
+import CustomInput from '../../shared/ui/customInput/customInput';
+import { ReactComponent as SvgQr } from '../../assets/svg/qr.svg';
+import cls from './reels.module.scss';
+import { ReactComponent as SvgLoadMore } from './../../assets/svg/loading.svg';
+import CustomButton from '../../shared/ui/сustomButton/CustomButton';
+import VideoCard from '../../feautures/videoCard/videoCard';
+import { ForFunc } from '../../entities/others';
+import { useAppSelector } from '../../shared/redux/hooks/hooks';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import Tabs from "../../shared/ui/tabs/tabs";
-import {tabOption} from "../../shared/const/index.const";
-import { authActions } from '../../shared/redux/slices/authSlice/authSlice';
-import IqPumpService from "../../widgets/iqPumpService/iqPumpService";
-import IqPumpMainWindow from "../../widgets/iqPumpService/iqPumpMainWindow";
-import {web3ProvidersMapUpdated} from "web3";
-import {useDispatch} from "react-redux";
+import { useModal, useProfile } from '../../shared/helpers/hooks';
+import { ProfileInfoType } from '../../shared/redux/slices/profiles/profilesSchema';
+import Portal from '../../shared/ui/portal/portal';
+import QRScanner from '../../widgets/QRScanner/QRScanner';
+import Modal from '../../shared/ui/modal/modal';
+import { Autoplay, Mousewheel, Navigation } from 'swiper/modules';
+import { useQuery } from '@tanstack/react-query';
+import { ProfilesApi } from '../../shared/api/api/queryClient';
+import { ethers } from 'ethers';
 
-export const profiles = [
+export const profilesFavourite: ProfileInfoType[] = [
     {
         profile_data: {
             id: 1,
-            activity_hobbies: "Playing competitive games, exploring new cultures through travel",
-            adress: "123 Example Street, Example City",
-            coordinates: [37.7749, -122.4194],
-            hashtags: "#gaming #traveling #esports #wanderlust",
+            activity_hobbies: 'Playing competitive games, exploring new cultures through travel',
+            adress: '123 Example Street, Example City',
+            coordinates: [{ id: 1, value: [37.7749, -122.4194] }],
+            hashtags: '#gaming #traveling #esports #wanderlust',
             is_incognito: false,
-            name: "John Doe",
-            url: "https://example.com",
-            wallet_number: "0x123456789ABCDEF"
+            name: 'John Doe',
+            url: 'https://example.com',
+            wallet_number: '0x123456789ABCDEF',
         },
         image_data: '/test.jpg',
         video_data: '1.mp4',
@@ -36,14 +38,14 @@ export const profiles = [
     {
         profile_data: {
             id: 2,
-            activity_hobbies: "Streaming games, backpacking across Europe",
-            adress: "123 Example Street, Example City",
-            coordinates: [37.7749, -122.4194],
-            hashtags: "#gaming #traveling #streamer #adventure",
+            activity_hobbies: 'Streaming games, backpacking across Europe',
+            adress: '123 Example Street, Example City',
+            coordinates: [{ id: 1, value: [37.7749, -122.4194] }],
+            hashtags: '#gaming #traveling #streamer #adventure',
             is_incognito: false,
-            name: "John Doe",
-            url: "https://example.com",
-            wallet_number: "0x123456789ABCDEF"
+            name: 'John Doe',
+            url: 'https://example.com',
+            wallet_number: '0x123456789ABCDEF',
         },
         image_data: '/test2.svg',
         video_data: '2.mp4',
@@ -51,14 +53,14 @@ export const profiles = [
     {
         profile_data: {
             id: 3,
-            activity_hobbies: "Competitive gaming, hiking in the mountains",
-            adress: "123 Example Street, Example City",
-            coordinates: [37.7749, -122.4194],
-            hashtags: "#gaming #traveling #hiking #naturelover",
+            activity_hobbies: 'Competitive gaming, hiking in the mountains',
+            adress: '123 Example Street, Example City',
+            coordinates: [{ id: 1, value: [37.7749, -122.4194] }],
+            hashtags: '#gaming #traveling #hiking #naturelover',
             is_incognito: false,
-            name: "John Doe",
-            url: "https://example.com",
-            wallet_number: "0x123456789ABCDEF"
+            name: 'John Doe',
+            url: 'https://example.com',
+            wallet_number: '0x123456789ABCDEF',
         },
         image_data: '/test3.svg',
         video_data: '3.mp4',
@@ -66,14 +68,14 @@ export const profiles = [
     {
         profile_data: {
             id: 4,
-            activity_hobbies: "Exploring indie games, traveling to historical sites",
-            adress: "123 Example Street, Example City",
-            coordinates: [37.7749, -122.4194],
-            hashtags: "#gaming #traveling #indiegames #history",
+            activity_hobbies: 'Exploring indie games, traveling to historical sites',
+            adress: '123 Example Street, Example City',
+            coordinates: [{ id: 1, value: [37.7749, -122.4194] }],
+            hashtags: '#gaming #traveling #indiegames #history',
             is_incognito: false,
-            name: "John Doe",
-            url: "https://example.com",
-            wallet_number: "0x123456789ABCDEF"
+            name: 'John Doe',
+            url: 'https://example.com',
+            wallet_number: '0x123456789ABCDEF',
         },
         image_data: '/test.jpg',
         video_data: '4.mp4',
@@ -81,14 +83,14 @@ export const profiles = [
     {
         profile_data: {
             id: 5,
-            activity_hobbies: "Speedrunning games, road tripping across the USA",
-            adress: "123 Example Street, Example City",
-            coordinates: [37.7749, -122.4194],
-            hashtags: "#gaming #traveling #speedrun #roadtrip",
+            activity_hobbies: 'Speedrunning games, road tripping across the USA',
+            adress: '123 Example Street, Example City',
+            coordinates: [{ id: 1, value: [37.7749, -122.4194] }],
+            hashtags: '#gaming #traveling #speedrun #roadtrip',
             is_incognito: false,
-            name: "John Doe",
-            url: "https://example.com",
-            wallet_number: "0x123456789ABCDEF"
+            name: 'John Doe',
+            url: 'https://example.com',
+            wallet_number: '0x123456789ABCDEF',
         },
         image_data: '/test.jpg',
         video_data: '5.mp4',
@@ -96,14 +98,14 @@ export const profiles = [
     {
         profile_data: {
             id: 6,
-            activity_hobbies: "Speedrunning games, road tripping across the USA",
-            adress: "123 Example Street, Example City",
-            coordinates: [37.7749, -122.4194],
-            hashtags: "#gaming #traveling #speedrun #roadtrip",
+            activity_hobbies: 'Speedrunning games, road tripping across the USA',
+            adress: '123 Example Street, Example City',
+            coordinates: [{ id: 1, value: [37.7749, -122.4194] }],
+            hashtags: '#gaming #traveling #speedrun #roadtrip',
             is_incognito: false,
-            name: "John Doe",
-            url: "https://example.com",
-            wallet_number: "0x123456789ABCDEF"
+            name: 'John Doe',
+            url: 'https://example.com',
+            wallet_number: '0x123456789ABCDEF',
         },
         image_data: '/test.jpg',
         video_data: '6.mp4',
@@ -111,14 +113,14 @@ export const profiles = [
     {
         profile_data: {
             id: 7,
-            activity_hobbies: "Competitive FPS gaming, traveling to music festivals",
-            adress: "123 Example Street, Example City",
-            coordinates: [37.7749, -122.4194],
-            hashtags: "#gaming #traveling #fps #musicfestival",
+            activity_hobbies: 'Competitive FPS gaming, traveling to music festivals',
+            adress: '123 Example Street, Example City',
+            coordinates: [{ id: 1, value: [37.7749, -122.4194] }],
+            hashtags: '#gaming #traveling #fps #musicfestival',
             is_incognito: false,
-            name: "John Doe",
-            url: "https://example.com",
-            wallet_number: "0x123456789ABCDEF"
+            name: 'John Doe',
+            url: 'https://example.com',
+            wallet_number: '0x123456789ABCDEF',
         },
         image_data: '/test.jpg',
         video_data: '7.mp4',
@@ -126,248 +128,238 @@ export const profiles = [
     {
         profile_data: {
             id: 8,
-            activity_hobbies: "Building gaming PCs, traveling to tech conferences",
-            adress: "123 Example Street, Example City",
-            coordinates: [37.7749, -122.4194],
-            hashtags: "#gaming #traveling #pcbuild #techlife",
+            activity_hobbies: 'Building gaming PCs, traveling to tech conferences',
+            adress: '123 Example Street, Example City',
+            coordinates: [{ id: 1, value: [37.7749, -122.4194] }],
+            hashtags: '#gaming #traveling #pcbuild #techlife',
             is_incognito: false,
-            name: "John Doe",
-            url: "https://example.com",
-            wallet_number: "0x123456789ABCDEF"
+            name: 'John Doe',
+            url: 'https://example.com',
+            wallet_number: '0x123456789ABCDEF',
         },
         image_data: '/test.jpg',
         video_data: '8.mp4',
     },
-    {
-        profile_data: {
-            id: 9,
-            activity_hobbies: "Playing strategy games, exploring ancient ruins",
-            adress: "123 Example Street, Example City",
-            coordinates: [37.7749, -122.4194],
-            hashtags: "#gaming #traveling #strategygames #history",
-            is_incognito: false,
-            name: "John Doe",
-            url: "https://example.com",
-            wallet_number: "0x123456789ABCDEF"
-        },
-        image_data: '/test.jpg',
-        video_data: '11.mp4',
-    },
-    {
-        profile_data: {
-            id: 10,
-            activity_hobbies: "Streaming retro games, traveling to vintage car shows",
-            adress: "123 Example Street, Example City",
-            coordinates: [37.7749, -122.4194],
-            hashtags: "#gaming #traveling #retrogaming #vintagecars",
-            is_incognito: false,
-            name: "John Doe",
-            url: "https://example.com",
-            wallet_number: "0x123456789ABCDEF"
-        },
-        image_data: '/test.jpg',
-        video_data: '22.mp4',
-    },
-    {
-        profile_data: {
-            id: 11,
-            activity_hobbies: "Exploring culinary games, traveling for food tours",
-            adress: "123 Example Street, Example City",
-            coordinates: [37.7749, -122.4194],
-            hashtags: "#gaming #traveling #еда #foodie",
-            is_incognito: false,
-            name: "John Doe",
-            url: "https://example.com",
-            wallet_number: "0x123456789ABCDEF"
-        },
-        image_data: '/test.jpg',
-        video_data: '33.mp4',
-    },
-    {
-        profile_data: {
-            id: 12,
-            activity_hobbies: "Exploring culinary games, traveling for food tours",
-            adress: "123 Example Street, Example City",
-            coordinates: [37.7749, -122.4194],
-            hashtags: "#gaming #traveling #еда #foodie",
-            is_incognito: false,
-            name: "John Doe",
-            url: "https://example.com",
-            wallet_number: "0x123456789ABCDEF"
-        },
-        image_data: '/test.jpg',
-        video_data: '33.mp4',
-    },
-]
-
-const services = [
-    {
-        profile_data: {
-            id: 13,
-            userId: 1,
-            title: 'iq Pump'
-        },
-        link: 'https://example.com',
-        type: 'service'
-    }
-]
+];
+const templates = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const Reels = () => {
-
-    const dispatch = useDispatch();
-
     /** states */
     const [currentIndex, setCurrentIndex] = React.useState<number>(1);
-    const [realsForShow, setRealsForShow] = React.useState<any[]>([]);
+    const [visibleReels, setVisibleReels] = React.useState<any[]>([]);
     const [isAnimating, setIsAnimating] = React.useState(false);
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
+    const [isLoadingSearch, setIsLoadingSearch] = React.useState<boolean>(false);
     const [searchLine, setSearchLine] = React.useState('');
     const [windowWidth, setWindowWidth] = React.useState<null | number>(null);
     const [counterSlides, setCounterSlides] = React.useState<number>(7);
-    const {profilesWithServices} = useAppSelector(state => state.authSlice)
+    const { modalQrScan, isClosingModalQrScan } = useAppSelector((state) => state.modalWindow);
+    const { profilesForShowing, services } = useAppSelector((state) => state.userProfiles);
+    const [filteredReals, setFilteredReals] = React.useState<ProfileInfoType[] | null>(null);
+    const { finishedQrScannerSendTokens, erc20FromQrForSearch } = useAppSelector((state) => state.userProfiles);
 
-    /** actions*/
-    const {addProfilesWithServices} = authActions;
+    const {
+        data: dataProfiles,
+        error: errorProfiles,
+        isPending: isPendingProfiles,
+        isFetching: isFetchingProfiles,
+    } = useQuery({
+        queryKey: ['profiles'],
+        queryFn: (meta) => ProfilesApi.getProfiles(meta),
+    });
+
+    /** управление модальными окнами*/
+    const { openModal } = useModal();
+    /** изменение состояний profileServiceSlice*/
+    const updateProfileServiceState = useProfile();
+
+    /** FUNCTIONS*/
+    const openQrScanner: ForFunc<void, void> = () => {
+        if (finishedQrScannerSendTokens) {
+            updateProfileServiceState('finishedQrScannerSendTokens', false);
+        }
+        updateProfileServiceState('finishedQrScannerReals', true);
+        openModal('modalQrScan');
+    };
 
     /** Функция для получения рандомных Reels */
-    const getRandomReels = (count: number, excludeIndexes: number[] = []) => {
-        const randomReels = [];
-        const usedIndexes = new Set(excludeIndexes);
-
-        while (randomReels.length < count) {
-            const randomIndex = Math.floor(Math.random() * profilesWithServices.length);
-            if (!usedIndexes.has(randomIndex)) {
-                randomReels.push(profilesWithServices[randomIndex]);
-                usedIndexes.add(randomIndex);
-            }
-        }
-
-        return randomReels;
+    const getRandomReels = (count: number, excludeIds: number[] = []) => {
+        const usedIds = new Set(excludeIds);
+        return profilesForShowing
+            .filter((profile) => !usedIds.has(profile.profile_data.id)) // Проверяем ID профиля
+            .sort(() => Math.random() - 0.5)
+            .slice(0, count);
     };
 
     /** поисковый запрос*/
-    const addSearchLineValue = (e:React.ChangeEvent<HTMLInputElement>) => {
-        setSearchLine(e.target.value)
-    }
+    const addSearchLineValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchLine(e.target.value);
+    };
 
     /** Функция для загрузки новых 5 рилсов */
     const showMoreReals: ForFunc<void, void> = () => {
-        setIsLoading(true)
+        setIsLoading(true);
         setIsAnimating(true);
 
         let nextIndex = currentIndex + counterSlides;
-        if (nextIndex >= profilesWithServices.length) {
+        if (nextIndex >= profilesForShowing.length) {
             // Если все рилсы уже показаны, начинаем заново
             nextIndex = 0;
         }
         setCurrentIndex(nextIndex);
     };
 
+    const updateSlidesCount = () => {
+        const width = window.innerWidth;
+
+        setCounterSlides(width >= 1079 ? 7 : 5);
+        if (width > 900) setWindowWidth(width);
+    };
+
     /** Обновляем отображаемые Reels при изменении currentIndex */
-    React.useEffect(() => {
-
-        if(profilesWithServices?.length >= 1) {
+    /** убрать profilesAndServices когда разелим сервисы от рислсов и заменить на profilesForShowing*/
+    const updateProfiles = () => {
+        if (profilesForShowing?.length >= 1) {
             let nextIndex = currentIndex + counterSlides;
-            if (nextIndex < profilesWithServices.length) {
-                // Достаточно рилсов — берём 5 подряд
-                setRealsForShow(profilesWithServices?.slice(currentIndex, nextIndex));
+            let newReels = [];
+
+            if (nextIndex < profilesForShowing.length) {
+                // Достаточно рилсов — берём подряд
+                newReels = profilesForShowing.slice(currentIndex, nextIndex);
             } else {
-                // Осталось меньше 5 рилсов — добираем рандомно
-                const remaining = profilesWithServices?.slice(currentIndex); // Берём оставшиеся
-                const neededCount = counterSlides - remaining.length;
-                const randomReels = getRandomReels(neededCount, [...remaining.map(r => r.profile_data?.id)]); // Добираем случайные
-                setRealsForShow([...remaining, ...randomReels]);
+                // Осталось меньше рилсов — добираем рандомно, но строго до counterSlides
+                const remaining = profilesForShowing.slice(currentIndex);
+                const neededCount = Math.max(0, counterSlides - remaining.length);
+                const alreadyAddedIds = newReels.map((r) => r.profile_data.id); // Получаем ID уже добавленных профилей
+                const randomReels = getRandomReels(neededCount, [...remaining.map((r) => r.profile_data.id), ...alreadyAddedIds]);
+
+                newReels = [...remaining, ...randomReels].slice(0, counterSlides);
             }
+
+            setVisibleReels(newReels);
+
             setTimeout(() => {
-                setIsLoading(false)
+                setIsLoading(false);
                 setIsAnimating(false);
-            }, 1000)
+            }, 1000);
         }
-
-
-    }, [currentIndex, counterSlides, profilesWithServices]);
+    };
 
     React.useEffect(() => {
-        const getCurrentWidth = () => {
-            const width = window.innerWidth;
-            if(width >= 1079) {
-                setCounterSlides(7);
-            } else if (width < 1079) {
-                // console.log('ставим 5')
-                setCounterSlides(5);
-            }
-            if (width > 900) {
-                setWindowWidth(width)
-            }
+        updateProfiles();
+    }, [currentIndex, counterSlides, profilesForShowing, services]);
+
+    React.useEffect(() => {
+        window.addEventListener('resize', updateSlidesCount);
+        updateSlidesCount();
+        return () => window.removeEventListener('resize', updateSlidesCount);
+    }, []);
+
+    const checkERC20 = async (searchParam) => {
+        setIsLoadingSearch(true);
+
+        let result = null;
+
+        if (searchLine.trim()) {
+            setIsLoadingSearch(true);
         }
 
-        window.addEventListener('resize',() => {
-           getCurrentWidth()
-        })
+        if (searchLine.length > 10 && profilesForShowing?.length >= 1) {
+            const res = await ethers.isAddress(searchParam);
 
-        getCurrentWidth()
-
-        return () => {
-            window.removeEventListener('resize', getCurrentWidth);
+            if (res) {
+                result = profilesForShowing.filter((item) => item.profile_data.wallet_number == searchLine);
+                setFilteredReals(result);
+            } else {
+                result = profilesForShowing.filter((item) => item.profile_data.hashtags.toLowerCase().includes(searchLine));
+                setFilteredReals(result);
+            }
+        } else {
+            result = profilesForShowing?.filter((item) => item.profile_data.hashtags.toLowerCase().includes(searchLine));
+            setFilteredReals(result);
         }
-    },[])
+    };
 
-    /** искуственная задержка запроса*/
+    React.useEffect(() => {
+        if (profilesForShowing?.length >= 1) {
+            checkERC20(searchLine);
+        }
+    }, [searchLine]);
+
+    /** обновляем состояние поиска после того как нашли рилсы или поиск не дал результата*/
     React.useEffect(() => {
         setTimeout(() => {
-            dispatch(addProfilesWithServices([...profiles, ...services]))
-        },1000)
-    },[])
+            setIsLoadingSearch(false);
+        }, 1000);
+    }, [filteredReals]);
+
+    React.useEffect(() => {
+        if (dataProfiles?.data?.length >= 1) {
+            updateProfileServiceState('profilesForShowing', dataProfiles?.data);
+        }
+    }, [dataProfiles]);
+
+    React.useEffect(() => {
+        if (erc20FromQrForSearch?.length) {
+            setSearchLine(erc20FromQrForSearch);
+        }
+    }, [erc20FromQrForSearch]);
 
     return (
         <div className={cls.wrapper}>
             <div className={cls.search_block}>
-                <CustomInput onChange={addSearchLineValue} classNameWrapper={cls.wrapper_input_search}
-                             classNameInput={cls.input_search} type="text" placeholder="search"/>
-                <SvgQr className={cls.svg_qr}/>
+                <CustomInput
+                    onChange={addSearchLineValue}
+                    classNameWrapper={cls.wrapper_input_search}
+                    classNameInput={cls.input_search}
+                    type='text'
+                    placeholder='search'
+                    value={searchLine}
+                />
+                <CustomButton classNameBtn={cls.btn_qr} type='button' onClick={openQrScanner}>
+                    <SvgQr className={cls.svg_qr} />
+                </CustomButton>
             </div>
+
             <div className={cls.cover_list_slides}>
                 <Swiper
-                    slidesPerView={"auto"}
+                    slidesPerView={'auto'}
                     centeredSlides={true}
-                    pagination={{
-                        clickable: true,
-                    }}
+                    mousewheel={{ forceToAxis: true, sensitivity: 0.5 }} // Прокрутка колесом мыши
+                    touchRatio={1}
+                    simulateTouch={true}
+                    threshold={20}
                     spaceBetween={20}
-                    className="mySwiper"
+                    className='mySwiper'
                     loop={true}
+                    modules={[Navigation, Mousewheel]}
                 >
-                    {realsForShow?.length >= 1 &&
-                        realsForShow?.map((item: any) => (
-                            <SwiperSlide key={item?.profile_data.id} style={{ width: "fit-content" }}>
-                                {item?.type === 'service' ? (
-                                    <div>
-                                       <IqPumpMainWindow key={item?.profile_data?.id + profilesWithServices?.length}/>
-                                    </div>
-                                ) : (
-                                    <VideoCard
-                                        classNameWrap={cls.video_card_tablet}
-                                        classNameCover={cls.videomain_tablet}
-                                        videoUrl={item?.video_data}
-                                        posterUrl={'./../../assets/default-poster.jpg'} // Постер для остальных профилей
-                                        muted={true}
-                                        controls={false}
-                                        startPointerEnter={true}
-                                        autoPlay={false}
-                                        userId={item?.profile_data?.id}
-                                    />
-                                )}
+                    {visibleReels?.length >= 1 &&
+                        visibleReels?.map((item: any) => (
+                            <SwiperSlide key={item?.profile_data?.id} style={{ width: 'fit-content' }}>
+                                <VideoCard
+                                    classNameWrap={cls.video_card_tablet}
+                                    classNameCover={cls.videomain_tablet}
+                                    videoUrl={item?.video_data}
+                                    posterUrl={'./../../assets/default-poster.jpg'}
+                                    muted={true}
+                                    controls={false}
+                                    startPointerEnter={true}
+                                    autoPlay={false}
+                                    userId={item?.profile_data?.id}
+                                />
                             </SwiperSlide>
-                        ))
-                    }
+                        ))}
                 </Swiper>
             </div>
-            {realsForShow.length >= 1 && <div className={cls.cover_reals_block}>
+
+            {visibleReels?.length >= 1 && !isPendingProfiles && !filteredReals && searchLine?.length == 0 && (
+                <div className={cls.cover_reals_block}>
                     <div className={cls.creator_video}>
                         <VideoCard
                             classNameWrap={cls.video_card_main}
                             classNameCover={cls.video}
-                            videoUrl={profilesWithServices[0]?.video_data}
+                            videoUrl={profilesForShowing[0]?.video_data}
                             posterUrl={''}
                             muted={true}
                             controls={false}
@@ -378,40 +370,155 @@ const Reels = () => {
                     </div>
                     <div className={cls.reals_block}>
                         <div className={`${windowWidth >= 1079 ? cls.video_container_big : cls.video_container}`}>
-                            {realsForShow?.length >= 1 &&
-                                realsForShow.map((item: any, index) => (
-                                    item?.type !== 'service' ? (
-                                        <VideoCard
-                                            classNameWrap={cls.video_card}
-                                            classNameCover={cls.videomain}
-                                            key={item?.profile_data?.id}
-                                            videoUrl={item?.video_data}
-                                            posterUrl={'./../../assets/video.mp4'}
-                                            muted={true}
-                                            controls={false}
-                                            startPointerEnter={true}
-                                            autoPlay={false}
-                                            userId={item?.profile_data?.id}
-                                        />
-                                    ) : (
-                                            <IqPumpMainWindow key={item?.profile_data?.id + profilesWithServices + index}/>
-                                    )
-                                ))
-                            }
-                            {profiles.length > 5 &&
+                            {visibleReels?.length >= 1 &&
+                                visibleReels?.map((item: any, index) => (
+                                    <VideoCard
+                                        classNameWrap={cls.video_card}
+                                        classNameCover={cls.videomain}
+                                        key={item?.profile_data?.id}
+                                        videoUrl={item?.video_data}
+                                        posterUrl={'./../../assets/video.mp4'}
+                                        muted={true}
+                                        controls={false}
+                                        startPointerEnter={true}
+                                        autoPlay={false}
+                                        userId={item?.profile_data?.id}
+                                    />
+                                ))}
+                            {visibleReels.length > 5 && (
                                 <CustomButton
                                     classnameWrapper={cls.btn_load_wrap}
                                     classNameBtn={cls.btn_load_more}
-                                    type="button"
+                                    type='button'
                                     onClick={showMoreReals}
                                 >
-                                    <SvgLoadMore className={`${cls.svg_load_more} ${isLoading && cls.load}`}/>
+                                    <SvgLoadMore className={`${cls.svg_load_more} ${isLoading && cls.load}`} />
                                 </CustomButton>
-                            }
+                            )}
                         </div>
                     </div>
-                </div>}
+                </div>
+            )}
 
+            {isPendingProfiles && visibleReels?.length < 1 && (
+                <div className={cls.cover_reals_block}>
+                    <div className={cls.creator_video}>
+                        <div className={cls.main_block}></div>
+                    </div>
+                    <div className={cls.reals_block}>
+                        <div className={`${windowWidth >= 1079 ? cls.video_container_big : cls.video_container}`}>
+                            {templates
+                                ?.slice(0, counterSlides)
+                                .map((item: number) => <div key={item} className={cls.main_block_min}></div>)}
+                            {templates?.length > 5 && (
+                                <CustomButton
+                                    classnameWrapper={cls.btn_load_wrap}
+                                    classNameBtn={cls.btn_load_more}
+                                    type='button'
+                                    onClick={showMoreReals}
+                                >
+                                    <SvgLoadMore className={`${cls.svg_load_more} ${isLoading && cls.load}`} />
+                                </CustomButton>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {isPendingProfiles && visibleReels?.length < 1 && (
+                <div className={cls.cover_list_slides}>
+                    <Swiper
+                        slidesPerView={'auto'}
+                        centeredSlides={true}
+                        mousewheel={{ forceToAxis: true, sensitivity: 0.5 }} // Прокрутка колесом мыши
+                        touchRatio={1} // Чувствительность касания
+                        simulateTouch={true} // Симуляция касания на десктопе
+                        threshold={20} // Порог для срабатывания свайпа
+                        spaceBetween={20}
+                        className='mySwiper'
+                        loop={true}
+                        modules={[Autoplay, Navigation, Mousewheel]} // Модули
+                    >
+                        {templates?.length >= 1 &&
+                            templates?.map((item: any) => (
+                                <SwiperSlide key={item} style={{ width: 'fit-content' }}>
+                                    <div className={cls.skeleton_slider}></div>
+                                </SwiperSlide>
+                            ))}
+                    </Swiper>
+                </div>
+            )}
+
+            {isLoadingSearch && (filteredReals === null || filteredReals.length === 0) && (
+                <div className={cls.cover_list_slides_filtered}>
+                    <Swiper
+                        slidesPerView={'auto'}
+                        centeredSlides={true}
+                        freeMode={false}
+                        mousewheel={{ forceToAxis: true, sensitivity: 0.5 }}
+                        touchRatio={1}
+                        simulateTouch={true}
+                        threshold={20}
+                        spaceBetween={20}
+                        className='mySwiper'
+                        loop={true}
+                        modules={[Autoplay, Navigation, Mousewheel]}
+                    >
+                        {templates?.length >= 1 &&
+                            templates?.map((item: any) => (
+                                <SwiperSlide key={item} style={{ width: 'fit-content' }}>
+                                    <div className={cls.skeleton_slider}></div>
+                                </SwiperSlide>
+                            ))}
+                    </Swiper>
+                </div>
+            )}
+
+            {filteredReals?.length > 0 && (
+                <div className={cls.cover_list_slides_filtered}>
+                    <Swiper
+                        slidesPerView={'auto'}
+                        centeredSlides={false}
+                        mousewheel={{ forceToAxis: true, sensitivity: 0.5 }}
+                        touchRatio={1}
+                        simulateTouch={true}
+                        threshold={20}
+                        spaceBetween={20}
+                        className='mySwiper'
+                        loop={true}
+                        modules={[Autoplay, Navigation, Mousewheel]} // Модули
+                    >
+                        {filteredReals?.length >= 1 &&
+                            filteredReals?.map((item: any) => (
+                                <SwiperSlide key={item?.profile_data?.id} style={{ width: 'fit-content' }}>
+                                    <VideoCard
+                                        classNameWrap={cls.video_card_tablet}
+                                        classNameCover={cls.videomain_tablet}
+                                        videoUrl={item?.video_data}
+                                        posterUrl={'./../../assets/default-poster.jpg'}
+                                        muted={true}
+                                        controls={false}
+                                        startPointerEnter={true}
+                                        autoPlay={false}
+                                        userId={item?.profile_data?.id}
+                                    />
+                                </SwiperSlide>
+                            ))}
+                    </Swiper>
+                </div>
+            )}
+
+            {searchLine?.length > 0 && filteredReals?.length === 0 && !isLoadingSearch && (
+                <div className={cls.cover_no_results}>
+                    <div className={cls.no_results}>Поиск не дал результатов</div>
+                </div>
+            )}
+
+            <Portal whereToAdd={document.body}>
+                <Modal show={modalQrScan} closing={isClosingModalQrScan}>
+                    <QRScanner />
+                </Modal>
+            </Portal>
         </div>
     );
 };

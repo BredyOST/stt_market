@@ -3,8 +3,8 @@ declare module '*.module.scss' {
     export default classes;
 }
 
-declare module "*.svg" {
-    import * as React from "react";
+declare module '*.svg' {
+    import * as React from 'react';
     export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
 }
 
@@ -13,9 +13,7 @@ declare module '*.png' {
     export = value;
 }
 
-
 declare module '*.mp4' {
     const value: string;
     export = value;
 }
-

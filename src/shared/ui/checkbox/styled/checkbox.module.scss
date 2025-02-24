@@ -41,7 +41,7 @@
     }
 
     .input:checked + .slider {
-        background-color: globalIndex.$color_title; // Зеленый цвет фона во включенном состоянии
+        background-color: #409798; // Зеленый цвет фона во включенном состоянии
 
         &:before {
             transform: translateX(mixins.rem(41)); // Сдвиг ползунка вправо (83px - 36px - 6px)

@@ -1,5 +1,4 @@
-import {Feature} from "../../widgets/geolocation/geolocation";
-
+import { Feature } from '../../shared/redux/slices/formsAddProfileSlice/formsAddProfileSchema';
 
 /** Объект сохранения данных в local Storage с формы заполнения*/
 export interface ObjForLocaleStorage {
@@ -10,7 +9,7 @@ export interface ObjForLocaleStorage {
     is_incognito: boolean;
     logoLink: string;
     bannerLink: string;
-    coordinates: Feature;
+    coordinates: Feature[];
     marketingPercent: number;
     mlm: string;
     language: string;

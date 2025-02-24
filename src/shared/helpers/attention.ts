@@ -9,4 +9,9 @@ export const showAttention = (message: string, indicator: 'error' | 'success' | 
         const notify = () => toast.success(message);
         notify();
     }
+
+    if (indicator === 'warning') {
+        const notify = () => toast.warning(message);
+        notify();
+    }
 };

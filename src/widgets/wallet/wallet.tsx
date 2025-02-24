@@ -1,150 +1,197 @@
-import React, {useEffect, useState} from "react";
-import {ethers} from "ethers";
+import React, { useEffect } from 'react';
+import { ethers } from 'ethers';
 import {
     exchangeContractAddress,
-    tokenContractAbi, tokenContractAddress,
+    tokenContractAbi,
+    tokenContractAddress,
     usdtContractAbi,
-    usdtContractAddress
-} from "../../helpers/contracts";
-import {useAppDispatch, useAppSelector} from "../../shared/redux/hooks/hooks";
+    usdtContractAddress,
+} from '../../helpers/contracts';
+import { useAppDispatch, useAppSelector } from '../../shared/redux/hooks/hooks';
 import cls from './wallet.module.scss';
-import {ReactComponent as SvgArrowRight} from "./../../assets/svg/arrow-rigth.svg";
-import {ReactComponent as SvgSwap} from "./../../assets/svg/swap.svg";
-import {ReactComponent as SvgDonation} from "./../../assets/svg/donation.svg";
-import {ReactComponent as SvgGift} from "./../../assets/svg/gift.svg";
-import CustomButton from "../../shared/ui/сustomButton/CustomButton";
-import {modalAddProfileActions} from "../../shared/redux/slices/modalWindowStatesSlice/modalWindowStateSlice";
-import SendTokens from "../../feautures/modalWindows/sendTokens/sendTokens";
-import Modal from "../../shared/ui/modal/modal";
-import Portal from "../../shared/ui/portal/portal";
-import Swap from "../../feautures/modalWindows/swap/swap";
-import Donation from "../../feautures/modalWindows/donation/donation";
-import {ForFunc} from "../../entities/others";
-import {IModalWindowStatesSchema} from "../../shared/redux/slices/modalWindowStatesSlice/modalWindowStatesSchema";
-import {walletActions} from "../../shared/redux/slices/walletSlice/walletSlice";
+import { ReactComponent as SvgArrowRight } from './../../assets/svg/arrow-rigth.svg';
+import { ReactComponent as SvgSwap } from './../../assets/svg/swap.svg';
+import { ReactComponent as SvgDonation } from './../../assets/svg/donation.svg';
+import { ReactComponent as SvgGift } from './../../assets/svg/gift.svg';
+import CustomButton from '../../shared/ui/сustomButton/CustomButton';
+import SendTokens from '../../feautures/modalWindows/sendTokens/sendTokens';
+import Modal from '../../shared/ui/modal/modal';
+import Portal from '../../shared/ui/portal/portal';
+import Swap from '../../feautures/modalWindows/swap/swap';
+import Donation from '../../feautures/modalWindows/donation/donation';
+import { ForFunc } from '../../entities/others';
+import { walletActions } from '../../shared/redux/slices/walletSlice/walletSlice';
+import { useAuthState, useModal, useWallet } from '../../shared/helpers/hooks';
+import SttBonus from '../../feautures/modalWindows/sttBonus/sttBonus';
 
-function Wallet(props) {
+interface IWalletProps {
+    className: string;
+}
 
-    const dispatch = useAppDispatch()
+function Wallet({ className }: IWalletProps) {
+    const dispatch = useAppDispatch();
 
     /** states */
-    const {provider, account} = useAppSelector(state => state.authSlice)
-    const {modalSendTokens, modalSwap, modalDonation, isClosingModalSendTokens, isClosingModalSwap, isClosingModalDonation} = useAppSelector(state => state.modalWindow)
-    const {successTransferTokens, successSwap,sttBalance, etcBalance, helpUsdtBalance, usdtBalance} = useAppSelector(state => state.walletSlice)
+    const { provider, account } = useAppSelector((state) => state.authSlice);
+    const {
+        modalSendTokens,
+        modalSwap,
+        modalDonation,
+        isClosingModalSendTokens,
+        isClosingModalSwap,
+        isClosingModalDonation,
+        modalSttBonus,
+        isClosingSttBonus,
+    } = useAppSelector((state) => state.modalWindow);
+    const { successTransferTokens, successSwap, sttBalance, etcBalance, helpUsdtBalance, usdtBalance } = useAppSelector(
+        (state) => state.walletSlice
+    );
 
     /** actions*/
-    const {openModal} = modalAddProfileActions
-    const {addSuccessTransferToken, addBalanceStt, addUdtStt, addEtcStt, addHelpUsdt} = walletActions;
+    const { addSuccessTransferToken } = walletActions;
 
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    /** HOOKS*/
+    /** изменение состояний walletSlice*/
+    const updateWalletState = useWallet();
+    /** управление модальными окнами*/
+    const { openModal } = useModal();
+    /** изменение состояний authSlice*/
+    const updateAuthState = useAuthState();
+
+    /**FUNCTIONS*/
+    /** для отображения попапов отправки токенов*/
+    const openModalWindow: ForFunc<
+        { modalName: 'modalSendTokens' | 'modalSwap' | 'modalDonation'; toTheShopTransfer?: 'fromTheShop' | 'toTheShop' },
+        void
+    > = ({ modalName, toTheShopTransfer = null }) => {
+        openModal(modalName);
+        if (toTheShopTransfer === 'fromTheShop') {
+            updateAuthState('transferToTheShop', false);
+        } else if (toTheShopTransfer === 'toTheShop') {
+            updateAuthState('transferToTheShop', true);
+        }
+    };
+
+    function numberWithCommas(x: number): string {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     }
 
-    useEffect(() => {
-        if (account && provider) {
+    /** получаем токены*/
+    const fetchBalanceData = async () => {
+        try {
+            if (!account || !provider) return;
+
             const contract = new ethers.Contract(tokenContractAddress, tokenContractAbi, provider);
             const usdtContract = new ethers.Contract(usdtContractAddress, usdtContractAbi, provider);
-            let totalSt = 0.0
-            let totalUs = 0.0
-            contract.totalSupply().then(res => {
-                totalSt = +(Number(res) / Math.pow(10, 9)).toFixed(2)
-                usdtContract.balanceOf(exchangeContractAddress).then(res => {
-                    totalUs = +(Number(res) / Math.pow(10, 6)).toFixed(2)
-                    contract.balanceOf(account).then(res => {
-                        let stBalance:any = (parseFloat(String((Number(res) / Math.pow(10, 9)) - 0.01)).toFixed(2))
-                        if (+stBalance < 0) {
-                            stBalance = 0.0
-                        }
-                        let rate = totalUs / totalSt
-                        let usBalance = (parseInt(String(parseFloat(String((rate * stBalance))) * 100)) /100)
-                        dispatch(addBalanceStt(stBalance))
-                        dispatch(addHelpUsdt(usBalance))
-                    })
-                })
-            })
-            usdtContract.balanceOf(account).then(res => {
-                let walletUsdtBalance = (parseInt(String(parseFloat(String(Number(res) / Math.pow(10, 6))) * 100)) / 100).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ').replace('.', ',')
-                dispatch(addUdtStt(+walletUsdtBalance))
 
-            })
-            provider?.getBalance(account).then((balance) => {
-                const balanceInEth = parseFloat(ethers.formatEther(balance)).toFixed(5).toString().replace('.', ',')
-                dispatch(addEtcStt(Number(balanceInEth.replace(',', '.'))))
-            })
+            const res = await contract.totalSupply();
+
+            const totalSt = +(Number(await contract.totalSupply()) / Math.pow(10, 9)).toFixed(2);
+
+            const totalUs = +(Number(await usdtContract.balanceOf(exchangeContractAddress)) / Math.pow(10, 6)).toFixed(2);
+            const stBalance = +(Number(await contract.balanceOf(account)) / Math.pow(10, 9) - 0.01).toFixed(2);
+
+            const rate = totalUs / totalSt;
+            const usBalance = (rate * stBalance).toFixed(2);
+
+            updateWalletState('sttBalance', stBalance);
+            updateWalletState('helpUsdtBalance', +usBalance);
+
+            const walletUsdtBalance = (Number(await usdtContract.balanceOf(account)) / Math.pow(10, 6)).toFixed(2);
+            updateWalletState('usdtBalance', +walletUsdtBalance);
+
+            const balanceInEth = parseFloat(ethers.formatEther(await provider.getBalance(account))).toFixed(5);
+            updateWalletState('etcBalance', +balanceInEth);
+
+            dispatch(addSuccessTransferToken(false));
+        } catch (err) {
+            console.log(err);
         }
-        dispatch(addSuccessTransferToken(false))
-    }, [account, successTransferTokens, successSwap]);
+    };
 
-    /**Functions*/
-    /** для отображения попапа отправки токенов*/
-    const showModalSendMoney:ForFunc<void, void> = () => {
-        const modalSendTokens:string = 'modalSendTokens'
-        dispatch(openModal({modalName: modalSendTokens as keyof IModalWindowStatesSchema}))
-    }
-    /** для отображения попапа swap*/
-    const showModalSendSwap = () => {
-        const modalSwapTokens:string = 'modalSwap'
-        dispatch(openModal({modalName: modalSwapTokens as keyof IModalWindowStatesSchema}))
-    }
-    /** для отображения попапа донатов*/
-    const sendDonation = () => {
-        const modalDonat:string = 'modalDonation'
-        dispatch(openModal({modalName: modalDonat as keyof IModalWindowStatesSchema}))
-    }
+    React.useEffect(() => {
+        fetchBalanceData();
+    }, [account, successTransferTokens, successSwap]);
 
     return (
         <>
-            <div className={cls.wrapper}>
+            <div className={`${cls.wrapper} ${className}`}>
                 <div className={cls.cover_price}>
                     <div className={cls.balance_values}>
-                        <div className={cls.balance_values_usdt}>{numberWithCommas(helpUsdtBalance)} USDT</div>
+                        <div className={cls.balance_values_usdt}>{numberWithCommas(usdtBalance)} USDT</div>
                         <div className={cls.balance_values_usd}>{etcBalance} ETH</div>
                     </div>
                     <div className={cls.balance_stt}>
-                        <a className={cls.balance_stt_ink}
-                           href={account ? "https://arbiscan.io/address/" + account : "#!"}
-                           target={account && "_blank"} rel={account && "noreferrer"}
+                        <a
+                            className={cls.balance_stt_ink}
+                            href={account ? 'https://arbiscan.io/address/' + account : '#!'}
+                            target={account && '_blank'}
+                            rel={account && 'noreferrer'}
                         >
                             <span className={cls.stt_balance}>{numberWithCommas(sttBalance)} STT</span>
                             <span className={cls.balance_values_usd}>12 $</span>
                         </a>
-
                     </div>
                     <div className={cls.balance_values_usd_cover}>
-                    <div className={cls.block_action_btns}>
-                        <CustomButton classnameWrapper={cls.btn_wrapper} classNameBtn={cls.btn_send_tokens} type='button' onClick={showModalSendMoney}>
-                            <SvgArrowRight className={cls.btnSenTokensSvg}/>
-                        </CustomButton>
-                        <CustomButton classnameWrapper={cls.btn_wrapper} classNameBtn={cls.btn_swap_tokens} type='button' onClick={showModalSendSwap}>
-                            <SvgSwap className={cls.btnSwapSvg}/>
-                        </CustomButton>
-                        <CustomButton classnameWrapper={cls.btn_wrapper} classNameBtn={cls.btn_donation} type='button' onClick={sendDonation}>
-                            <SvgDonation className={cls.btnDonationSvg}/>
-                        </CustomButton>
-                        <CustomButton classnameWrapper={cls.btn_wrapper} classNameBtn={cls.btn_gift} type='button'>
-                            <SvgGift className={cls.btnGiftSvg}/>
-                        </CustomButton>
-                    </div>
+                        <div className={cls.block_action_btns}>
+                            <CustomButton
+                                classnameWrapper={cls.btn_wrapper}
+                                classNameBtn={cls.btn_send_tokens}
+                                type='button'
+                                onClick={() => openModalWindow({ modalName: `modalSendTokens`, toTheShopTransfer: 'toTheShop' })}
+                            >
+                                <SvgArrowRight className={cls.btnSenTokensSvg} />
+                            </CustomButton>
+                            <CustomButton
+                                classnameWrapper={cls.btn_wrapper}
+                                classNameBtn={cls.btn_swap_tokens}
+                                type='button'
+                                onClick={() => openModalWindow({ modalName: `modalSwap` })}
+                            >
+                                <SvgSwap className={cls.btnSwapSvg} />
+                            </CustomButton>
+                            <CustomButton
+                                classnameWrapper={cls.btn_wrapper}
+                                classNameBtn={cls.btn_donation}
+                                type='button'
+                                onClick={() => openModalWindow({ modalName: 'modalDonation' })}
+                            >
+                                <SvgDonation className={cls.btnDonationSvg} />
+                            </CustomButton>
+                            <CustomButton
+                                classnameWrapper={cls.btn_wrapper}
+                                classNameBtn={cls.btn_gift}
+                                type='button'
+                                onClick={() => openModalWindow({ modalName: `modalSendTokens`, toTheShopTransfer: 'fromTheShop' })}
+                            >
+                                <SvgGift className={cls.btnGiftSvg} />
+                            </CustomButton>
+                        </div>
                     </div>
                 </div>
             </div>
             <Portal whereToAdd={document.body}>
                 <Modal show={modalSendTokens} closing={isClosingModalSendTokens}>
-                    <SendTokens/>
+                    <SendTokens />
                 </Modal>
             </Portal>
             <Portal whereToAdd={document.body}>
                 <Modal show={modalSwap} closing={isClosingModalSwap}>
-                    <Swap/>
+                    <Swap />
                 </Modal>
             </Portal>
             <Portal whereToAdd={document.body}>
                 <Modal show={modalDonation} closing={isClosingModalDonation}>
-                    <Donation/>
+                    <Donation />
+                </Modal>
+            </Portal>
+            <Portal whereToAdd={document.body}>
+                <Modal show={modalSttBonus} closing={isClosingSttBonus}>
+                    <SttBonus />
                 </Modal>
             </Portal>
         </>
-    )
+    );
 }
 
 export default Wallet;
