@@ -68,7 +68,6 @@ const QRScanner = () => {
     /** Запуск камеры и сканирование QR-кода */
     useEffect(() => {
         const codeReader = new BrowserMultiFormatReader();
-        if (result) return;
 
         const startCamera = async () => {
             try {
@@ -128,7 +127,6 @@ const QRScanner = () => {
 
     /** Обработка загруженного изображения */
     const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (result) return;
 
         const file = event.target.files?.[0];
         if (file) {
@@ -155,6 +153,7 @@ const QRScanner = () => {
                         } else {
                             showAttention('Ошибка при распознавании изображения', 'warning');
                             console.error('Ошибка при обработке изображения:', error);
+                            setImage(null)
                         }
                     }
                 };
@@ -166,23 +165,27 @@ const QRScanner = () => {
     React.useEffect(() => {
         setResult('');
         setValidateAddress(false);
+        setImage(null)
     }, []);
+
+
 
     return (
         <div className={cls.wrapper}>
-            <div className={cls.stt_modal_header}>
-                <div className={cls.notification_header}>QR Scanner</div>
-                <CustomButton onClick={closeModalQr} classnameWrapper={cls.wrapper_btn} classNameBtn={cls.cover_btn} type='button'>
-                    <SvgClose className={cls.close_svg} />
-                </CustomButton>
-            </div>
-            <video className={cls.qr_scanner} ref={videoRef} muted playsInline />
-            <input type='file' accept='image/*' onChange={handleFileUpload} />
-            {result && validateAddress && <div className={cls.result}>Результат: {result}</div>}
-            {result && !validateAddress && <div className={cls.result}>Результат: {result}</div>}
-            <CustomButton type='button' onClick={openModalForContinue} classnameWrapper={cls.wrap_btn} classNameBtn={cls.btn_send_tokens}>
-                search
+            <CustomButton onClick={closeModalQr} classnameWrapper={cls.wrapper_btn} classNameBtn={cls.cover_btn} type='button'>
+                <SvgClose className={cls.close_svg} />
             </CustomButton>
+
+            {/*<div className={cls.stt_modal_header}>*/}
+            {/*    <div className={cls.notification_header}>QR Scanner</div>*/}
+            {/*</div>*/}
+            {/*<video className={cls.qr_scanner} ref={videoRef} muted playsInline />*/}
+            {/*<input type='file' accept='image/*' onChange={handleFileUpload} />*/}
+            {/*{result && validateAddress && <div className={cls.result}>Результат: {result}</div>}*/}
+            {/*{result && !validateAddress && <div className={cls.result}>Результат: {result}</div>}*/}
+            {/*<CustomButton type='button' onClick={openModalForContinue} classnameWrapper={cls.wrap_btn} classNameBtn={cls.btn_send_tokens}>*/}
+            {/*    search*/}
+            {/*</CustomButton>*/}
         </div>
     );
 };

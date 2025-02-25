@@ -7,7 +7,7 @@ import { useModal } from '../../shared/helpers/hooks';
 import { INFO_USER_HEADER } from '../../shared/const/index.const';
 import { IInfoUserInHeader, labelProfileInfo } from '../../entities/others';
 import { useAppSelector } from '../../shared/redux/hooks/hooks';
-import { UserSlice } from '../../shared/redux/slices/authorizedInfo/authorizedInfo';
+import {ReactComponent as SvgProfile} from "./../../assets/svg/profile.svg";
 
 interface IProfileInfoProps {
     showInTheHeader: boolean;
@@ -34,7 +34,12 @@ const ProfileInfo = ({ className }: IProfileInfoProps) => {
     return (
         <div className={`${cls.wrapper} ${className}`}>
             <div className={cls.logo}>
-                <img className={cls.svgLogo} src={userInfo?.profile?.user_logo_url} alt='pictures' />
+                {userInfo?.profile?.user_logo_url &&
+                    <img className={cls.svgLogo} src={userInfo?.profile?.user_logo_url} alt='pictures'/>
+            }
+            {!userInfo?.profile?.user_logo_url &&
+                <SvgProfile className={cls.svgProfile}/>
+            }
             </div>
             <div className={cls.info_user}>
                 {!userInfo?.profile?.id && (

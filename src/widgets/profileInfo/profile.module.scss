@@ -27,9 +27,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     @media (min-width: mixins.em(791)) and (max-width: mixins.em(1230)) {
     }
+    overflow: hidden;
+}
+
+.svgProfile {
+    width: mixins.rem(120);
+    height: 100%;
+    fill: #1a1e21;
 }
 
 .info_user {

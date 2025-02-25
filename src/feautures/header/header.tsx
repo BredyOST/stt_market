@@ -46,8 +46,6 @@ function Header() {
             const response: any = await axios.post('https://stt.market/api/notifications/check/', data);
             if (response.status === 200) {
                 let responseData = response.data;
-                console.log('first')
-                console.log(responseData);
                 updateAuthState('telegramUsername', responseData?.username);
                 // отправляем уведомления
                 const data: { username: string } = { username: responseData.username };
@@ -116,15 +114,13 @@ function Header() {
                     <div className={`${cls.wrapper_ath} ${userInfo?.profile?.id ? cls.active : cls.additional}`}>
                         <div className={cls.left_block}>
                             <Logo />
-                            {userInfo?.profile?.id && (
                                 <CustomButton
-                                    classNameBtn={userInfo?.profile?.id && cls.btn_connect_loggin_mobile}
+                                    classNameBtn={cls.btn_connect_loggin_mobile}
                                     type='button'
                                     onClick={connectAccount}
                                 >
                                     {loggedIn ? t('logout') : t('connect')}
                                 </CustomButton>
-                            )}
                         </div>
                         <div className={cls.header_right_block}>
                             <div className={cls.language_safety}>

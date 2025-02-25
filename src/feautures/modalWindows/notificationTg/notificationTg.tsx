@@ -8,7 +8,6 @@ import cls from './notifictionTg.module.scss';
 import CustomButton from '../../../shared/ui/сustomButton/CustomButton';
 import { ReactComponent as SvgClose } from '../../../assets/svg/close.svg';
 import Countdown from 'react-countdown';
-import { Toast } from 'react-bootstrap';
 
 const NotificationTg = () => {
     const dispatch = useDispatch();

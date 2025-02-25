@@ -1,5 +1,5 @@
 import React, { HTMLAttributes } from 'react';
-import cls from './styled/customInput.module.scss';
+import cls from './customInput.module.scss';
 import { useAppSelector } from '../../redux/hooks/hooks';
 import { InputsIndicators } from '../../../entities/uiInterfaces/uiInterfaces';
 
@@ -61,58 +61,39 @@ const CustomInput = ({
         </div>
     );
 
-    // if (!indicators) {
+    // /** инпут для sttBonus модуля*/
+    // if (indicators === InputsIndicators.addSttBonus) {
     //     return (
-    //         <div className={classNameWrapper}>
+    //         <div className={cls.coverInputStt}>
     //             <input
-    //                 type={type}
-    //                 className={classNameInput}
+    //                 className={`${cls.input} ${cls.inputStt} ${codeHasWritten && cls.codeWritten}`}
     //                 placeholder={placeholder}
+    //                 type={type}
+    //                 disabled={disable && true}
     //                 value={inAppSelector ? state : value}
-    //                 onChange={onChange}
-    //                 disabled={disable}
-    //                 onBlur={onBlur}
-    //                 style={style}
+    //                 onChange={onChange && onChange}
     //             />
     //             {svg && !codeHasWritten && svg}
-    //             {showLength && <div className={cls.indicator_length}>{inAppSelector ? state?.length : value?.toString().length}</div>}
     //         </div>
     //     );
     // }
 
-    /** инпут для sttBonus модуля*/
-    if (indicators === InputsIndicators.addSttBonus) {
-        return (
-            <div className={cls.coverInputStt}>
-                <input
-                    className={`${cls.input} ${cls.inputStt} ${codeHasWritten && cls.codeWritten}`}
-                    placeholder={placeholder}
-                    type={type}
-                    disabled={disable && true}
-                    value={inAppSelector ? state : value}
-                    onChange={onChange && onChange}
-                />
-                {svg && !codeHasWritten && svg}
-            </div>
-        );
-    }
-
-    /** инпут для sttBonus модуля*/
-    if (indicators === InputsIndicators.addSearch) {
-        return (
-            <div className={cls.coverInput}>
-                <input
-                    className={`${cls.input} ${cls.inputSearch}`}
-                    placeholder={placeholder}
-                    type={type}
-                    disabled={disable && true}
-                    value={inAppSelector ? state : value}
-                    onChange={onChange && onChange}
-                />
-                {svg && svg}
-            </div>
-        );
-    }
+    // /** инпут для sttBonus модуля*/
+    // if (indicators === InputsIndicators.addSearch) {
+    //     return (
+    //         <div className={cls.coverInput}>
+    //             <input
+    //                 className={`${cls.input} ${cls.inputSearch}`}
+    //                 placeholder={placeholder}
+    //                 type={type}
+    //                 disabled={disable && true}
+    //                 value={inAppSelector ? state : value}
+    //                 onChange={onChange && onChange}
+    //             />
+    //             {svg && svg}
+    //         </div>
+    //     );
+    // }
 
     return null;
 };

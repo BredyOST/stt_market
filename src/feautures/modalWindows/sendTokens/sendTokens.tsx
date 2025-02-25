@@ -25,8 +25,9 @@ const SendTokens = () => {
     const [recipientAddress, setRecipientAddress] = useState<string>('');
     const [transferTokens, setTransferTokens] = useState<string>('0');
     const [sendTokensValue, setSendTokensValue] = useState<string>('0');
-    const [mlm, setMlm] = React.useState<number>(30);
+    const [mlm, setMlm] = React.useState<number>(0);
     const [validateAddress, setValidateAddress] = useState<boolean>(false);
+    const [userInfo, setUserInfo] = React.useState<any>(null)
 
     const deferredAddress = React.useDeferredValue(recipientAddress);
 
@@ -86,6 +87,7 @@ const SendTokens = () => {
     };
 
     /** FUNCTIONS*/
+    /** открыть qr scanner*/
     const openQrScanner: ForFunc<void, void> = () => {
         if (finishedQrScannerReals) {
             updateProfileServiceState('finishedQrScannerReals', false);
@@ -99,15 +101,95 @@ const SendTokens = () => {
         }
     };
 
-    /**Функция отправки токенов*/
+    /**отправка токенов*/
+    // async function sendTokens(receiver, amount) {
+    //
+    //     if (!validateAddress) {
+    //         showAttention(`Please check the entered ERC20 account.`, 'warning');
+    //         return;
+    //     }
+    //
+    //     if (+transferTokens <= 0) {
+    //         showAttention(`Please enter tokens for transfer`, 'warning');
+    //         return;
+    //     }
+    //
+    //     dispatch(addLoader(true));
+    //     updateAuthState('textInfo', 'preparation for the transaction.');
+    //
+    //     const signer = await provider.getSigner();
+    //
+    //     // Контракт токена STT
+    //     const contractCommon = new ethers.Contract(tokenContractAddress, tokenContractAbi, signer);
+    //     const contract = new ethers.Contract(sttAffiliateAddress, tokenContractAbiCb31, signer);
+    //
+    //     // Получаем decimals для токена
+    //     const decimals = await contractCommon.decimals();
+    //     const tokenAmount = ethers.parseUnits(amount.toString(), parseInt(decimals)); // Преобразуем в нужный формат
+    //
+    //     // Проверяем allowance (разрешение) перед approve
+    //     const allowanceBefore = await contractCommon.allowance(await signer.getAddress(), receiver);
+    //     console.log('Allowance before approve:', allowanceBefore.toString());
+    //
+    //     // Выполняем approve
+    //     updateAuthState('textInfo', 'Waiting for approve transaction confirmation');
+    //     const txApprove = await contractCommon.approve(sttAffiliateAddress, tokenAmount);
+    //
+    //     console.log('Approve transaction sent:', txApprove.hash);
+    //     const receiptApprove = await txApprove.wait();
+    //     console.log('Approve transaction confirmed:', receiptApprove);
+    //
+    //     updateAuthState('textInfo', 'Approve transaction confirmed');
+    //
+    //     // Проверяем allowance после approve
+    //     const allowanceAfter = await contractCommon.allowance(await signer.getAddress(), receiver);
+    //     console.log('Allowance after approve:', allowanceAfter.toString());
+    //
+    //     // Проверяем баланс подписанта
+    //     const balance = await contractCommon.balanceOf(await signer.getAddress());
+    //     console.log('Balance:', balance.toString());
+    //
+    //     // Выполняем перевод токенов
+    //     try {
+    //         updateAuthState('textInfo', 'Preparing token transfer');
+    //
+    //         let tx = null;
+    //         if (transferToTheShop) {
+    //             tx = await contract.paymentToTheShop(receiver, tokenAmount);
+    //         } else {
+    //             tx = await contract.paymentFromTheShop(receiver, tokenAmount);
+    //         }
+    //
+    //         updateAuthState('textInfo', 'Transaction sent');
+    //         showAttention(`Transaction sent`, 'success');
+    //
+    //         const receipt = await tx.wait();
+    //         console.log('Transaction confirmed:', receipt);
+    //         showAttention(`Transaction confirmed`, 'success');
+    //         setTransferTokens('0');
+    //         setSendTokensValue('0');
+    //         closeModalSendMoney();
+    //
+    //         // checkBalance()
+    //     } catch (error) {
+    //         showAttention(`Error sending tokens`, 'error');
+    //         console.error('Error sending tokens:', error);
+    //     } finally {
+    //         dispatch(addSuccessTransferToken(!successTransferTokens));
+    //         dispatch(addLoader(false));
+    //         updateAuthState('transferToTheShop', null);
+    //         updateAuthState('textInfo', null);
+    //     }
+    // }
+
     async function sendTokens(receiver, amount) {
         if (!validateAddress) {
-            showAttention(`Please check the entered ERC20 account.`, 'error');
+            showAttention(`Please check the entered ERC20 account.`, 'warning');
             return;
         }
 
         if (+transferTokens <= 0) {
-            showAttention(`Please enter tokens for transfer`, 'error');
+            showAttention(`Please enter tokens for transfer`, 'warning');
             return;
         }
 
@@ -115,6 +197,8 @@ const SendTokens = () => {
         updateAuthState('textInfo', 'preparation for the transaction.');
 
         const signer = await provider.getSigner();
+        const userAddress = await signer.getAddress();
+        console.log('Signer address:', userAddress);
 
         // Контракт токена STT
         const contractCommon = new ethers.Contract(tokenContractAddress, tokenContractAbi, signer);
@@ -122,31 +206,50 @@ const SendTokens = () => {
 
         // Получаем decimals для токена
         const decimals = await contractCommon.decimals();
-        const tokenAmount = ethers.parseUnits(amount.toString(), parseInt(decimals)); // Преобразуем в нужный формат
+        const tokenAmount = ethers.parseUnits(amount.toString(), parseInt(decimals));
 
-        // Проверяем allowance (разрешение) перед approve
-        const allowanceBefore = await contractCommon.allowance(await signer.getAddress(), receiver);
+        // Проверяем текущий allowance
+        const allowanceBefore = await contractCommon.allowance(userAddress, sttAffiliateAddress);
         console.log('Allowance before approve:', allowanceBefore.toString());
 
-        // Выполняем approve
-        updateAuthState('textInfo', 'Waiting for approve transaction confirmation');
-        const txApprove = await contractCommon.approve(sttAffiliateAddress, tokenAmount);
+        if (allowanceBefore >= tokenAmount) {
+            console.log('Approve не требуется, продолжаем перевод...');
+        } else {
+            try {
+                // Получаем estimateGas
+                const gasLimit = await contractCommon.approve.estimateGas(sttAffiliateAddress, tokenAmount);
+                console.log('Estimated Gas for approve:', gasLimit.toString());
 
-        console.log('Approve transaction sent:', txApprove.hash);
-        const receiptApprove = await txApprove.wait();
-        console.log('Approve transaction confirmed:', receiptApprove);
+                updateAuthState('textInfo', 'Waiting for approve transaction confirmation');
 
-        updateAuthState('textInfo', 'Approve transaction confirmed');
+                // Выполняем approve
+                console.log('Sending approve transaction...');
+                const txApprove = await contractCommon.approve(sttAffiliateAddress, tokenAmount, {
+                    from: userAddress,
+                    gasLimit,
+                });
+
+                console.log('Approve transaction sent:', txApprove.hash);
+                const receiptApprove = await txApprove.wait();
+                console.log('Approve transaction confirmed:', receiptApprove);
+
+                updateAuthState('textInfo', 'Approve transaction confirmed');
+            } catch (error) {
+                console.error('Ошибка при approve:', error);
+                showAttention(`Ошибка при подтверждении токенов`, 'error');
+                dispatch(addLoader(false));
+                return;
+            }
+        }
 
         // Проверяем allowance после approve
-        const allowanceAfter = await contractCommon.allowance(await signer.getAddress(), receiver);
+        const allowanceAfter = await contractCommon.allowance(userAddress, sttAffiliateAddress);
         console.log('Allowance after approve:', allowanceAfter.toString());
 
         // Проверяем баланс подписанта
-        const balance = await contractCommon.balanceOf(await signer.getAddress());
+        const balance = await contractCommon.balanceOf(userAddress);
         console.log('Balance:', balance.toString());
 
-        // Выполняем перевод токенов
         try {
             updateAuthState('textInfo', 'Preparing token transfer');
 
@@ -163,14 +266,13 @@ const SendTokens = () => {
             const receipt = await tx.wait();
             console.log('Transaction confirmed:', receipt);
             showAttention(`Transaction confirmed`, 'success');
+
             setTransferTokens('0');
             setSendTokensValue('0');
             closeModalSendMoney();
-
-            // checkBalance()
         } catch (error) {
-            showAttention(`Error sending tokens`, 'error');
             console.error('Error sending tokens:', error);
+            showAttention(`Error sending tokens`, 'error');
         } finally {
             dispatch(addSuccessTransferToken(!successTransferTokens));
             dispatch(addLoader(false));
@@ -179,13 +281,19 @@ const SendTokens = () => {
         }
     }
 
+
     /** проверка адреса*/
     async function isValidAddress(address: string): Promise<void> {
         const res = await ethers.isAddress(address);
         if (res) {
             setValidateAddress(true);
+            const signer = await provider.getSigner();
+            const contract = new ethers.Contract(sttAffiliateAddress, tokenContractAbiCb31, signer);
+            let rate = await contract.marketingRate(deferredAddress);
+                setMlm(rate);
         } else {
             setValidateAddress(false);
+            setMlm(0);
         }
     }
 
@@ -227,6 +335,7 @@ const SendTokens = () => {
         if (deferredAddress.length >= 1) {
             isValidAddress(deferredAddress);
         } else {
+            setMlm(0);
             setValidateAddress(false);
         }
     }, [deferredAddress]);
@@ -267,30 +376,32 @@ const SendTokens = () => {
                     </CustomButton>
                 )}
             </div>
-            <div className={cls.wrapper_header}>
-                <div className={cls.logo}>
-                    <img className={cls.svgLogo} src='/test.jpg' alt='pictures' />
-                </div>
-                <div className={cls.info_user}>
-                    <div className={cls.name_user}>
-                        <div className={cls.name}>Your Name</div>
-                        <div className={cls.status}>creator</div>
+            {userInfo &&
+                <div className={cls.wrapper_header}>
+                    <div className={cls.logo}>
+                        <img className={cls.svgLogo} src='/test.jpg' alt='pictures'/>
                     </div>
-                    <div className={cls.interaction_block}>
-                        {INFO_USER_SEND_TOKENS?.length > 0 &&
-                            INFO_USER_SEND_TOKENS.map((item: IInfoUserInHeader) => (
-                                <div key={item.id} className={cls.info_block}>
-                                    {item.svg}
-                                    <div>
-                                        {item.label === labelProfileInfo.donations && <div>18</div>}
-                                        {item.label === labelProfileInfo.favourites && <div>1.8M</div>}
-                                        {item.label === labelProfileInfo.subscribers && <div>1.8k</div>}
+                    <div className={cls.info_user}>
+                        <div className={cls.name_user}>
+                            <div className={cls.name}>No Name</div>
+                            <div className={cls.status}>creator</div>
+                        </div>
+                        <div className={cls.interaction_block}>
+                            {INFO_USER_SEND_TOKENS?.length > 0 &&
+                                INFO_USER_SEND_TOKENS.map((item: IInfoUserInHeader) => (
+                                    <div key={item.id} className={cls.info_block}>
+                                        {item.svg}
+                                        <div>
+                                            {item.label === labelProfileInfo.donations && <div>18</div>}
+                                            {item.label === labelProfileInfo.favourites && <div>1.8M</div>}
+                                            {item.label === labelProfileInfo.subscribers && <div>1.8k</div>}
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
             <div className={cls.cover_block_money}>
                 <div className={cls.tokensForSend}>
                     <div className={cls.value}>

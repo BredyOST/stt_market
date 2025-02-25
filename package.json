@@ -40,7 +40,8 @@
         "style-loader": "^4.0.0",
         "swiper": "^11.2.2",
         "use-state-with-callback": "^3.0.2",
-        "web-vitals": "^2.1.4"
+        "web-vitals": "^2.1.4",
+        "webrtc-adapter": "^9.0.1"
     },
     "scripts": {
         "start": "craco start",

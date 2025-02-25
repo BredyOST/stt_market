@@ -10,7 +10,7 @@ const IqPumpMainWindow = () => {
 
     return (
         <>
-            <DonHaveAccount />
+            {/*<NotAuthorizedUser />*/}
             {loggedIn && <HaveAccount />}
         </>
     );

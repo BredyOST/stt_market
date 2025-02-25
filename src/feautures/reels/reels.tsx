@@ -165,7 +165,9 @@ const Reels = () => {
         isFetching: isFetchingProfiles,
     } = useQuery({
         queryKey: ['profiles'],
-        queryFn: (meta) => ProfilesApi.getProfiles(meta),
+        // queryFn: (meta) => ProfilesApi.getProfiles(meta),
+        queryFn: (meta) => console.log(1)
+
     });
 
     /** управление модальными окнами*/
@@ -295,7 +297,7 @@ const Reels = () => {
 
     React.useEffect(() => {
 
-
+        /**убрать потом*/
         updateProfileServiceState('profilesForShowing', profilesFavourite);
 
         // if (dataProfiles?.data?.length >= 1) {

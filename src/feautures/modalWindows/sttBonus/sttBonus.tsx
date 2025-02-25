@@ -107,7 +107,7 @@ const SttBonusWindow = () => {
         console.log('Default Upliner:', defaultUplinerContract);
         if (checkUplainer !== defaultUplinerContract) {
             dispatch(addHasUpliner(true));
-        } else if (checkUplainer !== defaultUplinerContract) {
+        } else if (checkUplainer == defaultUplinerContract) {
             dispatch(addHasUpliner(false));
         }
     }
@@ -122,7 +122,7 @@ const SttBonusWindow = () => {
         console.log('Default Upliner:', defaultUplinerContract);
         if (checkUplainer !== defaultUplinerContract) {
             setHasUplinerForInvitedAdress(true);
-        } else if (checkUplainer !== defaultUplinerContract) {
+        } else if (checkUplainer == defaultUplinerContract) {
             setHasUplinerForInvitedAdress(false);
         }
     }
@@ -155,6 +155,7 @@ const SttBonusWindow = () => {
 
     React.useEffect(() => {
         if (erc20FromReals) {
+            setERCUpliner(erc20FromReals);
         }
     }, [erc20FromReals]);
 
@@ -198,7 +199,7 @@ const SttBonusWindow = () => {
                     </div>
                 )}
                 <div className={cls.input_block}>
-                    {!erc20FromReals && (
+                    {hasUpliner && (
                         <CustomInput
                             value={ERCUpliner}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => changeInputERC20(e)}
@@ -213,7 +214,7 @@ const SttBonusWindow = () => {
                             classNameInput={`${cls.inp} ${deferredAddress?.length >= 1 && !validateAddress && cls.notValidated} ${hasUpliner && hasUplinerForInvitedAdress && cls.notValidated}`}
                         ></CustomInput>
                     )}
-                    {erc20FromReals && <div className={cls.erc_wallet}>{erc20FromReals}</div>}
+                    {!hasUpliner && <div className={cls.erc_wallet}>{ERCUpliner}</div>}
                     {!hasUpliner && <div className={cls.input_text}>ERC20 - счет вашего пригласителя </div>}
                     {hasUpliner && !hasUplinerForInvitedAdress && (
                         <div className={cls.input_text}>Приглашение от вашего имени будет активно в течении 24 ч с момента отправки</div>

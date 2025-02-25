@@ -124,7 +124,6 @@ function App() {
                         {loggedIn && <History/>}
                     </div>
                 </div>
-                <ToastContainer/>
                 <Portal whereToAdd={document.body}>
                     <Loader isLoading={isLoader}/>
                 </Portal>

@@ -102,8 +102,6 @@ const Donation = () => {
         const contract = new ethers.Contract(token.contract, token.abi, signer);
 
         const decimals = await contract.decimals();
-
-        // Рассчитываем количество токенов с учетом decimals
         const tokenAmount = ethers.parseUnits(transferTokens.toString(), parseInt(decimals));
 
         // Проверяем allowance (разрешение) перед approve
